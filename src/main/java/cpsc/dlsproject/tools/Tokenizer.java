@@ -1,4 +1,4 @@
-package cpsc.dlsproject;
+package cpsc.dlsproject.tools;
 
 import java.util.List;
 

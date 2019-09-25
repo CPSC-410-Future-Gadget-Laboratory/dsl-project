@@ -1,4 +1,4 @@
-package cpsc.dlsproject;
+package cpsc.dlsproject.ast;
 
 public class DSLparser {
 
