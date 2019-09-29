@@ -11,10 +11,10 @@ public class IO extends Node {
         readfile = (IO == "READFILE");
     }
 
-
     @Override
     public void parse() {
-        
+        path = tokenizer.getNext();
+        tokenizer.getAndCheckNext("\\}");
     }
 
     @Override

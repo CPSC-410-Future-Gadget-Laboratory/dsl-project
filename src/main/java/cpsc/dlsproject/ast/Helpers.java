@@ -18,7 +18,4 @@ public class Helpers {
         Tokenizer tokenizer = Tokenizer.getTokenizer();
         return tokenizer.checkToken("READFILE") || tokenizer.checkToken("WRITEFILE");
     }
-
-
-
 }
