@@ -7,9 +7,14 @@ public class IO extends Node {
     private boolean readfile;
     private String path;
 
+    public IO(String IO) {
+        readfile = (IO == "READFILE");
+    }
+
+
     @Override
     public void parse() {
-
+        
     }
 
     @Override

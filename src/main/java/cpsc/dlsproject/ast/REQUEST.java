@@ -2,6 +2,8 @@ package cpsc.dlsproject.ast;
 
 import cpsc.dlsproject.tools.Node;
 
+import java.sql.SQLOutput;
+
 public class REQUEST extends Node {
     String requestType;
 
@@ -17,8 +19,19 @@ public class REQUEST extends Node {
             Node currNode = null;
             if (tokenizer.checkToken("ENDPOINT")) {
                 currNode = new ENDPOINT();
+            } else if (tokenizer.checkToken("VAR")) {
+                currNode = new VAR();
+            } else if (Helpers.CheckForCond()) {
+                currNode = new CONDITIONAL(tokenizer.getNext());
+            } else if (Helpers.CheckForIO()) {
+                currNode = new IO(tokenizer.getNext());
+            }
+            if (currNode == null) {
+                System.out.println("Error, invalid token");
+                System.exit(0);
             }
             currNode.parse();
+            children.add(currNode);
         }
         tokenizer.getNext(); // Pop the end token
     }
