@@ -1,10 +1,14 @@
 package cpsc.dlsproject.tools;
 
-public abstract class Node {
+import java.util.ArrayList;
+
+public class Node {
 
     protected Tokenizer tokenizer;
+    protected ArrayList<Node> nodes = new ArrayList<Node>();
 
+     public void parse(){
 
-    abstract public void parse();
+     };
 
 }
