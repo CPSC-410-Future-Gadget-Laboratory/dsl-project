@@ -33,9 +33,9 @@ public class CONDITIONAL extends Node {
                 currNode = new ENDPOINT();
             } else if (tokenizer.checkToken("VAR")) {
                 currNode = new VAR();
-            } else if (Helpers.CheckForRequestType()) {
+            } else if (ASTHelpers.CheckForRequestType()) {
                 currNode = new REQUEST(tokenizer.getNext());
-            } else if (Helpers.CheckForIO()) {
+            } else if (ASTHelpers.CheckForIO()) {
                 currNode = new IO(tokenizer.getNext());
             }
             if (currNode == null){

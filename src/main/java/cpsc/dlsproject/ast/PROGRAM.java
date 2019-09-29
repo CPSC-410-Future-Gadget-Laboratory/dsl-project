@@ -1,9 +1,7 @@
 package cpsc.dlsproject.ast;
 
 import cpsc.dlsproject.tools.Node;
-import cpsc.dlsproject.ast.Helpers;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PROGRAM extends Node {
@@ -15,9 +13,9 @@ public class PROGRAM extends Node {
         tokenizer.getAndCheckNext("START");
         while (!tokenizer.checkToken("END")) {
             Node currNode = null;
-            if (Helpers.CheckForRequestType()) {
+            if (ASTHelpers.CheckForRequestType()) {
                 currNode = new REQUEST(tokenizer.getNext());
-            } else if (Helpers.CheckForCond()) {
+            } else if (ASTHelpers.CheckForCond()) {
                 currNode = new CONDITIONAL(tokenizer.getNext());
             }
             if (currNode == null){

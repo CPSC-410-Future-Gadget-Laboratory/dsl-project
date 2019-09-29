@@ -2,7 +2,7 @@ package cpsc.dlsproject.ast;
 
 import cpsc.dlsproject.tools.Tokenizer;
 
-public class Helpers {
+public class ASTHelpers {
 
     public static boolean CheckForRequestType() {
         Tokenizer tokenizer = Tokenizer.getTokenizer();

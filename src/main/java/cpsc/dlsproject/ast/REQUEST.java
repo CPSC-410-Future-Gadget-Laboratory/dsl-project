@@ -2,8 +2,6 @@ package cpsc.dlsproject.ast;
 
 import cpsc.dlsproject.tools.Node;
 
-import java.sql.SQLOutput;
-
 public class REQUEST extends Node {
     String requestType;
 
@@ -21,9 +19,9 @@ public class REQUEST extends Node {
                 currNode = new ENDPOINT();
             } else if (tokenizer.checkToken("VAR")) {
                 currNode = new VAR();
-            } else if (Helpers.CheckForCond()) {
+            } else if (ASTHelpers.CheckForCond()) {
                 currNode = new CONDITIONAL(tokenizer.getNext());
-            } else if (Helpers.CheckForIO()) {
+            } else if (ASTHelpers.CheckForIO()) {
                 currNode = new IO(tokenizer.getNext());
             }
             if (currNode == null) {
