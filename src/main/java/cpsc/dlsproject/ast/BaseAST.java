@@ -1,10 +1,7 @@
 package cpsc.dlsproject.ast;
 
+/**
+ * A class representing the base behaviour and properties of an AST.
+ */
 public abstract class BaseAST {
-
-    /**
-     * Performs type checking on AST and raises
-     * error when inconsistent types are caught.
-     */
-    public abstract void typeCheck();
 }
