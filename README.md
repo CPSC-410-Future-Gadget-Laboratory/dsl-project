@@ -43,9 +43,9 @@ GET = {
 
 ## Contribution guide
 
-Please do not work directly in the master branch. Work in seperate branches, and make sure that the code builds on travis before sending in a pull request to merge into master.
+Please do not work directly in the master branch. Work in seperate branches, and make a pull request to merge into dev so that other members can work with/on your code. Once things are working on dev and after making sure that the code builds on travis, we'll send in a pull request to merge into master.
 
-We will be following the peer-review method of development, so any merge into master will require atleast one review from someone. This keeps the sanity of our codebase in check, and atleast one person from the team will be upto speed with what you did.
+We will be following the peer-review method of development, so any merge into dev or master will require atleast one review from someone. Master won't allow any pull requests before a review, dev will allow it but it's in good practice to get it reviewed. This keeps the sanity of our codebase in check, and atleast one person from the team will be upto speed with what you did.
 
 Also, keep in mind the following things when sending in pull requests:
 
