@@ -11,7 +11,7 @@ public class ASTHelpers {
 
     public static boolean CheckForCond() {
         Tokenizer tokenizer = Tokenizer.getTokenizer();
-        return tokenizer.checkToken("IF") || tokenizer.checkToken("ELSE");
+        return tokenizer.checkToken("IF") || tokenizer.checkToken("ELSE") || tokenizer.checkToken("THEN");
     }
 
     public static boolean CheckForIO() {

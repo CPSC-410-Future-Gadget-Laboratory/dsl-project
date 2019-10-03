@@ -10,8 +10,9 @@ public class PROGRAM extends Node {
 
     @Override
     public void parse() {
-        tokenizer.getAndCheckNext("START");
-        while (!tokenizer.checkToken("END")) {
+        int openBrackets = tokenizer.checkOpenBrackets();
+        int closedBrackets = 0;
+        while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
             Node currNode = null;
             if (ASTHelpers.CheckForRequestType()) {
                 currNode = new REQUEST(tokenizer.getNext());
@@ -20,7 +21,12 @@ public class PROGRAM extends Node {
             }
             if (currNode == null){
                 System.out.println("Error, invalid token");
-                System.exit(0);
+                break;
+                // throw exception
+//                System.exit(0);
+            }
+            if (tokenizer.checkBracket(tokenizer.checkCurrent())){
+                closedBrackets++;
             }
             currNode.parse();
             nodes.add(currNode);

@@ -9,7 +9,7 @@ public class VAR extends Node {
 
     @Override
     public void parse() {
-        tokenizer.getAndCheckNext("\\{");
+//        tokenizer.getAndCheckNext("\\{");
         name = tokenizer.getNext();
         if (!VariableMap.getVariableMap().containsKey(name)) {
             String type = tokenizer.getNext();

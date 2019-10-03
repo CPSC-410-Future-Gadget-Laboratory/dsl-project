@@ -11,9 +11,10 @@ public class REQUEST extends Node {
 
     @Override
     public void parse() {
+
         System.out.println(requestType);
-        tokenizer.getAndCheckNext("\\{");
-        while (!tokenizer.checkToken("\\}")) {
+        tokenizer.checkOpenBracket(tokenizer.checkCurrent());
+        while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
             Node currNode = null;
             if (tokenizer.checkToken("ENDPOINT")) {
                 currNode = new ENDPOINT();
@@ -23,15 +24,19 @@ public class REQUEST extends Node {
                 currNode = new CONDITIONAL(tokenizer.getNext());
             } else if (ASTHelpers.CheckForIO()) {
                 currNode = new IO(tokenizer.getNext());
+            } else if(tokenizer.checkToken("SEND")){
+                currNode = new SEND();
             }
             if (currNode == null) {
                 System.out.println("Error, invalid token");
-                System.exit(0);
+//                System.exit(0);
+            } else {
+                currNode.parse();
+                children.add(currNode);
             }
-            currNode.parse();
-            children.add(currNode);
+            tokenizer.getNext();
         }
-        tokenizer.getNext(); // Pop the end token
+        tokenizer.currentToken--;
     }
 
     @Override

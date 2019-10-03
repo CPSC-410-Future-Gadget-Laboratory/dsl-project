@@ -12,11 +12,16 @@ public class Tokenizer {
     private static String program;
     private static List<String> literals;
     private String[] tokens;
-    private int currentToken;
+    public int currentToken;
     private static Tokenizer theTokenizer;
 
     private Tokenizer() {
-        tokens = new String[]{"START", "GET", "{", "ENDPOINT", "{", "TESTING123", "}", "}", "END"};
+//        tokens = new String[]{"START", "GET", "{", "ENDPOINT", "{", "TESTING123", "}", "}", "END"};
+        // THIS IS A TEST
+//        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/hello", ";", "SEND", "{", "200", ";", "Hello World!", ";", "}", "}"};
+       tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "userId", "<", "10", "then", "SEND", "{", "200", ";", "Success", ";", "}", "else", "SEND", "{", "404", ";", "NOT FOUND", ";", "}", "}"};
+//        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
+
         System.out.println(tokens);
     }
 
@@ -49,7 +54,7 @@ public class Tokenizer {
         System.out.println(Arrays.asList(tokens));
     }
 
-    private String checkNext(){
+    public String checkNext(){
         String token="";
         if (currentToken<tokens.length){
             token = tokens[currentToken];
@@ -73,6 +78,10 @@ public class Tokenizer {
 
     public boolean checkToken(String regexp){
         String s = checkNext();
+        //Ignore this is a hack
+//        if(s.matches("\\{")){
+//            return true;
+//        }
         System.out.println("comparing: "+s+"  to  "+regexp);
         return (s.matches(regexp));
     }
@@ -99,5 +108,42 @@ public class Tokenizer {
         return theTokenizer;
     }
 
+    public int checkOpenBrackets(){
+        int count = 0;
+        for (String s: tokens){
+            if (s.equals("{")){
+                count++;
+            }
+        }
+        return count;
+    }
 
+
+    public boolean checkBracket(String s) {
+        return s.equals("}");
+    }
+
+    public boolean checkOpenBracket(String s) {
+        return s.equals("{");
+    }
+
+    public String checkCurrent() {
+        String token="";
+        if (currentToken<tokens.length){
+            token = tokens[currentToken];
+        }
+        else
+            token="NULLTOKEN";
+        return token;
+    }
+
+    public String getCurrent() {
+        String token="";
+        if (currentToken<tokens.length){
+            token = tokens[currentToken];
+        }
+        else
+            token="NULLTOKEN";
+        return token;
+    }
 }

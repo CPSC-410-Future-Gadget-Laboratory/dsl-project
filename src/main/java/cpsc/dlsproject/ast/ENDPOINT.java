@@ -7,12 +7,11 @@ public class ENDPOINT extends Node {
 
     @Override
     public void parse() {
-        tokenizer.getAndCheckNext("\\{");
-        tokenizer.getAndCheckNext("'");
-        endpoint = tokenizer.getNext();
-        tokenizer.getAndCheckNext("'");
-        tokenizer.getAndCheckNext("\\}");
-        System.out.println(endpoint);
+            tokenizer.getAndCheckNext("ENDPOINT");
+            endpoint = tokenizer.getNext();
+            tokenizer.checkCurrent().equals(";");
+            System.out.println(endpoint);
+
     }
 
     @Override
