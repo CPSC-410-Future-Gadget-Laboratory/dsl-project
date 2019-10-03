@@ -5,7 +5,7 @@ package cpsc.dlsproject.ast.expressions.values;
  * A wrapper class representing the "boolean".
  * e.g. true or false.
  */
-public class Boolean extends Value {
+public class BooleanValue extends Value {
     /**
      * the value of the Boolean.
      */

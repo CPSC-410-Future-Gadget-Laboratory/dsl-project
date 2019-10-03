@@ -4,6 +4,43 @@
 
 This is the CPSC 410 - Advanced Software Engineering group project.
 
+## EBNF
+Below is the EBNF of the language.
+```
+Program ::= EndpointDeclaration
+EndpointDeclaration ::= RequestMethod "{" URLDeclaration (Statement)* Response "}"
+RequestMethod ::= "GET" | "PUT" | "POST" | "DELETE"
+URLDeclaration ::= String ";"
+Statement ::= Conditional | ValueDeclaration | Response ";"
+Response ::= "SEND = {" (Statement)* "}"
+Conditional ::= "IF (" Expression ") THEN {" (Statement)* "} ELSE {" (Statement)* "}"
+ValueDeclaration ::= Type identifier " = " Expression
+Value::= String | Number | Boolean
+Type ::= "String" | "Number" | "Boolean"
+String ::= "\"" /^[a-z\d\-_\s]+$/i "\"";
+Number ::= "^[0-9]+$"
+Boolean ::= "true" | "false"
+Expression ::= BinaryOperation | Value ";"
+BinaryOperation ::= Expression BinaryOperator Expression
+BinaryOperator ::=  "+" "-" "*" "/"
+ReservedKeywords ::= RequestMethod & "SEND" & Type & "GET_PARAM"
+```
+
+## Language Design Specification Changelist
+#### 0.0.1 - October 21st, 2019 (latest)
+- `VAL` must be declared before being used.
+- Endpoint Declaration must declare the endpoint url in their body using the `ENDPOINT` keyword which is assigned to a value of type `String`, and AT LEAST one response declaration using `SEND` keyword. For instance:
+```
+GET = {
+    ENDPOINT = "/path/to/resource";
+    // SOME LOGIC...
+    SEND = {
+        200;
+        "Here is your resource!";
+    }
+}
+```
+
 ## Contribution guide
 
 Please do not work directly in the master branch. Work in seperate branches, and make sure that the code builds on travis before sending in a pull request to merge into master.
