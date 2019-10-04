@@ -30,6 +30,7 @@ public class PROGRAM extends Node {
             }
             currNode.parse();
             nodes.add(currNode);
+            tokenizer.getNext();
         }
     }
 

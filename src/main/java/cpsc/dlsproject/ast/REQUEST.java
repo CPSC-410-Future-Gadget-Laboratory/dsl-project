@@ -36,7 +36,7 @@ public class REQUEST extends Node {
             }
             tokenizer.getNext();
         }
-        tokenizer.currentToken--;
+//        tokenizer.currentToken--;
     }
 
     @Override
