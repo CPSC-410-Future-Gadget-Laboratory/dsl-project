@@ -1,0 +1,7 @@
+GET = {
+  ENDPOINT = "/v1/hello";
+  SEND = {
+    200;
+    "Hello World!";
+  }
+}
