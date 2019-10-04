@@ -1,8 +1,8 @@
-package cpsc.dlsproject.ast;
+package cpsc.dlsproject.ast.Statements;
 
-import cpsc.dlsproject.tools.Node;
+import cpsc.dlsproject.ast.BaseAST;
 
-public class ENDPOINT extends Node {
+public class ENDPOINT extends BaseAST {
     String endpoint = "";
 
     @Override

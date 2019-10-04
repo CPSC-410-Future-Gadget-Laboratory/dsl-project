@@ -1,8 +1,8 @@
-package cpsc.dlsproject.ast;
+package cpsc.dlsproject.ast.Statements;
 
-import cpsc.dlsproject.tools.Node;
+import cpsc.dlsproject.ast.BaseAST;
 
-public class IO extends Node {
+public class IO extends BaseAST {
 
     private boolean readfile;
     private String path;

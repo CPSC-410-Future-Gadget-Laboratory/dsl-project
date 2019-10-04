@@ -1,12 +1,9 @@
-package cpsc.dlsproject.ast;
-
-import cpsc.dlsproject.tools.Node;
-import cpsc.dlsproject.tools.Variable;
-
-import static cpsc.dlsproject.tools.VariableMap.variables;
+package cpsc.dlsproject.ast.Statements;
 
 
-public class CONDITIONAL extends Node {
+import cpsc.dlsproject.ast.*;
+
+public class CONDITIONAL extends STATEMENT {
     private boolean IF;
     private String var1 = "";
     private String var1Type = "";
@@ -76,7 +73,7 @@ public class CONDITIONAL extends Node {
 //        tokenizer.getNext(); // Pop the end token
 
         while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
-            Node currNode = null;
+            BaseAST currNode = null;
             if (tokenizer.checkToken("ENDPOINT")) {
                 currNode = new ENDPOINT();
             } else if (tokenizer.checkToken("VAR")) {
@@ -98,7 +95,6 @@ public class CONDITIONAL extends Node {
             tokenizer.getNext();
         }
         tokenizer.currentToken--;
-
     }
 
     @Override

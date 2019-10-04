@@ -1,14 +1,15 @@
-package cpsc.dlsproject.tools;
+package cpsc.dlsproject.ast;
+
+import cpsc.dlsproject.tools.Tokenizer;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public abstract class Node {
+public abstract class BaseAST {
 
-    protected ArrayList<Node> children = new ArrayList<>();
+    protected ArrayList<BaseAST> children = new ArrayList<>();
     protected Tokenizer tokenizer = Tokenizer.getTokenizer();
     static protected PrintWriter writer; //in case you need to write something to a file!
     public static void setWriter(String name) throws FileNotFoundException, UnsupportedEncodingException {

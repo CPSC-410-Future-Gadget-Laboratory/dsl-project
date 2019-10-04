@@ -1,8 +1,10 @@
-package cpsc.dlsproject.ast;
+package cpsc.dlsproject.ast.Statements;
 
-import cpsc.dlsproject.tools.Node;
+import cpsc.dlsproject.ast.ASTHelpers;
+import cpsc.dlsproject.ast.BaseAST;
+import cpsc.dlsproject.ast.Statements.*;
 
-public class REQUEST extends Node {
+public class REQUEST extends BaseAST {
     String requestType;
 
     public REQUEST(String requestType) {
@@ -15,7 +17,7 @@ public class REQUEST extends Node {
         System.out.println(requestType);
         tokenizer.checkOpenBracket(tokenizer.checkCurrent());
         while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
-            Node currNode = null;
+            BaseAST currNode = null;
             if (tokenizer.checkToken("ENDPOINT")) {
                 currNode = new ENDPOINT();
             } else if (tokenizer.checkToken("VAR")) {

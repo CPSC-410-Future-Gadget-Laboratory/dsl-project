@@ -1,8 +1,8 @@
 package cpsc.dlsproject.ast;
 
-import cpsc.dlsproject.tools.Node;
+import cpsc.dlsproject.ast.Statements.VAR;
 
-public class LOGICAL extends Node {
+public class LOGICAL extends BaseAST {
 
     private String oper;
 

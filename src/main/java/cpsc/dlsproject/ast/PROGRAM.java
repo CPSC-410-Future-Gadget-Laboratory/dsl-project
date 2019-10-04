@@ -1,19 +1,20 @@
 package cpsc.dlsproject.ast;
 
-import cpsc.dlsproject.tools.Node;
+import cpsc.dlsproject.ast.Statements.CONDITIONAL;
+import cpsc.dlsproject.ast.Statements.REQUEST;
 
 import java.util.ArrayList;
 
-public class PROGRAM extends Node {
+public class PROGRAM extends BaseAST {
 
-    private ArrayList<Node> nodes = new ArrayList<>(); // Array list of instructions. Each node is the root node of an AST. Separate blocks of instructions are separate trees
+    private ArrayList<BaseAST> nodes = new ArrayList<>(); // Array list of instructions. Each node is the root node of an AST. Separate blocks of instructions are separate trees
 
     @Override
     public void parse() {
         int openBrackets = tokenizer.checkOpenBrackets();
         int closedBrackets = 0;
         while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
-            Node currNode = null;
+            BaseAST currNode = null;
             if (ASTHelpers.CheckForRequestType()) {
                 currNode = new REQUEST(tokenizer.getNext());
             } else if (ASTHelpers.CheckForCond()) {
