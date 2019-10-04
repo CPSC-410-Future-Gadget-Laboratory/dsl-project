@@ -16,11 +16,6 @@ public class CONDITIONAL extends STATEMENT {
         IF = (condType == "IF");
     }
 
-    private boolean CheckForLogical() {
-        return tokenizer.checkToken("AND") || tokenizer.checkToken("OR") || tokenizer.checkToken("<") || tokenizer.checkToken(">") || tokenizer.checkToken("==") ||
-                tokenizer.checkToken("!=") || tokenizer.checkToken("<=") || tokenizer.checkToken(">=");
-    }
-
     public static boolean isNumeric(String strNum) {
         return strNum.matches("-?\\d+(\\.\\d+)?");
     }
@@ -30,7 +25,7 @@ public class CONDITIONAL extends STATEMENT {
 //        tokenizer.getAndCheckNext("\\{");
 //        tokenizer.getAndCheckNext("{");
         var1 = tokenizer.getNext();
-        if (!CheckForLogical()) {
+        if (!ASTHelpers.CheckForLogical()) {
             System.out.println("Not a logical token. Error");
             System.exit(0);
         }

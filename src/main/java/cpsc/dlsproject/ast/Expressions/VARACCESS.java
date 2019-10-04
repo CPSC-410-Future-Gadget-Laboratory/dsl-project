@@ -3,6 +3,10 @@ package cpsc.dlsproject.ast.Expressions;
 public class VARACCESS extends Expression {
     public String identifier;
 
+    public VARACCESS(String s) {
+        identifier = s;
+    }
+
     @Override
     public void parse() {
        identifier = tokenizer.getNext();

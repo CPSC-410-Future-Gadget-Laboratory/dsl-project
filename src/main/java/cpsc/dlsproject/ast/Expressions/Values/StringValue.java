@@ -4,7 +4,7 @@ public class StringValue extends Value {
 
     private String value;
 
-    StringValue(String s) {
+    public StringValue(String s) {
         value = s;
     }
 

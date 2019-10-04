@@ -18,4 +18,15 @@ public class ASTHelpers {
         Tokenizer tokenizer = Tokenizer.getTokenizer();
         return tokenizer.checkToken("READFILE") || tokenizer.checkToken("WRITEFILE");
     }
+
+    public static boolean CheckForLogical() {
+        Tokenizer tokenizer = Tokenizer.getTokenizer();
+        return  tokenizer.checkToken("<") || tokenizer.checkToken(">") || tokenizer.checkToken("==") ||
+                tokenizer.checkToken("!=") || tokenizer.checkToken("<=") || tokenizer.checkToken(">=");
+    }
+
+    public static boolean CheckForOperator() {
+        Tokenizer tokenizer = Tokenizer.getTokenizer();
+        return  tokenizer.checkToken("+") || tokenizer.checkToken("-") || tokenizer.checkToken("*") || tokenizer.checkToken("/");
+    }
 }

@@ -8,7 +8,7 @@ public class NumberValue extends Value {
         return value;
     }
 
-    NumberValue(double d) {
+    public NumberValue(double d) {
         value = d;
     }
 

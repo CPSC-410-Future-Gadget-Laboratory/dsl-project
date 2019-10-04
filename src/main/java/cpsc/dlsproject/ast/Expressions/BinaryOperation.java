@@ -16,6 +16,44 @@ public class BinaryOperation extends Expression{
      */
     public Expression rhs;
 
+    public BinaryOperation(String oper) {
+        switch (oper) {
+            case "+" :
+                operator = BinaryOperator.PLUS;
+                break;
+            case "-" :
+                operator = BinaryOperator.MINUS;
+                break;
+            case "*" :
+                operator = BinaryOperator.MULTIPLY;
+                break;
+            case "/" :
+                operator = BinaryOperator.DIVISION;
+                break;
+            case ">" :
+                operator = BinaryOperator.GREATERTHAN;
+                break;
+            case "<" :
+                operator = BinaryOperator.LESSTHAN;
+                break;
+            case ">=" :
+                operator = BinaryOperator.GEQUAL;
+                break;
+            case "<=" :
+                operator = BinaryOperator.LEQUAL;
+                break;
+            case "==" :
+                operator = BinaryOperator.EQUAL;
+                break;
+            case "!=" :
+                operator = BinaryOperator.NOTEQUAL;
+                break;
+            default:
+                System.out.println("Reached default case in BinaryOperation. Should be impossible.");
+                System.exit(0);
+        }
+    }
+
     @Override
     public void parse() {
 

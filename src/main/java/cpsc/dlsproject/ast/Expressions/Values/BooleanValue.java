@@ -7,7 +7,7 @@ public class BooleanValue extends Value {
 
     private boolean value;
 
-    BooleanValue(boolean value) {
+    public BooleanValue(boolean value) {
         this.value = value;
     }
 
