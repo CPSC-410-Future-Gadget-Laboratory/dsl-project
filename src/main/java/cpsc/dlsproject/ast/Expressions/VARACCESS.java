@@ -1,9 +1,11 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.Expressions;
 
-public class URLDeclaration extends STATEMENT {
+public class VARACCESS extends Expression {
+    public String identifier;
+
     @Override
     public void parse() {
-
+       identifier = tokenizer.getNext();
     }
 
     @Override
