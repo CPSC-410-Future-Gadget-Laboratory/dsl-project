@@ -7,9 +7,8 @@ public class ENDPOINT extends BaseAST {
 
     @Override
     public void parse() {
-        tokenizer.getAndCheckNext("ENDPOINT");
         endpoint = tokenizer.getNext();
-        tokenizer.checkCurrent().equals(";");
+        tokenizer.getNext().equals(";");
         System.out.println(endpoint);
     }
 

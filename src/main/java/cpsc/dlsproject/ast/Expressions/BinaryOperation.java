@@ -18,13 +18,13 @@ public class BinaryOperation extends Expression{
 
     public BinaryOperation(String oper) {
         switch (oper) {
-            case "+" :
+            case "PLUS" :
                 operator = BinaryOperator.PLUS;
                 break;
             case "-" :
                 operator = BinaryOperator.MINUS;
                 break;
-            case "*" :
+            case "MULTI" :
                 operator = BinaryOperator.MULTIPLY;
                 break;
             case "/" :

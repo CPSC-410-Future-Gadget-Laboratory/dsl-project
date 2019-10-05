@@ -27,6 +27,6 @@ public class ASTHelpers {
 
     public static boolean CheckForOperator() {
         Tokenizer tokenizer = Tokenizer.getTokenizer();
-        return  tokenizer.checkToken("+") || tokenizer.checkToken("-") || tokenizer.checkToken("*") || tokenizer.checkToken("/");
+        return  tokenizer.checkNext().matches("PLUS") || tokenizer.checkToken("-") || tokenizer.checkToken("MULTI") || tokenizer.checkToken("/");
     }
 }

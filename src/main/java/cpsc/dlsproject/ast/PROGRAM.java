@@ -11,9 +11,12 @@ public class PROGRAM extends BaseAST {
 
     @Override
     public void parse() {
-        int openBrackets = tokenizer.checkOpenBrackets();
-        int closedBrackets = 0;
-        while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
+        if (!tokenizer.checkNext().matches("START")) {
+            System.out.println("Program must start with keyword START");
+            System.exit(0);
+        }
+        tokenizer.getNext(); // Pop START keyword
+        while (!tokenizer.checkNext().matches("END")) {
             BaseAST currNode = null;
             if (ASTHelpers.CheckForRequestType()) {
                 currNode = new REQUEST(tokenizer.getNext());
@@ -22,17 +25,12 @@ public class PROGRAM extends BaseAST {
             }
             if (currNode == null){
                 System.out.println("Error, invalid token");
-                break;
-                // throw exception
-//                System.exit(0);
-            }
-            if (tokenizer.checkBracket(tokenizer.checkCurrent())){
-                closedBrackets++;
+                System.exit(0);
             }
             currNode.parse();
             nodes.add(currNode);
-            tokenizer.getNext();
         }
+        System.out.println("Done with PROGRAM!");
     }
 
     @Override

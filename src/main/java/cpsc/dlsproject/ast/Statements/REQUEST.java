@@ -15,7 +15,7 @@ public class REQUEST extends BaseAST {
     public void parse() {
 
         System.out.println(requestType);
-        tokenizer.checkOpenBracket(tokenizer.checkCurrent());
+        tokenizer.checkOpenBracket(tokenizer.getNext());
         while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
             BaseAST currNode = null;
             if (tokenizer.checkToken("ENDPOINT")) {
@@ -31,14 +31,14 @@ public class REQUEST extends BaseAST {
             }
             if (currNode == null) {
                 System.out.println("Error, invalid token");
-//                System.exit(0);
+                System.exit(0);
             } else {
+                tokenizer.getNext(); // Pop the keyword
                 currNode.parse();
                 children.add(currNode);
             }
-            tokenizer.getNext();
         }
-//        tokenizer.currentToken--;
+        tokenizer.getNext(); // Pop the last bracket
     }
 
     @Override

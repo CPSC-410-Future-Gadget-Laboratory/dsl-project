@@ -14,17 +14,15 @@ public class VAR extends BaseAST {
     public String name;
     public Expression expression;
 
-    private void handleOper(BinaryOperation operation, Expression expression) {
-        if (operation == null) {
-            if (!ASTHelpers.CheckForLogical() && !ASTHelpers.CheckForOperator() ) {
-                System.out.println("Error, not logical operator. Exiting");
-                System.exit(0);
-            }
-            operation = new BinaryOperation(tokenizer.getNext());
-            operation.lhs = expression;
+    private BinaryOperation handleOper(BinaryOperation operation, Expression expression) {
+        BinaryOperation oper = operation;
+        if (oper == null) {
+            oper = new BinaryOperation(tokenizer.getNext());
+            oper.lhs = expression;
         } else {
-            operation.rhs = expression;
+            oper.rhs = expression;
         }
+        return oper;
     }
 
     private StringValue handleString() {
@@ -39,16 +37,16 @@ public class VAR extends BaseAST {
         Expression expression;
         while (!tokenizer.checkNext().equals(";")) {
             String token = tokenizer.checkNext();
-            if (token.equals("\"")) {
+            if (token.matches("\"")) {
                 expression = handleString();
             } else if (token.equals("true") || token.equals("false")) {
                 expression = new BooleanValue(Boolean.parseBoolean(tokenizer.getNext()));
-            } else if (token.matches("/^[0-9]+(\\.[0-9]+)?$")) {
+            } else if (token.matches("^\\((?=.)([+-]?([0-9]*)(\\.([0-9]+))?)\\)$") || token.matches("^[-+]?\\d+$")) {
                 expression = new NumberValue(Double.parseDouble(tokenizer.getNext()));
             } else {
                 expression = new VARACCESS(tokenizer.getNext());
             }
-            handleOper(operation, expression);
+            operation = handleOper(operation, expression);
         }
         if (operation == null) {
             System.out.println("Error in expression creation in AST. EXIT");
