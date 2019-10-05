@@ -23,7 +23,7 @@ public class REQUEST extends BaseAST {
             } else if (tokenizer.checkToken("VAR")) {
                 currNode = new VAR();
             } else if (ASTHelpers.CheckForCond()) {
-                currNode = new CONDITIONAL(tokenizer.getNext());
+                currNode = new CONDITIONAL();
             } else if (ASTHelpers.CheckForIO()) {
                 currNode = new IO(tokenizer.getNext());
             } else if(tokenizer.checkToken("SEND")){

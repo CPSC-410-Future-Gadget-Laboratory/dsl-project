@@ -16,7 +16,7 @@ public class Tokenizer {
         // THIS IS A TEST
 //        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/hello", ";", "SEND", "{", "200", ";", "Hello World!", ";", "}", "}"};
 //       tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "userId", "<", "10", "then", "SEND", "{", "200", ";", "Success", ";", "}", "else", "SEND", "{", "404", ";", "NOT FOUND", ";", "}", "}", "GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
-        tokens = new String[]{"START", "GET", "{", "VAR", "ID", "Number", "5.437", ";", "VAR", "ID2", "Number", "ID", "PLUS", "5", ";", "VAR", "ID3", "String", "\"", "HELLO WORLD!", "\"", ";", "}", "END"};
+        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "(","userId", "<", "10", ")", "{", "SEND", "{", "200", ";", "\"", "Success", "\"", ";", "}", "}", "ELSE", "{", "SEND", "{", "404", ";", "\"", "NOT FOUND", "\"", ";", "}", "}", "}", "GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
         System.out.println(tokens);
     }
 

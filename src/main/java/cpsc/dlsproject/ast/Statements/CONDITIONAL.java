@@ -12,10 +12,6 @@ import cpsc.dlsproject.ast.Expressions.Values.StringValue;
 public class CONDITIONAL extends STATEMENT {
     public Expression condition;
 
-    public static boolean isNumeric(String strNum) {
-        return strNum.matches("-?\\d+(\\.\\d+)?");
-    }
-
     private BinaryOperation handleOper(BinaryOperation operation, Expression expression) {
         BinaryOperation oper = operation;
         if (oper == null) {
@@ -61,7 +57,7 @@ public class CONDITIONAL extends STATEMENT {
 
     private IFELSE handleIFELSE() {
         if (!tokenizer.getNext().equals("{")) {
-            System.out.println("Invalid formation of conditional statement");
+            System.out.println("Invalid formation of IFELSE statement");
             System.exit(0);
         }
 
@@ -90,10 +86,6 @@ public class CONDITIONAL extends STATEMENT {
 
     @Override
     public void parse() {
-        if (!tokenizer.getNext().equals("{")) {
-            System.out.println("Invalid formation of conditional statement");
-            System.exit(0);
-        }
         if (!tokenizer.getNext().equals("(")) {
             System.out.println("Invalid formation of condition expression");
             System.exit(0);
@@ -101,7 +93,7 @@ public class CONDITIONAL extends STATEMENT {
         expressionHandler();
         IFELSE ifStatement = handleIFELSE();
         children.add(ifStatement);
-        if(tokenizer.getNext().equals("ELSE")) {
+        if(!tokenizer.getNext().equals("ELSE")) {
             System.out.println("Invalid formation of else statement");
             System.exit(0);
         }

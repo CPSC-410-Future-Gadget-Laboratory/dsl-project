@@ -18,12 +18,15 @@ public class SEND extends BaseAST {
     @Override
     public void parse() {
         tokenizer.checkOpenBracket(tokenizer.getNext());
-        while(!tokenizer.checkBracket(tokenizer.getNext()) && !tokenizer.checkBracket(tokenizer.checkNext())){
+        while(!tokenizer.checkNext().equals("}")){
             this.statusCode = Integer.parseInt(tokenizer.getNext());
             tokenizer.getNext().equals(";");
+            tokenizer.getNext().equals("\"");
             message = tokenizer.getNext();
-            tokenizer.getCurrent().equals(";");
+            tokenizer.getNext().equals("\"");
+            tokenizer.getNext().equals(";");
         }
+        tokenizer.getNext(); // Pop the end token
     }
 
     @Override

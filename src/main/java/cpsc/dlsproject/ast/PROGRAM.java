@@ -11,17 +11,13 @@ public class PROGRAM extends BaseAST {
 
     @Override
     public void parse() {
-        if (!tokenizer.checkNext().matches("START")) {
-            System.out.println("Program must start with keyword START");
-            System.exit(0);
-        }
         tokenizer.getNext(); // Pop START keyword
-        while (!tokenizer.checkNext().matches("END")) {
+        while (tokenizer.moreTokens()) {
             BaseAST currNode = null;
             if (ASTHelpers.CheckForRequestType()) {
                 currNode = new REQUEST(tokenizer.getNext());
             } else if (ASTHelpers.CheckForCond()) {
-                currNode = new CONDITIONAL(tokenizer.getNext());
+                currNode = new CONDITIONAL();
             }
             if (currNode == null){
                 System.out.println("Error, invalid token");
