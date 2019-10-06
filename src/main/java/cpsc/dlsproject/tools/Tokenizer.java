@@ -1,9 +1,5 @@
 package cpsc.dlsproject.tools;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,9 +15,8 @@ public class Tokenizer {
 //        tokens = new String[]{"START", "GET", "{", "ENDPOINT", "{", "TESTING123", "}", "}", "END"};
         // THIS IS A TEST
 //        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/hello", ";", "SEND", "{", "200", ";", "Hello World!", ";", "}", "}"};
-       tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "userId", "<", "10", "then", "SEND", "{", "200", ";", "Success", ";", "}", "else", "SEND", "{", "404", ";", "NOT FOUND", ";", "}", "}", "GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
-//        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
-
+//       tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "userId", "<", "10", "then", "SEND", "{", "200", ";", "Success", ";", "}", "else", "SEND", "{", "404", ";", "NOT FOUND", ";", "}", "}", "GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
+        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "(","userId", "<", "10", ")", "{", "SEND", "{", "200", ";", "\"", "Success", "\"", ";", "}", "}", "ELSE", "{", "SEND", "{", "404", ";", "\"", "NOT FOUND", "\"", ";", "}", "}", "}", "GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
         System.out.println(tokens);
     }
 
@@ -58,6 +53,17 @@ public class Tokenizer {
         String token="";
         if (currentToken<tokens.length){
             token = tokens[currentToken];
+        }
+        else
+            token="NO_MORE_TOKENS";
+        return token;
+    }
+
+    public String checkAheadOfNext(int pos){
+        String token="";
+        int index = currentToken + pos;
+        if (index<tokens.length){
+            token = tokens[index];
         }
         else
             token="NO_MORE_TOKENS";
