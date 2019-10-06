@@ -1,6 +1,6 @@
 package cpsc.dlsproject.ast.Statements;
 
-public class IFELSE extends STATEMENT {
+public class IfElse extends Statement {
     @Override
     public void parse() {
 

@@ -1,9 +1,9 @@
 package cpsc.dlsproject.ast.Expressions;
 
-public class VARACCESS extends Expression {
+public class VarAccess extends Expression {
     public String identifier;
 
-    public VARACCESS(String s) {
+    public VarAccess(String s) {
         identifier = s;
     }
 

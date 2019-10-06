@@ -1,18 +1,16 @@
 package cpsc.dlsproject.ast.Statements;
 
-import cpsc.dlsproject.ast.ASTHelpers;
-import cpsc.dlsproject.ast.BaseAST;
+
+import cpsc.dlsproject.ast.*;
 import cpsc.dlsproject.ast.Expressions.BinaryOperation;
 import cpsc.dlsproject.ast.Expressions.Expression;
-import cpsc.dlsproject.ast.Expressions.VARACCESS;
+import cpsc.dlsproject.ast.Expressions.VarAccess;
 import cpsc.dlsproject.ast.Expressions.Values.BooleanValue;
 import cpsc.dlsproject.ast.Expressions.Values.NumberValue;
 import cpsc.dlsproject.ast.Expressions.Values.StringValue;
-import cpsc.dlsproject.ast.Expressions.Values.Value;
 
-public class VAR extends BaseAST {
-    public String name;
-    public Expression expression;
+public class Conditional extends Statement {
+    public Expression condition;
 
     private BinaryOperation handleOper(BinaryOperation operation, Expression expression) {
         BinaryOperation oper = operation;
@@ -35,7 +33,7 @@ public class VAR extends BaseAST {
     private void expressionHandler() {
         BinaryOperation operation = null;
         Expression expression;
-        while (!tokenizer.checkNext().equals(";")) {
+        while (!tokenizer.checkNext().equals(")")) {
             String token = tokenizer.checkNext();
             if (token.matches("\"")) {
                 expression = handleString();
@@ -44,7 +42,7 @@ public class VAR extends BaseAST {
             } else if (token.matches("^\\((?=.)([+-]?([0-9]*)(\\.([0-9]+))?)\\)$") || token.matches("^[-+]?\\d+$")) {
                 expression = new NumberValue(Double.parseDouble(tokenizer.getNext()));
             } else {
-                expression = new VARACCESS(tokenizer.getNext());
+                expression = new VarAccess(tokenizer.getNext());
             }
             operation = handleOper(operation, expression);
         }
@@ -52,37 +50,55 @@ public class VAR extends BaseAST {
             System.out.println("Error in expression creation in AST. EXIT");
             System.exit(0);
         } else {
-            this.expression = operation;
+            this.condition = operation;
         }
+        tokenizer.getNext(); // Pop the end )
+    }
+
+    private IfElse handleIFELSE() {
+        if (!tokenizer.getNext().equals("{")) {
+            System.out.println("Invalid formation of IFELSE statement");
+            System.exit(0);
+        }
+
+        IfElse ifelse = new IfElse();
+        while(!tokenizer.checkNext().equals("}")) {
+            BaseAST currNode = null;
+            if (tokenizer.checkToken("VAR")) {
+                currNode = new Var();
+            } else if (ASTHelpers.CheckForCond()) {
+                currNode = new Conditional();
+            } else if(tokenizer.checkToken("SEND")){
+                currNode = new Send();
+            }
+            if (currNode == null) {
+                System.out.println("Error, invalid token in conditional statement");
+                System.exit(0);
+            } else {
+                tokenizer.getNext(); // Pop the keyword
+                currNode.parse();
+                ifelse.children.add(currNode);
+            }
+        }
+        tokenizer.getNext(); // Pop end token
+        return ifelse;
     }
 
     @Override
     public void parse() {
-//        tokenizer.getAndCheckNext("\\{");
-        name = tokenizer.getNext();
-        if (tokenizer.checkNext() == "String") {
-            tokenizer.getNext();
-            if (tokenizer.checkNext().matches("\"") && tokenizer.checkAheadOfNext(3).equals(";")) {
-                expression = handleString();
-            } else {
-                expressionHandler();
-            }
-        } else if (tokenizer.checkNext() == "Number") {
-            tokenizer.getNext();
-            if (tokenizer.checkAheadOfNext(1).equals(";")) {
-                expression = new NumberValue(Double.parseDouble(tokenizer.getNext()));
-            } else {
-                expressionHandler();
-            }
-        } else if (tokenizer.checkNext() == "Boolean") {
-            tokenizer.getNext();
-            if (tokenizer.checkAheadOfNext(1).equals(";")) {
-                expression = new BooleanValue(Boolean.parseBoolean(tokenizer.getNext()));
-            } else {
-                expressionHandler();
-            }
+        if (!tokenizer.getNext().equals("(")) {
+            System.out.println("Invalid formation of condition expression");
+            System.exit(0);
         }
-        tokenizer.getAndCheckNext(";");
+        expressionHandler();
+        IfElse ifStatement = handleIFELSE();
+        children.add(ifStatement);
+        if(!tokenizer.getNext().equals("ELSE")) {
+            System.out.println("Invalid formation of else statement");
+            System.exit(0);
+        }
+        IfElse elseStatement = handleIFELSE();
+        children.add(elseStatement);
     }
 
     @Override

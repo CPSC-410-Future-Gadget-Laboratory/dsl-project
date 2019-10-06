@@ -11,7 +11,7 @@ public abstract class BaseAST {
 
     public ArrayList<BaseAST> children = new ArrayList<>();
     protected Tokenizer tokenizer = Tokenizer.getTokenizer();
-    static protected PrintWriter writer; //in case you need to write something to a file!
+    protected static PrintWriter writer; //in case you need to write something to a file!
     public static void setWriter(String name) throws FileNotFoundException, UnsupportedEncodingException {
         writer = new PrintWriter(name, "UTF-8");
     }
