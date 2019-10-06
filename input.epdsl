@@ -4,4 +4,5 @@ GET = {
     200;
     "Hello World!";
   }
+  VAR userID Number = 54;
 }

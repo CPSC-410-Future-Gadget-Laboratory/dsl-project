@@ -15,7 +15,7 @@ public class App
     public static void main( String[] args )
     {
         List<String> literals = Arrays.asList("START", "GET", "POST", "PUT", "DELETE",
-                "{", "ENDPOINT", "VAL", "GET_PARAM", "SEND", "}", "IF", "else", "&&", "||", "<", ">", "<=", ">=", "==");
+                "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "\"", "<", ">", "<=", ">=", "==");
         Tokenizer.makeTokenizer("input.epdsl", literals);
         PROGRAM p = new PROGRAM();
         System.out.println("Done tokenizing");

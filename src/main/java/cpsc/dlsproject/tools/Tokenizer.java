@@ -36,43 +36,35 @@ public class Tokenizer {
     private void spaceKillingTokenize(){
         String tokenizedProgram = program;
         tokenizedProgram = tokenizedProgram.replace("\n","");
-        tokenizedProgram = tokenizedProgram.replaceAll(";","");
-        tokenizedProgram = tokenizedProgram.replace("(","{");
-        tokenizedProgram = tokenizedProgram.replace(")","}");
-        //Replacing the double quoted strings with single quotes
-        List<String> quotedStrings = new ArrayList<>();
-        tokenizedProgram = changeDoubleQuotes(tokenizedProgram, quotedStrings);
+        tokenizedProgram = tokenizedProgram.replace("\r","");
+        tokenizedProgram = tokenizedProgram.replaceAll(";","_;_");
+        tokenizedProgram = tokenizedProgram.replace("+","PLUS");
+        tokenizedProgram = tokenizedProgram.replace("-","MINUS");
+        tokenizedProgram = tokenizedProgram.replace("*","MULTI");
+        tokenizedProgram = tokenizedProgram.replace("\\","DIV");
 
         //Changing the endpoint braces so in case the endpoint contains curly braces like /api/v1/{userId}
-        //the braces don't get tokenized
+        //        //the braces don't get tokenized
         List<String> endpoints = new ArrayList<>();
         tokenizedProgram = changeEndPointBraces(tokenizedProgram, endpoints);
 
+        tokenizedProgram = tokenizedProgram.replace(" = ","_");
 
         System.out.println(program);
         for (String s : literals){
             tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
         }
-        tokenizedProgram = tokenizedProgram.replace("[", "{");
-        tokenizedProgram = tokenizedProgram.replace("]", "}");
+
+        tokenizedProgram = tokenizedProgram.replaceAll("[ ]+", "");
 
         //Tokenizing
         List<String> temparray= new LinkedList<>(Arrays.asList(tokenizedProgram.split("[_]+")));
 
-        for(int i = 0; i < quotedStrings.size(); i++){
-            quotedStrings.set(i, quotedStrings.get(i).replaceAll("\"", "\'"));
-        }
-
-        for(int i = 0; i<temparray.size(); i++)
-            if(!quotedStrings.contains(temparray.get(i)))
-                temparray.set(i, temparray.get(i).replaceAll("[ ]+", ""));
-        temparray.removeAll(Collections.singletonList(""));
-
-        //switch logical operator and first operand
-        swapLogicalOperator(temparray);
+        temparray.remove("");
+        temparray.remove("");
 
         tokens = new String[temparray.size()];
-        System.arraycopy(temparray.toArray(),0,tokens,0,temparray.size()-1);
+        System.arraycopy(temparray.toArray(),0,tokens,0,temparray.size());
         System.out.println(Arrays.asList(tokens));
     }
 
@@ -102,18 +94,6 @@ public class Tokenizer {
             System.out.println(tokenizedProgram);
         }
         return tokenizedProgram;
-    }
-
-    private void swapLogicalOperator(List<String> temparray) {
-        String [] operators = {"&&", "||", "<", ">", "<=", ">=", "=="};
-        for(String operator: operators){
-            if(temparray.contains(operator)){
-                int indexOperator = temparray.indexOf(operator);
-                String temp = temparray.get(indexOperator-1);
-                temparray.set(indexOperator-1, operator);
-                temparray.set(indexOperator, temp);
-            }
-        }
     }
 
     public String checkNext(){

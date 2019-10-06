@@ -60,22 +60,22 @@ public class VAR extends BaseAST {
     public void parse() {
 //        tokenizer.getAndCheckNext("\\{");
         name = tokenizer.getNext();
-        if (tokenizer.checkNext() == "String") {
+        if (tokenizer.checkNext().equals("String")) {
             tokenizer.getNext();
             if (tokenizer.checkNext().matches("\"") && tokenizer.checkAheadOfNext(3).equals(";")) {
                 expression = handleString();
             } else {
                 expressionHandler();
             }
-        } else if (tokenizer.checkNext() == "Number") {
+        } else if (tokenizer.checkNext().equals("Number")) {
             tokenizer.getNext();
             if (tokenizer.checkAheadOfNext(1).equals(";")) {
                 expression = new NumberValue(Double.parseDouble(tokenizer.getNext()));
             } else {
                 expressionHandler();
             }
-        } else if (tokenizer.checkNext() == "Boolean") {
-            tokenizer.getNext();
+        } else if (tokenizer.checkNext().equals("Boolean")) {
+                tokenizer.getNext();
             if (tokenizer.checkAheadOfNext(1).equals(";")) {
                 expression = new BooleanValue(Boolean.parseBoolean(tokenizer.getNext()));
             } else {
