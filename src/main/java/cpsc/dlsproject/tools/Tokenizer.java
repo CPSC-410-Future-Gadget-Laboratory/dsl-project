@@ -1,5 +1,13 @@
 package cpsc.dlsproject.tools;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,13 +19,15 @@ public class Tokenizer {
     public int currentToken;
     private static Tokenizer theTokenizer;
 
-    private Tokenizer() {
-//        tokens = new String[]{"START", "GET", "{", "ENDPOINT", "{", "TESTING123", "}", "}", "END"};
-        // THIS IS A TEST
-//        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/hello", ";", "SEND", "{", "200", ";", "Hello World!", ";", "}", "}"};
-//       tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "userId", "<", "10", "then", "SEND", "{", "200", ";", "Success", ";", "}", "else", "SEND", "{", "404", ";", "NOT FOUND", ";", "}", "}", "GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
-        tokens = new String[]{"GET", "{", "ENDPOINT", "/v1/user/{userId}", ";", "IF", "(","userId", "<", "10", ")", "{", "SEND", "{", "200", ";", "\"", "Success", "\"", ";", "}", "}", "ELSE", "{", "SEND", "{", "404", ";", "\"", "NOT FOUND", "\"", ";", "}", "}", "}", "GET", "{", "ENDPOINT", "/v1/hello", ";", "}"};
-        System.out.println(tokens);
+    private Tokenizer(String filename, List<String> literalsList){
+        literals = literalsList;
+        try {
+            program = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Didn't find file");
+            System.exit(0);
+        }
+        spaceKillingTokenize();
     }
 
     //modifies: this.tokens
@@ -26,27 +36,84 @@ public class Tokenizer {
     private void spaceKillingTokenize(){
         String tokenizedProgram = program;
         tokenizedProgram = tokenizedProgram.replace("\n","");
-        tokenizedProgram = tokenizedProgram.trim();
-        System.out.println(program);
-    }
+        tokenizedProgram = tokenizedProgram.replaceAll(";","");
+        tokenizedProgram = tokenizedProgram.replace("(","{");
+        tokenizedProgram = tokenizedProgram.replace(")","}");
+        //Replacing the double quoted strings with single quotes
+        List<String> quotedStrings = new ArrayList<>();
+        tokenizedProgram = changeDoubleQuotes(tokenizedProgram, quotedStrings);
 
-    //modifies: this.tokens
-    //effects: will result in a list of tokens (sitting at this.tokens) that has spaces within tokens.
-    //          this might mean you need to strip off spaces around things during parsing (ick)
-    private void spaceHappyTokenize (){
-        String tokenizedProgram = program;
-        tokenizedProgram = tokenizedProgram.replace("\n","");
+        //Changing the endpoint braces so in case the endpoint contains curly braces like /api/v1/{userId}
+        //the braces don't get tokenized
+        List<String> endpoints = new ArrayList<>();
+        tokenizedProgram = changeEndPointBraces(tokenizedProgram, endpoints);
+
+
         System.out.println(program);
         for (String s : literals){
             tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
+        }
+        tokenizedProgram = tokenizedProgram.replace("[", "{");
+        tokenizedProgram = tokenizedProgram.replace("]", "}");
+
+        //Tokenizing
+        List<String> temparray= new LinkedList<>(Arrays.asList(tokenizedProgram.split("[_]+")));
+
+        for(int i = 0; i < quotedStrings.size(); i++){
+            quotedStrings.set(i, quotedStrings.get(i).replaceAll("\"", "\'"));
+        }
+
+        for(int i = 0; i<temparray.size(); i++)
+            if(!quotedStrings.contains(temparray.get(i)))
+                temparray.set(i, temparray.get(i).replaceAll("[ ]+", ""));
+        temparray.removeAll(Collections.singletonList(""));
+
+        //switch logical operator and first operand
+        swapLogicalOperator(temparray);
+
+        tokens = new String[temparray.size()];
+        System.arraycopy(temparray.toArray(),0,tokens,0,temparray.size()-1);
+        System.out.println(Arrays.asList(tokens));
+    }
+
+    private String changeEndPointBraces(String tokenizedProgram, List<String> endpoints) {
+        Pattern pattern = Pattern.compile("ENDPOINT[ ]*=[ ]*_'(.*?)'_");
+        Matcher m = pattern.matcher(tokenizedProgram);
+        while (m.find()) {
+            endpoints.add(m.group());
+        }
+        for (String s : endpoints){
+            String changedBraceEndpoint = s.replace('{', '[');
+            changedBraceEndpoint = changedBraceEndpoint.replace('}', ']');
+            tokenizedProgram = tokenizedProgram.replace(s,changedBraceEndpoint);
             System.out.println(tokenizedProgram);
         }
-        tokenizedProgram = tokenizedProgram.replaceAll("__","_");
-        System.out.println(tokenizedProgram);
-        String [] temparray=tokenizedProgram.split("_");
-        tokens = new String[temparray.length-1];
-        System.arraycopy(temparray,1,tokens,0,temparray.length-1);
-        System.out.println(Arrays.asList(tokens));
+        return tokenizedProgram;
+    }
+
+    private String changeDoubleQuotes(String tokenizedProgram, List<String> quotedStrings) {
+        Pattern pattern = Pattern.compile("\"(.*?)\"");
+        Matcher m = pattern.matcher(tokenizedProgram);
+        while (m.find()) {
+            quotedStrings.add(m.group());
+        }
+        for (String s : quotedStrings){
+            tokenizedProgram = tokenizedProgram.replace(s,"_'"+s.substring(1, s.length()-1)+"'_");
+            System.out.println(tokenizedProgram);
+        }
+        return tokenizedProgram;
+    }
+
+    private void swapLogicalOperator(List<String> temparray) {
+        String [] operators = {"&&", "||", "<", ">", "<=", ">=", "=="};
+        for(String operator: operators){
+            if(temparray.contains(operator)){
+                int indexOperator = temparray.indexOf(operator);
+                String temp = temparray.get(indexOperator-1);
+                temparray.set(indexOperator-1, operator);
+                temparray.set(indexOperator, temp);
+            }
+        }
     }
 
     public String checkNext(){
@@ -104,9 +171,9 @@ public class Tokenizer {
         return currentToken<tokens.length;
     }
 
-    public static void makeTokenizer(){
+    public static void makeTokenizer(String s, List<String> literals){
         if (theTokenizer==null) {
-            theTokenizer = new Tokenizer();
+            theTokenizer = new Tokenizer(s, literals);
         }
     }
 
