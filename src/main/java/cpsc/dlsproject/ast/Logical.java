@@ -1,20 +1,20 @@
 package cpsc.dlsproject.ast;
 
-import cpsc.dlsproject.ast.Statements.VAR;
+import cpsc.dlsproject.ast.Statements.Var;
 
-public class LOGICAL extends BaseAST {
+public class Logical extends BaseAST {
 
     private String oper;
 
-    public LOGICAL(String oper) {
+    public Logical(String oper) {
         this.oper = oper;
     }
 
     @Override
     public void parse() {
-        VAR cond1 = new VAR();
+        Var cond1 = new Var();
         cond1.parse();
-        VAR cond2 = new VAR();
+        Var cond2 = new Var();
         cond2.parse();
     }
 

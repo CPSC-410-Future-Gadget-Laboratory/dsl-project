@@ -2,7 +2,7 @@ package cpsc.dlsproject.ast.Statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 
-public class SEND extends BaseAST {
+public class Send extends BaseAST {
 
     private int statusCode;
     String message = "";

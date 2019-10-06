@@ -1,6 +1,6 @@
 package cpsc.dlsproject;
 
-import cpsc.dlsproject.ast.PROGRAM;
+import cpsc.dlsproject.ast.Program;
 import cpsc.dlsproject.tools.Tokenizer;
 
 /**
@@ -12,7 +12,7 @@ public class App
     public static void main( String[] args )
     {
         Tokenizer.makeTokenizer();
-        PROGRAM p = new PROGRAM();
+        Program p = new Program();
         p.parse();
     }
 }

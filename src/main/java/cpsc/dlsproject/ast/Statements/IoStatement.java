@@ -2,12 +2,12 @@ package cpsc.dlsproject.ast.Statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 
-public class IO extends BaseAST {
+public class IoStatement extends BaseAST {
 
     private boolean readfile;
     private String path;
 
-    public IO(String IO) {
+    public IoStatement(String IO) {
         readfile = (IO == "READFILE");
     }
 

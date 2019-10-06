@@ -2,7 +2,7 @@ package cpsc.dlsproject.ast.Statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 
-public class ENDPOINT extends BaseAST {
+public class Endpoint extends BaseAST {
     String endpoint = "";
 
     @Override

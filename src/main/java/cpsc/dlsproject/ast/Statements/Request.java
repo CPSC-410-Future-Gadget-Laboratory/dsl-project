@@ -2,12 +2,11 @@ package cpsc.dlsproject.ast.Statements;
 
 import cpsc.dlsproject.ast.ASTHelpers;
 import cpsc.dlsproject.ast.BaseAST;
-import cpsc.dlsproject.ast.Statements.*;
 
-public class REQUEST extends BaseAST {
+public class Request extends BaseAST {
     String requestType;
 
-    public REQUEST(String requestType) {
+    public Request(String requestType) {
         this.requestType = requestType;
     }
 
@@ -19,15 +18,15 @@ public class REQUEST extends BaseAST {
         while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
             BaseAST currNode = null;
             if (tokenizer.checkToken("ENDPOINT")) {
-                currNode = new ENDPOINT();
+                currNode = new Endpoint();
             } else if (tokenizer.checkToken("VAR")) {
-                currNode = new VAR();
+                currNode = new Var();
             } else if (ASTHelpers.CheckForCond()) {
-                currNode = new CONDITIONAL();
+                currNode = new Conditional();
             } else if (ASTHelpers.CheckForIO()) {
-                currNode = new IO(tokenizer.getNext());
+                currNode = new IoStatement(tokenizer.getNext());
             } else if(tokenizer.checkToken("SEND")){
-                currNode = new SEND();
+                currNode = new Send();
             }
             if (currNode == null) {
                 System.out.println("Error, invalid token");
