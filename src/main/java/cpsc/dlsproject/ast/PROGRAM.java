@@ -16,4 +16,8 @@ public class Program extends BaseAST {
      * A list of endpoint declarations.
      */
     public List<EndpointDeclaration> endpoints;
+
+    public Program(List<EndpointDeclaration> endpoints) {
+        this.endpoints = endpoints;
+    }
 }

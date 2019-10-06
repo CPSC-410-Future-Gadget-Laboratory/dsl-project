@@ -10,6 +10,10 @@ import cpsc.dlsproject.visitors.ASTVisitor;
 
 public class TypeCheckVisitor extends ASTVisitor<Boolean> {
 
+    TypeCheckVisitor(Program program) {
+        super(program);
+    }
+
     @Override
     Boolean visit(Program program) {
         return null;

@@ -19,4 +19,10 @@ public class BinaryOperation extends Expression {
      * The right hand side of the operand.
      */
     public Expression rhs;
+
+    public BinaryOperation(BinaryOperator operator, Expression lhs, Expression rhs) {
+        this.operator = operator;
+        this.lhs = lhs;
+        this.rhs = rhs;
+    }
 }

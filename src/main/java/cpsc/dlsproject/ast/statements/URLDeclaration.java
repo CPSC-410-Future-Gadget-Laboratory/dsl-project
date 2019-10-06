@@ -22,4 +22,9 @@ public class URLDeclaration extends Statement {
      * url that will be replaced with real values.
      */
     public List<String> params;
+
+    public URLDeclaration(String url, List<String> params) {
+        this.url = url;
+        this.params = params;
+    }
 }

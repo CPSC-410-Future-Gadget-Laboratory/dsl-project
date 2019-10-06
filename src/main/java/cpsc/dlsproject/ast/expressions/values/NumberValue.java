@@ -9,4 +9,8 @@ public class NumberValue extends Value {
      * the value of the Number.
      */
     private double value;
+
+    public NumberValue(double value) {
+        this.value = value;
+    }
 }

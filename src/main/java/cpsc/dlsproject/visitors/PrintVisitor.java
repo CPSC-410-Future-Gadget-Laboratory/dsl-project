@@ -8,20 +8,49 @@ import cpsc.dlsproject.ast.expressions.values.StringValue;
 import cpsc.dlsproject.ast.statements.*;
 
 public class PrintVisitor extends ASTVisitor<String> {
+
+    String currIndentation;
+
+    PrintVisitor(Program program) {
+        super(program);
+
+        currIndentation = "";
+    }
+
+    void scopeIn() {
+        currIndentation += "    "; // 4 spaces.
+    }
+
+    void scopeOut() {
+        currIndentation = currIndentation.substring(0, currIndentation.length() - 4);
+    }
+
     @Override
     String visit(Program program) {
         String output = "";
 
         for (EndpointDeclaration endpoint: program.endpoints) {
-            output += "Hellow!";
+            output += this.visit(endpoint);
         }
 
         return output;
     }
 
     @Override
-    String visit(EndpointDeclaration endpoints) {
-        return null;
+    String visit(EndpointDeclaration endpoint) {
+        String output = "";
+
+        output += this.visit(endpoint.requestMethodType) + " {\n";
+        this.scopeIn();
+        output += this.visit(endpoint.url);
+
+        for(Statement statement : endpoint.statements) {
+            output += this.visit(statement);
+        }
+        this.scopeOut();
+        output += this.currIndentation + "};\n";
+
+        return output;
     }
 
     @Override
@@ -31,17 +60,26 @@ public class PrintVisitor extends ASTVisitor<String> {
 
     @Override
     String visit(RequestMethod requestMethod) {
-        return null;
+        return requestMethod.name();
     }
 
     @Override
     String visit(Response response) {
-        return null;
+        String output = "";
+
+        output += currIndentation + "SEND = {\n";
+        this.scopeIn();
+        output += currIndentation + response.statusCode + "\";\n";
+        output += currIndentation + "\"" + response.message + "\";\n";
+        this.scopeOut();
+        output += currIndentation + "};\n";
+
+        return output;
     }
 
     @Override
     String visit(URLDeclaration url) {
-        return null;
+        return currIndentation + "ENDPOINT = \"" + url.url + "\";\n";
     }
 
     @Override

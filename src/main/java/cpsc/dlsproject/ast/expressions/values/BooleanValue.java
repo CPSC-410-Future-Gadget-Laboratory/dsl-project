@@ -10,4 +10,8 @@ public class BooleanValue extends Value {
      * the value of the Boolean.
      */
     public boolean value;
+
+    public BooleanValue(boolean value) {
+        this.value = value;
+    }
 }

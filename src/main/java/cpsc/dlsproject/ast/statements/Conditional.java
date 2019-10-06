@@ -20,5 +20,14 @@ public class Conditional extends Statement {
      */
     public List<Statement> thenStatements;
 
+    /**
+     * The statements to execute if condition evaluates to FALSE,
+     */
     public List<Statement> elseStatements;
+
+    public Conditional(Expression condition, List<Statement> thenStatements, List<Statement> elseStatements) {
+        this.condition = condition;
+        this.thenStatements = thenStatements;
+        this.elseStatements = elseStatements;
+    }
 }

@@ -20,9 +20,20 @@ public class EndpointDeclaration extends Statement {
     public RequestMethod requestMethodType;
 
     /**
+     * url of the endpoint.
+     */
+    public URLDeclaration url;
+
+    /**
      * List of statements in the body.
      * A valid endpoint should have URLDeclaration as first statement,
      * and at least one RespondDeclaration.
      */
     public List<Statement> statements;
+
+    public EndpointDeclaration(RequestMethod requestMethodType, URLDeclaration url, List<Statement> statements) {
+        this.requestMethodType = requestMethodType;
+        this.url = url;
+        this.statements = statements;
+    }
 }

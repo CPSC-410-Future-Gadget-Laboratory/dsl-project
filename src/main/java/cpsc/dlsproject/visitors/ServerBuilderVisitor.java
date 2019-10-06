@@ -12,6 +12,11 @@ import cpsc.dlsproject.visitors.ASTVisitor;
  * A class representing a visitor for building the server.
  */
 public class ServerBuilderVisitor extends ASTVisitor<Boolean> {
+
+    ServerBuilderVisitor(Program program) {
+        super(program);
+    }
+
     @Override
     Boolean visit(Program program) {
         return null;

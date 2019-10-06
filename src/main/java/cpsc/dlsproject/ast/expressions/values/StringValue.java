@@ -9,4 +9,8 @@ public class StringValue extends Value {
      * the value of the string.
      */
     public StringValue value;
+
+    public StringValue(StringValue value) {
+        this.value = value;
+    }
 }
