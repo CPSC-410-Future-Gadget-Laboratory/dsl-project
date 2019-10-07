@@ -21,13 +21,13 @@ public class BinaryOperation extends Expression{
             case "PLUS" :
                 operator = BinaryOperator.PLUS;
                 break;
-            case "-" :
+            case "MINUS" :
                 operator = BinaryOperator.MINUS;
                 break;
             case "MULTI" :
                 operator = BinaryOperator.MULTIPLY;
                 break;
-            case "/" :
+            case "DIV" :
                 operator = BinaryOperator.DIVISION;
                 break;
             case ">" :

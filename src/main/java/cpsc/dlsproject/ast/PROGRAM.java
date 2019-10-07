@@ -11,7 +11,6 @@ public class PROGRAM extends BaseAST {
 
     @Override
     public void parse() {
-        tokenizer.getNext(); // Pop START keyword
         while (tokenizer.moreTokens()) {
             BaseAST currNode = null;
             if (ASTHelpers.CheckForRequestType()) {

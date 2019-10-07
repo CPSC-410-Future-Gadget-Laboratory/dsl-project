@@ -13,7 +13,6 @@ public class REQUEST extends BaseAST {
 
     @Override
     public void parse() {
-
         System.out.println(requestType);
         tokenizer.checkOpenBracket(tokenizer.getNext());
         while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
