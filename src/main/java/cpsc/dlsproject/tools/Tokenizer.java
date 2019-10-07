@@ -61,7 +61,6 @@ public class Tokenizer {
         List<String> temparray= new LinkedList<>(Arrays.asList(tokenizedProgram.split("[_]+")));
 
         temparray.remove("");
-        temparray.remove("");
 
         tokens = new String[temparray.size()];
         System.arraycopy(temparray.toArray(),0,tokens,0,temparray.size());
