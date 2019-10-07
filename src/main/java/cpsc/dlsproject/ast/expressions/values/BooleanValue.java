@@ -1,4 +1,4 @@
-package cpsc.dlsproject.ast.Expressions.Values;
+package cpsc.dlsproject.ast.expressions.values;
 
 public class BooleanValue extends Value {
     public boolean isValue() {
@@ -13,21 +13,6 @@ public class BooleanValue extends Value {
 
     @Override
     public void parse() {
-
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
 
     }
 }

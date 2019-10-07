@@ -32,4 +32,9 @@ public class Response extends Statement {
         this.message = message;
         this.embededValues = embededValues;
     }
+
+    @Override
+    public void parse() {
+
+    }
 }

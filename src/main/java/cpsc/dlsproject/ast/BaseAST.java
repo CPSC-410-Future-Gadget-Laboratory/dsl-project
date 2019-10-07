@@ -1,3 +1,5 @@
+package cpsc.dlsproject.ast;
+
 import cpsc.dlsproject.tools.Tokenizer;
 
 import java.io.FileNotFoundException;
@@ -18,8 +20,4 @@ public abstract class BaseAST {
     }
 
     abstract public void parse();
-    abstract public void evaluate();
-    abstract public void nameCheck();
-    abstract public void typeCheck();
-
 }

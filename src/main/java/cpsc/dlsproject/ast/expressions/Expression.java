@@ -1,4 +1,4 @@
-package cpsc.dlsproject.ast.Expressions;
+package cpsc.dlsproject.ast.expressions;
 
 import cpsc.dlsproject.ast.BaseAST;
 

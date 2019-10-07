@@ -1,13 +1,13 @@
-package cpsc.dlsproject.ast.Statements;
-
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.*;
-import cpsc.dlsproject.ast.Expressions.BinaryOperation;
-import cpsc.dlsproject.ast.Expressions.Expression;
-import cpsc.dlsproject.ast.Expressions.VarAccess;
-import cpsc.dlsproject.ast.Expressions.Values.BooleanValue;
-import cpsc.dlsproject.ast.Expressions.Values.NumberValue;
-import cpsc.dlsproject.ast.Expressions.Values.StringValue;
+import cpsc.dlsproject.ast.expressions.BinaryOperation;
+import cpsc.dlsproject.ast.expressions.Expression;
+import cpsc.dlsproject.ast.expressions.VarAccess;
+import cpsc.dlsproject.ast.expressions.values.BooleanValue;
+import cpsc.dlsproject.ast.expressions.values.NumberValue;
+import cpsc.dlsproject.ast.expressions.values.StringValue;
+import cpsc.dlsproject.ast.statements.Statement;
 
 public class Conditional extends Statement {
     public Expression condition;
@@ -99,20 +99,5 @@ public class Conditional extends Statement {
         }
         IfElse elseStatement = handleIFELSE();
         children.add(elseStatement);
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }

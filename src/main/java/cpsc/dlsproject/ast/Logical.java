@@ -1,6 +1,6 @@
 package cpsc.dlsproject.ast;
 
-import cpsc.dlsproject.ast.Statements.Var;
+import cpsc.dlsproject.ast.statements.Var;
 
 public class Logical extends BaseAST {
 
@@ -16,20 +16,5 @@ public class Logical extends BaseAST {
         cond1.parse();
         Var cond2 = new Var();
         cond2.parse();
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }

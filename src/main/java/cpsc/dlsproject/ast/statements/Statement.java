@@ -1,4 +1,4 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 

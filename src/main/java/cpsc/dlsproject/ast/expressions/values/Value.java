@@ -1,7 +1,6 @@
-package cpsc.dlsproject.ast.Expressions.Values;
+package cpsc.dlsproject.ast.expressions.values;
 
-import cpsc.dlsproject.ast.BaseAST;
-import cpsc.dlsproject.ast.Expressions.Expression;
+import cpsc.dlsproject.ast.expressions.Expression;
 
 public abstract class Value extends Expression {
 }

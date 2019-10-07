@@ -1,12 +1,12 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.BaseAST;
-import cpsc.dlsproject.ast.Expressions.BinaryOperation;
-import cpsc.dlsproject.ast.Expressions.Expression;
-import cpsc.dlsproject.ast.Expressions.VarAccess;
-import cpsc.dlsproject.ast.Expressions.Values.BooleanValue;
-import cpsc.dlsproject.ast.Expressions.Values.NumberValue;
-import cpsc.dlsproject.ast.Expressions.Values.StringValue;
+import cpsc.dlsproject.ast.expressions.BinaryOperation;
+import cpsc.dlsproject.ast.expressions.Expression;
+import cpsc.dlsproject.ast.expressions.VarAccess;
+import cpsc.dlsproject.ast.expressions.values.BooleanValue;
+import cpsc.dlsproject.ast.expressions.values.NumberValue;
+import cpsc.dlsproject.ast.expressions.values.StringValue;
 
 public class Var extends BaseAST {
     public String name;
@@ -81,20 +81,5 @@ public class Var extends BaseAST {
             }
         }
         tokenizer.getAndCheckNext(";");
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }

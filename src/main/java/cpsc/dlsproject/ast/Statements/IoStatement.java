@@ -1,4 +1,4 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 
@@ -15,20 +15,5 @@ public class IoStatement extends BaseAST {
     public void parse() {
         path = tokenizer.getNext();
         tokenizer.getAndCheckNext("\\}");
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }

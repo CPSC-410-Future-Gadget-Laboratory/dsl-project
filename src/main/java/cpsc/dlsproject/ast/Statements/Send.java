@@ -1,4 +1,4 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 
@@ -27,20 +27,5 @@ public class Send extends BaseAST {
             tokenizer.getNext().equals(";");
         }
         tokenizer.getNext(); // Pop the end token
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }

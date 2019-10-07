@@ -36,4 +36,9 @@ public class EndpointDeclaration extends Statement {
         this.url = url;
         this.statements = statements;
     }
+
+    @Override
+    public void parse() {
+
+    }
 }

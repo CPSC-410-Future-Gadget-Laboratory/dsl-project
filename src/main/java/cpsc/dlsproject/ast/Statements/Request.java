@@ -1,7 +1,9 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.ASTHelpers;
 import cpsc.dlsproject.ast.BaseAST;
+import cpsc.dlsproject.ast.statements.Conditional;
+import cpsc.dlsproject.ast.statements.Endpoint;
 
 public class Request extends BaseAST {
     String requestType;
@@ -20,7 +22,6 @@ public class Request extends BaseAST {
             if (tokenizer.checkToken("ENDPOINT")) {
                 currNode = new Endpoint();
             } else if (tokenizer.checkToken("VAR")) {
-                currNode = new Var();
             } else if (ASTHelpers.CheckForCond()) {
                 currNode = new Conditional();
             } else if (ASTHelpers.CheckForIO()) {
@@ -38,20 +39,5 @@ public class Request extends BaseAST {
             }
         }
         tokenizer.getNext(); // Pop the last bracket
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }
