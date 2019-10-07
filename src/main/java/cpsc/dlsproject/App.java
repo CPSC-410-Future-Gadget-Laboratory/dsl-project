@@ -1,6 +1,6 @@
 package cpsc.dlsproject;
 
-import cpsc.dlsproject.ast.PROGRAM;
+import cpsc.dlsproject.ast.Program;
 import cpsc.dlsproject.tools.Tokenizer;
 
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class App
         List<String> literals = Arrays.asList("START", "GET", "POST", "PUT", "DELETE",
                 "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "\"", "<", ">", "<=", ">=", "==");
         Tokenizer.makeTokenizer("input.epdsl", literals);
-        PROGRAM p = new PROGRAM();
+        Program p = new Program();
         System.out.println("Done tokenizing");
         p.parse();
         System.out.println("Done parsing");

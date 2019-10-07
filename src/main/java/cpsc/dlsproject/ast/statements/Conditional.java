@@ -1,15 +1,15 @@
-package cpsc.dlsproject.ast.Statements;
-
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.*;
-import cpsc.dlsproject.ast.Expressions.BinaryOperation;
-import cpsc.dlsproject.ast.Expressions.Expression;
-import cpsc.dlsproject.ast.Expressions.VARACCESS;
-import cpsc.dlsproject.ast.Expressions.Values.BooleanValue;
-import cpsc.dlsproject.ast.Expressions.Values.NumberValue;
-import cpsc.dlsproject.ast.Expressions.Values.StringValue;
+import cpsc.dlsproject.ast.expressions.BinaryOperation;
+import cpsc.dlsproject.ast.expressions.Expression;
+import cpsc.dlsproject.ast.expressions.VarAccess;
+import cpsc.dlsproject.ast.expressions.values.BooleanValue;
+import cpsc.dlsproject.ast.expressions.values.NumberValue;
+import cpsc.dlsproject.ast.expressions.values.StringValue;
+import cpsc.dlsproject.ast.statements.Statement;
 
-public class CONDITIONAL extends STATEMENT {
+public class Conditional extends Statement {
     public Expression condition;
 
     private BinaryOperation handleOper(BinaryOperation operation, Expression expression) {
@@ -42,7 +42,7 @@ public class CONDITIONAL extends STATEMENT {
             } else if (token.matches("^\\((?=.)([+-]?([0-9]*)(\\.([0-9]+))?)\\)$") || token.matches("^[-+]?\\d+$")) {
                 expression = new NumberValue(Double.parseDouble(tokenizer.getNext()));
             } else {
-                expression = new VARACCESS(tokenizer.getNext());
+                expression = new VarAccess(tokenizer.getNext());
             }
             operation = handleOper(operation, expression);
         }
@@ -55,21 +55,21 @@ public class CONDITIONAL extends STATEMENT {
         tokenizer.getNext(); // Pop the end )
     }
 
-    private IFELSE handleIFELSE() {
+    private IfElse handleIFELSE() {
         if (!tokenizer.getNext().equals("{")) {
             System.out.println("Invalid formation of IFELSE statement");
             System.exit(0);
         }
 
-        IFELSE ifelse = new IFELSE();
+        IfElse ifelse = new IfElse();
         while(!tokenizer.checkNext().equals("}")) {
             BaseAST currNode = null;
             if (tokenizer.checkToken("VAR")) {
-                currNode = new VAR();
+                currNode = new Var();
             } else if (ASTHelpers.CheckForCond()) {
-                currNode = new CONDITIONAL();
+                currNode = new Conditional();
             } else if(tokenizer.checkToken("SEND")){
-                currNode = new SEND();
+                currNode = new Send();
             }
             if (currNode == null) {
                 System.out.println("Error, invalid token in conditional statement");
@@ -91,28 +91,13 @@ public class CONDITIONAL extends STATEMENT {
             System.exit(0);
         }
         expressionHandler();
-        IFELSE ifStatement = handleIFELSE();
+        IfElse ifStatement = handleIFELSE();
         children.add(ifStatement);
         if(!tokenizer.getNext().equals("ELSE")) {
             System.out.println("Invalid formation of else statement");
             System.exit(0);
         }
-        IFELSE elseStatement = handleIFELSE();
+        IfElse elseStatement = handleIFELSE();
         children.add(elseStatement);
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }

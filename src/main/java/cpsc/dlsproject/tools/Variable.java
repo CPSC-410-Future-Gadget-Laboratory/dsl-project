@@ -1,23 +1,12 @@
 package cpsc.dlsproject.tools;
 
-public class Variable {
-    private String type;
-    private String value;
+import com.google.auto.value.AutoValue;
 
-    public Variable(String type, String value) {
-        this.type = type;
-        this.value = value;
+@AutoValue
+abstract class Variable {
+    static Variable create(String name, String value) {
+        return new cpsc.dlsproject.tools.AutoValue_Variable(name, value);
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
+    abstract String name();
+    abstract String value();
 }

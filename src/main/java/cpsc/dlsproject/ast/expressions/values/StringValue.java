@@ -1,4 +1,4 @@
-package cpsc.dlsproject.ast.Expressions.Values;
+package cpsc.dlsproject.ast.expressions.values;
 
 public class StringValue extends Value {
 
@@ -14,21 +14,6 @@ public class StringValue extends Value {
 
     @Override
     public void parse() {
-
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
 
     }
 }

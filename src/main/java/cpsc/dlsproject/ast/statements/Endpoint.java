@@ -1,8 +1,8 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 
-public class ENDPOINT extends BaseAST {
+public class Endpoint extends BaseAST {
     String endpoint = "";
 
     @Override
@@ -12,20 +12,5 @@ public class ENDPOINT extends BaseAST {
         tokenizer.getAndCheckNext("\"");
         tokenizer.getNext().equals(";");
         System.out.println(endpoint);
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }

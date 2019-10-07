@@ -1,6 +1,9 @@
-package cpsc.dlsproject.ast.Expressions;
+package cpsc.dlsproject.ast.expressions;
 
-public class BinaryOperation extends Expression{
+import cpsc.dlsproject.ast.expressions.BinaryOperator;
+import cpsc.dlsproject.ast.expressions.Expression;
+
+public class BinaryOperation extends Expression {
     /**
      * The operator of the binary operation.
      */
@@ -56,21 +59,6 @@ public class BinaryOperation extends Expression{
 
     @Override
     public void parse() {
-
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
 
     }
 }

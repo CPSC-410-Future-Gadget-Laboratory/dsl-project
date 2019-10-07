@@ -1,13 +1,13 @@
-package cpsc.dlsproject.ast.Statements;
+package cpsc.dlsproject.ast.statements;
 
 import cpsc.dlsproject.ast.BaseAST;
 
-public class IO extends BaseAST {
+public class IoStatement extends BaseAST {
 
     private boolean readfile;
     private String path;
 
-    public IO(String IO) {
+    public IoStatement(String IO) {
         readfile = (IO == "READFILE");
     }
 
@@ -15,20 +15,5 @@ public class IO extends BaseAST {
     public void parse() {
         path = tokenizer.getNext();
         tokenizer.getAndCheckNext("\\}");
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }
