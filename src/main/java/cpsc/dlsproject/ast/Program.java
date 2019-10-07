@@ -1,13 +1,22 @@
 package cpsc.dlsproject.ast;
 
-import cpsc.dlsproject.ast.Statements.Conditional;
-import cpsc.dlsproject.ast.Statements.Request;
+import cpsc.dlsproject.ast.statements.Conditional;
+import cpsc.dlsproject.ast.statements.EndpointDeclaration;
+import cpsc.dlsproject.ast.statements.Request;
 
 import java.util.ArrayList;
 
 public class Program extends BaseAST {
 
+    public ArrayList<EndpointDeclaration> endpoints;
     private ArrayList<BaseAST> nodes = new ArrayList<>(); // Array list of instructions. Each node is the root node of an AST. Separate blocks of instructions are separate trees
+
+    public Program() {
+    }
+
+    public Program(ArrayList<EndpointDeclaration> endpoints) {
+        this.endpoints = endpoints;
+    }
 
     @Override
     public void parse() {
@@ -28,20 +37,4 @@ public class Program extends BaseAST {
         }
         System.out.println("Done with PROGRAM!");
     }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
-    }
-
 }

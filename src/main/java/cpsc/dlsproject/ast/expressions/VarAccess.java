@@ -1,4 +1,4 @@
-package cpsc.dlsproject.ast.Expressions;
+package cpsc.dlsproject.ast.expressions;
 
 public class VarAccess extends Expression {
     public String identifier;
@@ -10,20 +10,5 @@ public class VarAccess extends Expression {
     @Override
     public void parse() {
        identifier = tokenizer.getNext();
-    }
-
-    @Override
-    public void evaluate() {
-
-    }
-
-    @Override
-    public void nameCheck() {
-
-    }
-
-    @Override
-    public void typeCheck() {
-
     }
 }
