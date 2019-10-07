@@ -7,13 +7,13 @@ This is the CPSC 410 - Advanced Software Engineering group project.
 ## EBNF
 Below is the EBNF of the language.
 ```
-Program ::= EndpointDeclaration
-EndpointDeclaration ::= RequestMethod "{" URLDeclaration (Statement)* Response "}"
+Program ::= EndpointDeclaration*
+EndpointDeclaration ::= RequestMethod " = {" URLDeclaration (Statement)* Response "}"
 RequestMethod ::= "GET" | "PUT" | "POST" | "DELETE"
-URLDeclaration ::= String ";"
-Statement ::= Conditional | ValueDeclaration | Response ";"
+Statement ::= Conditional | ValueDeclaration | Response | URLDeclaration ";"
+URLDeclaration ::= "ENDPOINT = " String ";"
 Response ::= "SEND = {" (Statement)* "}"
-Conditional ::= "IF (" Expression ") THEN {" (Statement)* "} ELSE {" (Statement)* "}"
+Conditional ::= "IF (" Expression ") {" (Statement)* "} ELSE {" (Statement)* "}"
 ValueDeclaration ::= Type identifier " = " Expression
 Value::= String | Number | Boolean
 Type ::= "String" | "Number" | "Boolean"
