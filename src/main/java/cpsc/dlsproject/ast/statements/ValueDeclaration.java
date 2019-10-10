@@ -26,6 +26,10 @@ public class ValueDeclaration extends Statement {
      */
     public Expression expression;
 
+    public ValueDeclaration() {
+
+    }
+
     public ValueDeclaration(String name, Type type, Expression expression) {
         this.name = name;
         this.type = type;

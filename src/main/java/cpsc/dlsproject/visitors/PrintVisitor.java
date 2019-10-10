@@ -11,7 +11,7 @@ public class PrintVisitor extends ASTVisitor<String> {
 
     String currIndentation;
 
-    PrintVisitor(Program program) {
+    public PrintVisitor(Program program) {
         super(program);
 
         currIndentation = "";
@@ -26,7 +26,7 @@ public class PrintVisitor extends ASTVisitor<String> {
     }
 
     @Override
-    String visit(Program program) {
+    String visit(Program program) throws Exception {
         String output = "";
 
         for (EndpointDeclaration endpoint: program.endpoints) {
@@ -37,7 +37,7 @@ public class PrintVisitor extends ASTVisitor<String> {
     }
 
     @Override
-    String visit(EndpointDeclaration endpoint) {
+    String visit(EndpointDeclaration endpoint) throws Exception {
         String output = "";
 
         output += this.visit(endpoint.requestMethodType) + " {\n";
@@ -54,17 +54,17 @@ public class PrintVisitor extends ASTVisitor<String> {
     }
 
     @Override
-    String visit(Conditional conditional) {
+    String visit(Conditional conditional) throws Exception {
         return null;
     }
 
     @Override
-    String visit(RequestMethod requestMethod) {
+    String visit(RequestMethod requestMethod) throws Exception {
         return requestMethod.name();
     }
 
     @Override
-    String visit(Response response) {
+    String visit(Response response) throws Exception {
         String output = "";
 
         output += currIndentation + "SEND = {\n";
@@ -78,32 +78,32 @@ public class PrintVisitor extends ASTVisitor<String> {
     }
 
     @Override
-    String visit(URLDeclaration url) {
+    String visit(URLDeclaration url) throws Exception {
         return currIndentation + "ENDPOINT = \"" + url.url + "\";\n";
     }
 
     @Override
-    String visit(ValueDeclaration valueDeclaration) {
+    String visit(ValueDeclaration valueDeclaration) throws Exception {
         return null;
     }
 
     @Override
-    String visit(BinaryOperation binOp) {
+    String visit(BinaryOperation binOp) throws Exception {
         return null;
     }
 
     @Override
-    String visit(BooleanValue bool) {
+    String visit(BooleanValue bool) throws Exception {
         return null;
     }
 
     @Override
-    String visit(NumberValue num) {
+    String visit(NumberValue num) throws Exception {
         return null;
     }
 
     @Override
-    String visit(StringValue str) {
+    String visit(StringValue str) throws Exception {
         return null;
     }
 }

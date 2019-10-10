@@ -4,6 +4,7 @@ import cpsc.dlsproject.ast.ASTHelpers;
 import cpsc.dlsproject.ast.BaseAST;
 import cpsc.dlsproject.ast.statements.Conditional;
 import cpsc.dlsproject.ast.statements.Endpoint;
+import cpsc.dlsproject.types.Type;
 
 public class Request extends BaseAST {
     String requestType;
@@ -15,7 +16,7 @@ public class Request extends BaseAST {
     @Override
     public void parse() {
         System.out.println(requestType);
-        tokenizer.checkOpenBracket(tokenizer.getNext());
+        tokenizer.checkOpenBracket(tokenizer.getNext()); //TODO: checkOpenBracket returns boolean but it doesn't do anything with the return value. What was expected here?
         while (!tokenizer.checkBracket(tokenizer.getCurrent())) {
             BaseAST currNode = null;
             if (tokenizer.checkToken("ENDPOINT")) {

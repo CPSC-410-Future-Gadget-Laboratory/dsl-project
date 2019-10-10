@@ -9,8 +9,12 @@ import cpsc.dlsproject.ast.expressions.values.NumberValue;
 import cpsc.dlsproject.ast.expressions.values.StringValue;
 import cpsc.dlsproject.ast.statements.Statement;
 
+import java.util.ArrayList;
+
 public class Conditional extends Statement {
     public Expression condition;
+    public ArrayList<Statement> thenCase;
+    public ArrayList<Statement> elseCase;
 
     private BinaryOperation handleOper(BinaryOperation operation, Expression expression) {
         BinaryOperation oper = operation;
