@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Arrays;
@@ -14,7 +13,8 @@ import java.util.List;
 public class Tokenizer {
 
     private static String program;
-    private static List<String> literals;
+    private static List<String> literals = Arrays.asList("START", "GET", "POST", "PUT", "DELETE",
+            "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "\"", "<", ">", "<=", ">=", "==");;
     private String[] tokens;
     public int currentToken;
     private static Tokenizer theTokenizer;
@@ -27,6 +27,11 @@ public class Tokenizer {
             System.out.println("Didn't find file");
             System.exit(0);
         }
+        spaceKillingTokenize();
+    }
+
+    private Tokenizer(String program) {
+        this.program = program;
         spaceKillingTokenize();
     }
 
@@ -153,6 +158,12 @@ public class Tokenizer {
     public static void makeTokenizer(String s, List<String> literals){
         if (theTokenizer == null) {
             theTokenizer = new Tokenizer(s, literals);
+        }
+    }
+
+    public static void makeTokenizer(String program) {
+        if (theTokenizer == null) {
+            theTokenizer = new Tokenizer(program);
         }
     }
 
