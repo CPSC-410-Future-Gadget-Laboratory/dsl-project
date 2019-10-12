@@ -31,11 +31,13 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
         try {
             server = Server.newBuilder().setPort(8000).build();
             this.visit(program);
+            variables = new SymbolTable();
+            server.startServer();
+            return new VoidValue();
         } catch (IOException | ServerEvaluationError e) {
             System.out.println("Failed building the server.");
         }
-        variables = new SymbolTable();
-        server.startServer();
+
         return new VoidValue();
     }
 

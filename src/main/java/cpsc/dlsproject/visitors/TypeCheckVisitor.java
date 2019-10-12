@@ -26,9 +26,7 @@ public class TypeCheckVisitor extends ASTVisitor<Boolean> {
     }
 
     @Override
-    Boolean visit(VarAccess varAccess) throws Exception {
-        return null;
-    }
+    Boolean visit(VarAccess varAccess) throws Exception { return null; }
 
     @Override
     Boolean visit(Conditional conditional) {
