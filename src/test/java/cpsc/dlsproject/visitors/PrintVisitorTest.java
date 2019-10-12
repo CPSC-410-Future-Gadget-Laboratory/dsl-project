@@ -28,8 +28,6 @@ public class PrintVisitorTest extends TestCase {
                 "};\n";
         PrintVisitor printVisitor = new PrintVisitor(program);
         String actual = printVisitor.run();
-        System.out.println("Expected:\n" + expected + "\n");
-        System.out.println("Actual: \n" + printVisitor.run() + "\n");
         assertEquals(expected, actual);
     }
 }
