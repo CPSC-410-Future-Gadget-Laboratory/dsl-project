@@ -2,6 +2,7 @@ package cpsc.dlsproject.visitors;
 
 import cpsc.dlsproject.ast.expressions.BinaryOperation;
 import cpsc.dlsproject.ast.expressions.Expression;
+import cpsc.dlsproject.ast.expressions.VarAccess;
 import cpsc.dlsproject.ast.expressions.values.BooleanValue;
 import cpsc.dlsproject.ast.expressions.values.NumberValue;
 import cpsc.dlsproject.ast.expressions.values.StringValue;
@@ -58,14 +59,11 @@ public abstract class ASTVisitor<X> {
 
     abstract X visit(Program program) throws Exception;
     abstract X visit(EndpointDeclaration endpoint) throws Exception;
+    abstract X visit(VarAccess varAccess) throws Exception;
     abstract X visit(Conditional conditional) throws Exception;
-    abstract X visit(RequestMethod requestMethod) throws Exception;
     abstract X visit(Response response) throws Exception;
     abstract X visit(URLDeclaration url) throws Exception;
     abstract X visit(ValueDeclaration valueDeclaration) throws Exception;
     abstract X visit(BinaryOperation binOp) throws Exception;
-    abstract X visit(BooleanValue bool) throws Exception;
-    abstract X visit(NumberValue num) throws Exception;
-    abstract X visit(StringValue str) throws Exception;
 }
 

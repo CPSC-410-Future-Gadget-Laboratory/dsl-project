@@ -5,7 +5,7 @@ import cpsc.dlsproject.types.Type;
 public class NumberValue extends Value {
     public Type type = Type.NUMBER;
 
-    private double value;
+    public double value;
 
     public double getValue() {
         return value;

@@ -1,12 +1,13 @@
 package cpsc.dlsproject.visitors;
 
-import cpsc.dlsproject.ast.BaseAST;
 import cpsc.dlsproject.ast.expressions.BinaryOperation;
+import cpsc.dlsproject.ast.expressions.BinaryOperator;
+import cpsc.dlsproject.ast.expressions.VarAccess;
 import cpsc.dlsproject.ast.expressions.values.*;
 import cpsc.dlsproject.ast.statements.*;
 import cpsc.dlsproject.ast.Program;
 import cpsc.dlsproject.server.Server;
-import cpsc.dlsproject.types.Type;
+import cpsc.dlsproject.utils.SymbolTable;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,15 +39,6 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
         return new VoidValue();
     }
 
-    public void logError(BaseAST ast, String message) {
-        errorMessages.add("Evaluation Error at " + ast.getClass().getName() + ": " + message);
-        return;
-    }
-
-    public void logError(BaseAST ast) {
-        logError(ast, "Failed evalating " + ast.getClass().getName());
-    }
-
     @Override
     Value visit(Program program) throws ServerEvaluationError {
         for (EndpointDeclaration endpointDeclaration : program.endpoints) {
@@ -58,7 +50,6 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
 
     @Override
     Value visit(EndpointDeclaration endpoint) throws ServerEvaluationError {
-        // TODO: Talk to @Eishan where to specify HTTP Method.
         this.visit(endpoint.url);
 
         server.setHandler(endpoint.url.url, httpExchange -> {
@@ -67,8 +58,8 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
                 try {
                     this.visit(statement);
                 } catch (Exception e) {
+                    httpExchange.getResponseBody().write("Sorry, there has been an error on the server side. :(".getBytes(Charset.forName("UTF-8")));
                     System.out.println("500: There is an error when evaluating the statement. It is more likely to be the interpreter's error, not the developer's.");
-                    httpExchange.getResponseBody().write("IT WORKS!".getBytes(Charset.forName("UTF-8")));
                 }
             }
         });
@@ -76,26 +67,35 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
         return new VoidValue();
     }
 
+    @Override
+    Value visit(VarAccess varAccess) throws Exception {
+        return this.variables.getValue(varAccess.identifier);
+    }
+
     /**
      * @param conditional
      * @return true on successful evaluation, false otherwise.
      */
     @Override
-    Value visit(Conditional conditional) throws Exception {
+    Value visit(Conditional conditional) throws ServerEvaluationError {
         // Assumption: always return Boolean Value.
-        BooleanValue conditionResult = (BooleanValue) this.visit(conditional.condition);
+        BooleanValue conditionResult = null;
+        try {
+            conditionResult = (BooleanValue) this.visit(conditional.condition);
+        } catch (Exception e) {
+            throw new Error("Error evaluating expression");
+        }
         ArrayList<Statement> toBeExecuted = conditionResult.value ? conditional.thenCase : conditional.elseCase;
 
         for (Statement statement: toBeExecuted) {
-            this.visit(statement);
+            try {
+                this.visit(statement);
+            } catch (Exception e) {
+                throw new ServerEvaluationError("Error evaluating statement");
+            }
         }
 
         return new VoidValue();
-    }
-
-    @Override
-    Value visit(RequestMethod requestMethod) throws ServerEvaluationError {
-        return null;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
             out.write(body);
             out.close();
         } catch (IOException e) {
-            System.out.println("There is an error when writing response into body.");
+            throw new ServerEvaluationError("There is an error when writing response into body.");
         }
         return new VoidValue();
     }
@@ -122,30 +122,56 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
     }
 
     @Override
-    Value visit(ValueDeclaration valueDeclaration) throws Exception {
-        Value result = this.visit(valueDeclaration.expression);
+    Value visit(ValueDeclaration valueDeclaration) throws ServerEvaluationError {
+        Value result = null;
+        try {
+            result = this.visit(valueDeclaration.expression);
+        } catch (Exception e) {
+            throw new ServerEvaluationError("Error evaluating expression");
+        }
         this.variables.setValue(valueDeclaration.name, result);
         return new VoidValue();
     }
 
     @Override
     Value visit(BinaryOperation binOp) throws ServerEvaluationError {
-        return null;
-    }
+        Value leftResult = null;
+        Value rightResult = null;
 
-    @Override
-    Value visit(BooleanValue bool) throws ServerEvaluationError {
-        return null;
-    }
+        try {
+            leftResult = this.visit(binOp.lhs);
+            rightResult = this.visit(binOp.rhs);
+        } catch (Exception e) {
+            throw new ServerEvaluationError("Error evaluating expression.");
+        }
 
-    @Override
-    Value visit(NumberValue num) throws ServerEvaluationError {
-        return null;
-    }
-
-    @Override
-    Value visit(StringValue str) throws ServerEvaluationError {
-        return null;
+        if (binOp.operator == BinaryOperator.PLUS) {
+            return new NumberValue(((NumberValue) leftResult).value + ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.MINUS) {
+            return new NumberValue(((NumberValue) leftResult).value - ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.MULTIPLY) {
+            return new NumberValue(((NumberValue) leftResult).value * ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.DIVISION) {
+            return new NumberValue(((NumberValue) leftResult).value / ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.LESSER) {
+            return new BooleanValue(((NumberValue) leftResult).value < ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.LEQUAL) {
+            return new BooleanValue(((NumberValue) leftResult).value <= ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.EQUAL) {
+            return new BooleanValue(((NumberValue) leftResult).value == ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.NOTEQUAL) {
+            return new BooleanValue(((NumberValue) leftResult).value != ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.GEQUAL) {
+            return new BooleanValue(((NumberValue) leftResult).value >= ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.GREATER) {
+            return new BooleanValue(((NumberValue) leftResult).value >= ((NumberValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.AND) {
+            return new BooleanValue(((BooleanValue) leftResult).value && ((BooleanValue) rightResult).value);
+        } else if (binOp.operator == BinaryOperator.OR) {
+            return new BooleanValue(((BooleanValue) leftResult).value || ((BooleanValue) rightResult).value);
+        } else {
+            throw new ServerEvaluationError("Binary Operation is not specified/invalid.");
+        }
     }
 
     private class ServerEvaluationError extends Exception {

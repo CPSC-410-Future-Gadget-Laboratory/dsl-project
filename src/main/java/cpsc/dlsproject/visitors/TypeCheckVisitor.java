@@ -1,6 +1,7 @@
 package cpsc.dlsproject.visitors;
 
 import cpsc.dlsproject.ast.expressions.BinaryOperation;
+import cpsc.dlsproject.ast.expressions.VarAccess;
 import cpsc.dlsproject.ast.expressions.values.BooleanValue;
 import cpsc.dlsproject.ast.expressions.values.NumberValue;
 import cpsc.dlsproject.ast.expressions.values.StringValue;
@@ -25,12 +26,12 @@ public class TypeCheckVisitor extends ASTVisitor<Boolean> {
     }
 
     @Override
-    Boolean visit(Conditional conditional) {
+    Boolean visit(VarAccess varAccess) throws Exception {
         return null;
     }
 
     @Override
-    Boolean visit(RequestMethod requestMethod) {
+    Boolean visit(Conditional conditional) {
         return null;
     }
 
@@ -51,21 +52,6 @@ public class TypeCheckVisitor extends ASTVisitor<Boolean> {
 
     @Override
     Boolean visit(BinaryOperation binOp) {
-        return null;
-    }
-
-    @Override
-    Boolean visit(BooleanValue bool) {
-        return null;
-    }
-
-    @Override
-    Boolean visit(NumberValue num) {
-        return null;
-    }
-
-    @Override
-    Boolean visit(StringValue str) {
         return null;
     }
 }
