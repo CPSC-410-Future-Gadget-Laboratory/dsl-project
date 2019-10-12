@@ -147,11 +147,11 @@ public class Tokenizer {
     }
 
     public boolean moreTokens(){
-        return currentToken<tokens.length;
+        return currentToken < tokens.length;
     }
 
     public static void makeTokenizer(String s, List<String> literals){
-        if (theTokenizer==null) {
+        if (theTokenizer == null) {
             theTokenizer = new Tokenizer(s, literals);
         }
     }

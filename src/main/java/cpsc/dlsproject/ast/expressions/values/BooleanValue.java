@@ -1,11 +1,10 @@
 package cpsc.dlsproject.ast.expressions.values;
 
-public class BooleanValue extends Value {
-    public boolean isValue() {
-        return value;
-    }
+import cpsc.dlsproject.types.Type;
 
-    private boolean value;
+public class BooleanValue extends Value {
+    public Type type = Type.BOOLEAN;
+    public final boolean value;
 
     public BooleanValue(boolean value) {
         this.value = value;

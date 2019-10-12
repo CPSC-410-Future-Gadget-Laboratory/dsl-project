@@ -1,8 +1,5 @@
 package cpsc.dlsproject.ast.expressions;
 
-import cpsc.dlsproject.ast.expressions.BinaryOperator;
-import cpsc.dlsproject.ast.expressions.Expression;
-
 public class BinaryOperation extends Expression {
     /**
      * The operator of the binary operation.
@@ -34,10 +31,10 @@ public class BinaryOperation extends Expression {
                 operator = BinaryOperator.DIVISION;
                 break;
             case ">" :
-                operator = BinaryOperator.GREATERTHAN;
+                operator = BinaryOperator.GREATER;
                 break;
             case "<" :
-                operator = BinaryOperator.LESSTHAN;
+                operator = BinaryOperator.LESSER;
                 break;
             case ">=" :
                 operator = BinaryOperator.GEQUAL;
