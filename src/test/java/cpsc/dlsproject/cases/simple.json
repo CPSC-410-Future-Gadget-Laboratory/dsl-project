@@ -1,0 +1,10 @@
+{
+  "code": "simple.dsl",
+  "test": [
+    {
+      "endpoint": "/path/to/success",
+      "expectedStatusCode": 200,
+      "expectedMessage": "here is to your success!"
+    }
+  ]
+}
