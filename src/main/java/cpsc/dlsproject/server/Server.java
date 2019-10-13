@@ -30,6 +30,10 @@ public final class Server {
     return this.port;
   }
 
+  public void stopServer() {
+    this.server.stop(0);
+  }
+
   /**
    * Creates an endpoint context within the server. If the endpoint has already been created, or the
    * parameter is not a valid path, an {@link IllegalArgumentException} will be thrown
