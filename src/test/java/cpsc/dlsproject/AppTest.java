@@ -48,7 +48,7 @@ public class AppTest extends TestCase {
     Interpreter interpreter = Interpreter.loadScriptFromString(codeString);
     // Uncomment this line to run tests
    // interpreter.runProgram();
-    JSONArray testArray = (JSONArray) testObject.get("test");
+    JSONArray testArray = (JSONArray) testObject.get("tests");
     for (Object obj : testArray) {
       JSONObject testObj = (JSONObject) obj;
       String enpoint = (String) testObj.get("enpoint");
