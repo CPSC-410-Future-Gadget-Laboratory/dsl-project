@@ -51,9 +51,9 @@ public class AppTest extends TestCase {
     JSONArray testArray = (JSONArray) testObject.get("tests");
     for (Object obj : testArray) {
       JSONObject testObj = (JSONObject) obj;
-      String enpoint = (String) testObj.get("enpoint");
+      String endpoint = (String) testObj.get("endpoint");
       String expectedMessage = (String) testObj.get("expectedMessage");
-     // testEndpoint(enpoint, expectedMessage);
+     // testEndpoint(endpoint, expectedMessage);
     }
    // interpreter.killProgram();
     // Sleep for two seconds
