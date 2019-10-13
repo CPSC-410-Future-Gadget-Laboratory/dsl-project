@@ -26,6 +26,10 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
         super(program);
     }
 
+    public void stopServer() {
+        server.stopServer();
+    }
+
     @Override
     public Value run() {
         try {

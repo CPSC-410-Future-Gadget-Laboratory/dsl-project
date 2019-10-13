@@ -6,6 +6,7 @@ import cpsc.dlsproject.visitors.ServerBuilderVisitor;
 
 public class Interpreter {
   private final String script;
+  private ServerBuilderVisitor serverBuilder;
 
   private Interpreter(String script) {
     this.script = script;
@@ -23,8 +24,12 @@ public class Interpreter {
     Program program = new Program();
     program.parse();
 
-    ServerBuilderVisitor serverBuilder = new ServerBuilderVisitor(program);
+    serverBuilder = new ServerBuilderVisitor(program);
     serverBuilder.run();
+  }
+
+  public void killProgram() {
+    serverBuilder.stopServer();
   }
 
   public static void main(String[] args) {
