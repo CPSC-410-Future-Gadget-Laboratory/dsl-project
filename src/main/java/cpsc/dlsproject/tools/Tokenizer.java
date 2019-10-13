@@ -42,11 +42,16 @@ public class Tokenizer {
         String tokenizedProgram = program;
         tokenizedProgram = tokenizedProgram.replace("\n","");
         tokenizedProgram = tokenizedProgram.replace("\r","");
+        //check this
         tokenizedProgram = tokenizedProgram.replaceAll(";","_;_");
+        //check above
         tokenizedProgram = tokenizedProgram.replace("+","PLUS");
         tokenizedProgram = tokenizedProgram.replace("-","MINUS");
         tokenizedProgram = tokenizedProgram.replace("*","MULTI");
         tokenizedProgram = tokenizedProgram.replace("\\","DIV");
+
+        List<String> quotedStrings = new ArrayList<>();
+        tokenizedProgram = changeDoubleQuotes(tokenizedProgram, quotedStrings);
 
         //Changing the endpoint braces so in case the endpoint contains curly braces like /api/v1/{userId}
         //        //the braces don't get tokenized
@@ -59,13 +64,17 @@ public class Tokenizer {
         for (String s : literals){
             tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
         }
-
-        tokenizedProgram = tokenizedProgram.replaceAll("[ ]+", "");
+        tokenizedProgram = tokenizedProgram.replace("[", "{");
+        tokenizedProgram = tokenizedProgram.replace("]", "}");
 
         //Tokenizing
         List<String> temparray= new LinkedList<>(Arrays.asList(tokenizedProgram.split("[_]+")));
 
-        temparray.remove("");
+        for(int i = 0; i<temparray.size(); i++)
+            if(!quotedStrings.contains(temparray.get(i)))
+                temparray.set(i, temparray.get(i).replaceAll("[ ]+", ""));
+
+        temparray.removeAll(Collections.singletonList(""));
 
         tokens = new String[temparray.size()];
         System.arraycopy(temparray.toArray(),0,tokens,0,temparray.size());
@@ -94,7 +103,7 @@ public class Tokenizer {
             quotedStrings.add(m.group());
         }
         for (String s : quotedStrings){
-            tokenizedProgram = tokenizedProgram.replace(s,"_'"+s.substring(1, s.length()-1)+"'_");
+            tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
             System.out.println(tokenizedProgram);
         }
         return tokenizedProgram;
