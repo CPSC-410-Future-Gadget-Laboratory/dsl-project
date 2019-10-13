@@ -2,7 +2,7 @@
   "test_suite": [
     {
       "code": "binary.dsl",
-      "test": [
+      "tests": [
         {
           "endpoint": "/",
           "expectedStatusCode": 200,
@@ -12,7 +12,7 @@
     },
     {
       "code": "conditional.dsl",
-      "test": [
+      "tests": [
         {
           "endpoint": "/conditionalTrue",
           "expectedStatusCode": 200,
@@ -27,7 +27,7 @@
     },
     {
       "code": "simple.dsl",
-      "test": [
+      "tests": [
         {
           "endpoint": "/path/to/success",
           "expectedStatusCode": 200,
