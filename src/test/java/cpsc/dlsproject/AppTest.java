@@ -53,6 +53,7 @@ public class AppTest extends TestCase {
       JSONObject testObj = (JSONObject) obj;
       String endpoint = (String) testObj.get("endpoint");
       String expectedMessage = (String) testObj.get("expectedMessage");
+      // TODO: Test for expectedStatus in the future.
      // testEndpoint(endpoint, expectedMessage);
     }
    // interpreter.killProgram();
