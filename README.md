@@ -8,26 +8,69 @@ This is the CPSC 410 - Advanced Software Engineering group project.
 Below is the EBNF of the language.
 ```
 Program ::= EndpointDeclaration*
-EndpointDeclaration ::= RequestMethod " = {" URLDeclaration (Statement)* Response "}"
+EndpointDeclaration ::= RequestMethod STRING " {" (Statement)* Response "}"
 RequestMethod ::= "GET" | "PUT" | "POST" | "DELETE"
-Statement ::= Conditional | ValueDeclaration | Response | URLDeclaration ";"
-URLDeclaration ::= "ENDPOINT = " String ";"
-Response ::= "SEND = {" (Statement)* "}"
+Statement ::= Conditional | ValueDeclaration | Response ";"
+Response ::= "SEND {" (Statement)* "}"
 Conditional ::= "IF (" Expression ") {" (Statement)* "} ELSE {" (Statement)* "}"
-ValueDeclaration ::= Type identifier " = " Expression
+ValueDeclaration ::= ":" Type " = " Expression
 Value::= String | Number | Boolean
 Type ::= "String" | "Number" | "Boolean"
 String ::= "\"" /^[a-z\d\-_\s]+$/i "\"";
 Number ::= "^[0-9]+$"
 Boolean ::= "true" | "false"
 Expression ::= BinaryOperation | Value ";"
-BinaryOperation ::= Expression BinaryOperator Expression
+BinaryOperation ::= BinaryOperator "TO" Expression Expression
 BinaryOperator ::=  "+" "-" "*" "/"
 ReservedKeywords ::= RequestMethod & "SEND" & Type & "GET_PARAM"
 ```
 
 ## Language Design Specification Changelist
-#### 0.0.1 - October 21st, 2019 (latest)
+
+#### 1.0.0 - October 8th, 2019 (latest)
+After discussion the following changes were proposed:
+- We now support prefix notation for BinaryOperation. A binary operation starts with an operator (`+`, `-`, `*`, `/`), followed by two Values seperated by the string `"TO"`
+- Variables will have to be declared with types. The variable name should be followed by a `":"` and a type (currently only `Number` and `Boolean` are supported)
+```
+GET "meaning/of/life" {
+    // SOME LOGIC..
+    IF (answer == 42) {
+            SEND {
+            200;
+            "Found the meaning of life and this universe!";
+        }
+    } ELSE {
+        SEND {
+            404;
+            "Still searching for my meaning";
+        }
+    }
+}
+```
+
+#### 0.0.2 - October 2nd, 2019
+After user testing, the following changes were made:
+- The `THEN` keyword will be omitted in the `IF` and `ELSE` conditions to maintain consistency with other languages
+- The `=` after `GET` and `SEND` keyword will be omitted due to redundancy
+- The `ENDPOINT` keyword will be omitted inside the body of an endpoint method, and the endpoint string will be specified right after the endpoint method keyword, such as `GET` or `POST`
+```
+GET "meaning/of/life" {
+    // SOME LOGIC..
+    IF (answer == 42) {
+            SEND {
+            200;
+            "Found the meaning of life!";
+        }
+    } ELSE {
+        SEND {
+            404;
+            "Still searching";
+        }
+    }
+}
+```
+
+#### 0.0.1 - September 23th, 2019
 - `VAL` must be declared before being used.
 - Endpoint Declaration must declare the endpoint url in their body using the `ENDPOINT` keyword which is assigned to a value of type `String`, and AT LEAST one response declaration using `SEND` keyword. For instance:
 ```
