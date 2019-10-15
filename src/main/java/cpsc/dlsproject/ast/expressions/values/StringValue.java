@@ -10,4 +10,8 @@ public class StringValue extends Value {
         value = s;
     }
 
+    @Override
+    public String toString() {
+        return value;
+    }
 }

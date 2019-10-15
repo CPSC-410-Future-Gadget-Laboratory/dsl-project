@@ -1,5 +1,10 @@
 package cpsc.dlsproject.utils;
 
+import cpsc.dlsproject.ast.expressions.values.Value;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Utils {
     private static Utils utilsObj = new Utils();
 
@@ -25,7 +30,7 @@ public class Utils {
     }
 
     public boolean checkIfTokenIsOperator(String token) {
-        return  token.equals("PLUS") ||
+        return token.equals("PLUS") ||
                 token.equals("MINUS") ||
                 token.equals("MULTI") ||
                 token.equals("DIV") ||
@@ -38,5 +43,21 @@ public class Utils {
                 token.equals("%") ||
                 token.equals("&&") ||
                 token.equals("||");
+    }
+
+    public String replaceEmbeddedValues(SymbolTable variables, String message) throws Exception {
+        Pattern pattern = Pattern.compile("\\{[A-z]*[A-z|0-9]*\\}");
+        Matcher matcher = pattern.matcher(message);
+        String replacedMsg = message;
+        while (matcher.find()) {
+            String identifier = matcher.group().substring(1, matcher.group().length() - 1);
+            Value value = variables.getValue(identifier);
+            String valueStr = value.toString();
+            if (value == null) {
+                throw new Exception(identifier + " is not defined.");
+            }
+            replacedMsg = replacedMsg.replaceFirst("\\{" + identifier + "\\}", valueStr);
+        }
+        return replacedMsg;
     }
 }

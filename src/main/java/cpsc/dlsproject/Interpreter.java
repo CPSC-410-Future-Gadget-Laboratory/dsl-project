@@ -64,12 +64,13 @@ public class Interpreter {
                   "  VAR equalOp: Boolean = == a TO b;\n" +
                   "  VAR notEqualOp: Boolean = != a TO b;\n" +
                   "  VAR greaterThanOp: Boolean = > a TO b;\n" +
+                  "  VAR greaterThanOrEqualOp: Boolean = >= a TO b;\n" +
                   "\n" +
                   "  SEND {\n" +
-                  "  \"addition: {addition}, subtraction: {subtraction}, multiplication: {multiplication}, division: {division}, andOp: {andOp}, orOp: {orOp}, lessThanOp: {lessThanOp}, equalOp: {equalOp}, notEqualOp: {notEqualOp}, greaterThanOp: {greaterThanOp}\";\n" +
                   "  200;\n" +
-                  "  }\n" +
-                  "};\n").runProgram();
+                  "  \"addition: {addition}, subtraction: {subtraction}, multiplication: {multiplication}, division: {division}, andOp: {andOp}, orOp: {orOp}, lessThanOp: {lessThanOp}, equalOp: {equalOp}, notEqualOp: {notEqualOp}, greaterThanOp: {greaterThanOp}\";\n" +
+                  "  };\n" +
+                  "}\n").runProgram();
       } catch (InterpreterException e) {
           e.printStackTrace();
       }

@@ -1,28 +1,27 @@
 package cpsc.dlsproject.visitors;
 
 import com.sun.net.httpserver.HttpExchange;
-import cpsc.dlsproject.Interpreter;
-import cpsc.dlsproject.ast.BaseAST;
 import cpsc.dlsproject.ast.expressions.BinaryOperation;
 import cpsc.dlsproject.ast.expressions.BinaryOperator;
-import cpsc.dlsproject.ast.expressions.Expression;
 import cpsc.dlsproject.ast.expressions.VarAccess;
 import cpsc.dlsproject.ast.expressions.values.*;
 import cpsc.dlsproject.ast.statements.*;
 import cpsc.dlsproject.ast.Program;
 import cpsc.dlsproject.server.Server;
 import cpsc.dlsproject.utils.SymbolTable;
+import cpsc.dlsproject.utils.Utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A class representing a visitor for building the server.
  */
 public class ServerBuilderVisitor extends ASTVisitor<Value> {
-    public ArrayList<String> errorMessages;
     public Server server;
     public SymbolTable variables;
     private int port = 8000;
@@ -122,8 +121,14 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
     @Override
     Value visit(Response response) throws ServerEvaluationError {
         HttpExchange httpExchange = variables.getHttpExchange();
+        String replacedMsg = null;
         try {
-            byte body[] = response.message.getBytes("UTF-8");
+            replacedMsg = Utils.getUtilsObj().replaceEmbeddedValues(variables, response.message);
+        } catch (Exception e) {
+            throw new ServerEvaluationError("Error when replacing embedded values.");
+        }
+        try {
+            byte body[] = replacedMsg.getBytes("UTF-8");
             httpExchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
             httpExchange.sendResponseHeaders(response.statusCode, body.length);
 

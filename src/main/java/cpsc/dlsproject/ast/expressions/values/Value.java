@@ -5,4 +5,6 @@ import cpsc.dlsproject.types.Type;
 
 public abstract class Value extends Expression {
     public Type type;
+
+    public abstract String toString();
 }

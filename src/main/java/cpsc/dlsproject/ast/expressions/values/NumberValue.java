@@ -15,4 +15,9 @@ public class NumberValue extends Value {
     public NumberValue(double d) {
         value = d;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }
