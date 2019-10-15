@@ -197,22 +197,17 @@ public class ParseVisitor extends ASTVisitor<BaseAST> {
         switch (type) {
             case "Number":
                 varDeclaration.type = Type.NUMBER;
-                varDeclaration.expression = new NumberValue(Double.parseDouble(tokenizer.getNext()));
                 break;
 
             case "Boolean":
                 varDeclaration.type = Type.BOOLEAN;
-                String token = tokenizer.getNext();
-                if (!token.equals("true") && !token.equals("false")) {
-                    throw new Exception("Boolean type is not either true or false.");
-                }
-                varDeclaration.expression = new BooleanValue(token.equals("true"));
                 break;
 
             default:
                 throw new Exception("Invalid type in Var declaration.");
-
         }
+
+        varDeclaration.expression = parseExpression();
 
 //        List<String> expressionList = tokenizer.getNextExpression();
 //
@@ -241,13 +236,13 @@ public class ParseVisitor extends ASTVisitor<BaseAST> {
     @Override
     BaseAST visit(BinaryOperation binOp) throws Exception {
         String token = tokenizer.getNext();
-        if (token.equals("+")) {
+        if (token.equals("PLUS")) {
             binOp.operator = BinaryOperator.PLUS;
-        } else if (token.equals("-")) {
+        } else if (token.equals("MINUS")) {
             binOp.operator = BinaryOperator.MINUS;
-        } else if (token.equals("*")) {
+        } else if (token.equals("MULTI")) {
             binOp.operator = BinaryOperator.MULTIPLY;
-        } else if (token.equals("\\")) {
+        } else if (token.equals("DIV")) {
             binOp.operator = BinaryOperator.DIVISION;
         } else if (token.equals("%")) {
         } else if (token.equals("<")) {
@@ -262,6 +257,10 @@ public class ParseVisitor extends ASTVisitor<BaseAST> {
             binOp.operator = BinaryOperator.GEQUAL;
         } else if (token.equals(">")) {
             binOp.operator = BinaryOperator.GREATER;
+        } else if (token.equals("&&")) {
+            binOp.operator = BinaryOperator.AND;
+        } else if (token.equals("||")) {
+            binOp.operator = BinaryOperator.OR;
         } else {
             throw new Exception(token + " cannot be parsed as expression.");
         }

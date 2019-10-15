@@ -14,7 +14,7 @@ public class Tokenizer {
 
     private static String program;
     private static List<String> literals = Arrays.asList("START", "GET", "POST", "PUT", "DELETE",
-            "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "<", ">", "<=", ">=", "==", "TO");
+            "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "&&", "||","String", "Number", "Boolean",  "<=", ">=", "<", ">", "==", "!=", "TO");
     private String[] tokens;
     public int currentToken;
     private static Tokenizer theTokenizer;

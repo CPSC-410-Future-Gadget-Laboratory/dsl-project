@@ -47,37 +47,29 @@ public class Interpreter {
 
   public static void main(String[] args) {
       try {
-          Interpreter.loadScriptFromString("GET \"/conditionalTrue\" {\n" +
-          "    VAR a: Number = 1;\n" +
-          "    VAR b: Number = 2;\n" +
-          "    IF ( <  a TO b ) {\n" +
-          "      SEND {\n" +
-          "        200;\n" +
-          "        \"something good\";\n" +
-          "      };\n" +
-          "    } ELSE {\n" +
-          "      SEND {\n" +
-          "        500;\n" +
-          "        \"something bad\";\n" +
-          "      };\n" +
-          "    }\n" +
-          "}\n" +
-          "\n" +
-          "GET \"/conditionalFalse\" {\n" +
-          "    VAR a : Number = 1;\n" +
-          "    VAR b : Number = 2;\n" +
-          "    IF (> a TO b) {\n" +
-          "      SEND {\n" +
-          "        200;\n" +
-          "        \"something good\";\n" +
-          "      }\n" +
-          "    } ELSE {\n" +
-          "      SEND {\n" +
-          "        500;\n" +
-          "        \"something bad\";\n" +
-          "      }\n" +
-          "    }\n" +
-          "}").runProgram();
+          Interpreter.loadScriptFromString("GET \"/\" {\n" +
+                  "  VAR a: Number = 1;\n" +
+                  "  VAR b: Number = 2;\n" +
+                  "\n" +
+                  "  VAR c: Boolean = true;\n" +
+                  "  VAR d: Boolean = false;\n" +
+                  "\n" +
+                  "  VAR addition: Number = + a TO b;\n" +
+                  "  VAR subtraction: Number = - a TO b;\n" +
+                  "  VAR multiplication: Number = * a TO b;\n" +
+                  "  VAR division: Number = \\ a TO b;\n" +
+                  "  VAR andOp: Boolean = && c TO d;\n" +
+                  "  VAR orOp: Boolean = || c TO d;\n" +
+                  "  VAR lessThanOp: Boolean = < a TO b;\n" +
+                  "  VAR equalOp: Boolean = == a TO b;\n" +
+                  "  VAR notEqualOp: Boolean = != a TO b;\n" +
+                  "  VAR greaterThanOp: Boolean = > a TO b;\n" +
+                  "\n" +
+                  "  SEND {\n" +
+                  "  \"addition: {addition}, subtraction: {subtraction}, multiplication: {multiplication}, division: {division}, andOp: {andOp}, orOp: {orOp}, lessThanOp: {lessThanOp}, equalOp: {equalOp}, notEqualOp: {notEqualOp}, greaterThanOp: {greaterThanOp}\";\n" +
+                  "  200;\n" +
+                  "  }\n" +
+                  "};\n").runProgram();
       } catch (InterpreterException e) {
           e.printStackTrace();
       }

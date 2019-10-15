@@ -25,16 +25,18 @@ public class Utils {
     }
 
     public boolean checkIfTokenIsOperator(String token) {
-        return  token.equals("+") ||
-                token.equals("-") ||
-                token.equals("*") ||
-                token.equals("\\") ||
+        return  token.equals("PLUS") ||
+                token.equals("MINUS") ||
+                token.equals("MULTI") ||
+                token.equals("DIV") ||
                 token.equals("<") ||
                 token.equals("<=") ||
                 token.equals("==") ||
                 token.equals("!=") ||
                 token.equals(">") ||
                 token.equals(">=") ||
-                token.equals("%");
+                token.equals("%") ||
+                token.equals("&&") ||
+                token.equals("||");
     }
 }
