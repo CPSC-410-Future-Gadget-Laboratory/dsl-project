@@ -11,7 +11,7 @@ Program ::= EndpointDeclaration*
 EndpointDeclaration ::= RequestMethod STRING " {" (Statement)* Response "}"
 RequestMethod ::= "GET" | "PUT" | "POST" | "DELETE"
 Statement ::= Conditional | ValueDeclaration | Response ";"
-Response ::= "SEND {" (Statement)* "}"
+Response ::= "SEND {" Number ";" String ";" "}"
 Conditional ::= "IF (" Expression ") {" (Statement)* "} ELSE {" (Statement)* "}"
 ValueDeclaration ::= ":" Type " = " Expression
 Value::= String | Number | Boolean
@@ -28,9 +28,10 @@ ReservedKeywords ::= RequestMethod & "SEND" & Type & "GET_PARAM"
 ## Language Design Specification Changelist
 
 #### 1.0.0 - October 8th, 2019 (latest)
-After discussion the following changes were proposed:
+After the discussion to simplify the implementation, the following changes were proposed:
 - We now support prefix notation for BinaryOperation. A binary operation starts with an operator (`+`, `-`, `*`, `/`), followed by two Values seperated by the string `"TO"`
 - Variables will have to be declared with types. The variable name should be followed by a `":"` and a type (currently only `Number` and `Boolean` are supported)
+- `SEND` response now takes in exactly two statements, `Number;` and `String;` and in that order.
 ```
 GET "/conditionalTrue" {
     VAR a : Number = 1;
