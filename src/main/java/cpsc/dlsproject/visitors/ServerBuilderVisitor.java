@@ -1,6 +1,7 @@
 package cpsc.dlsproject.visitors;
 
 import com.sun.net.httpserver.HttpExchange;
+import cpsc.dlsproject.Interpreter;
 import cpsc.dlsproject.ast.BaseAST;
 import cpsc.dlsproject.ast.expressions.BinaryOperation;
 import cpsc.dlsproject.ast.expressions.BinaryOperator;
@@ -24,6 +25,7 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
     public ArrayList<String> errorMessages;
     public Server server;
     public SymbolTable variables;
+    private int port = 8000;
 
     public ServerBuilderVisitor(Program program) {
         super(program);
@@ -33,14 +35,18 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
         server.stopServer();
     }
 
+    public void setPort(int port) {
+        this.port = port;
+    }
+
     @Override
     public Value run() {
         try {
-            server = Server.newBuilder().setPort(8000).build();
+            server = Server.newBuilder().setPort(port).build();
             variables = new SymbolTable();
             this.visit(program);
             server.startServer();
-            System.out.println("Server is serving in port 8000...");
+            System.out.println("Server is serving in port " + port);
             return new VoidValue();
         } catch (IOException | ServerEvaluationError e) {
             System.out.println("Failed building the server.");

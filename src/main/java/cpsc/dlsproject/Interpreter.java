@@ -8,6 +8,7 @@ import cpsc.dlsproject.visitors.ServerBuilderVisitor;
 public class Interpreter {
   private final String script;
   private ServerBuilderVisitor serverBuilder;
+  private int port = 8000;
 
   private Interpreter(String script) {
     this.script = script;
@@ -20,17 +21,23 @@ public class Interpreter {
     return new Interpreter(script);
   }
 
-  public void runProgram() throws InterpreterException {
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void runProgram() throws InterpreterException {
     Tokenizer.makeTokenizer(script);
     ParseVisitor parser = new ParseVisitor();
       Program program = null;
       try {
           program = (Program) parser.run();
       } catch (Exception e) {
-          throw new InterpreterException("Error while parsing.");
+          System.out.println("Throwing a parsing exception!");
+          throw new InterpreterException(e);
       }
 
       serverBuilder = new ServerBuilderVisitor(program);
+      serverBuilder.setPort(port);
     serverBuilder.run();
   }
 
@@ -76,8 +83,11 @@ public class Interpreter {
       }
   }
 
-    private class InterpreterException extends Throwable {
+    private static class InterpreterException extends Exception {
         public InterpreterException(String msg) {
+            super(msg);
+        }
+        public InterpreterException(Exception msg) {
             super(msg);
         }
     }
