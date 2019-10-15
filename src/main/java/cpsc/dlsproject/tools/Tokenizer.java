@@ -61,9 +61,17 @@ public class Tokenizer {
         tokenizedProgram = tokenizedProgram.replace(" = ","_");
 
         System.out.println(program);
+
         for (String s : literals){
-            tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
+            //checking this so that it doesn't incorrectly tokenize >= or <= as >_= and <_=
+            if(s.equals("<") || s.equals(">")){
+                tokenizedProgram = tokenizedProgram.replace(s+"[^=]","_"+s+"_");
+            }
+            else{
+                tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
+            }
         }
+
         tokenizedProgram = tokenizedProgram.replace("[", "{");
         tokenizedProgram = tokenizedProgram.replace("]", "}");
 
