@@ -27,18 +27,7 @@ public class PrintVisitorTest extends TestCase {
                 "    };\n" +
                 "};\n";
         PrintVisitor printVisitor = new PrintVisitor(program);
-        String actual = null;
-        try {
-            actual = printVisitor.run();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("Expected:\n" + expected + "\n");
-        try {
-            System.out.println("Actual: \n" + printVisitor.run() + "\n");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String actual = printVisitor.run();
         assertEquals(expected, actual);
     }
 }
