@@ -82,7 +82,7 @@ public class Tokenizer {
     }
 
     private String changeEndPointBraces(String tokenizedProgram, List<String> endpoints) {
-        Pattern pattern = Pattern.compile("ENDPOINT[ ]*=[ ]*_'(.*?)'_");
+        Pattern pattern = Pattern.compile("\"(.*?)\"");
         Matcher m = pattern.matcher(tokenizedProgram);
         while (m.find()) {
             endpoints.add(m.group());
