@@ -9,8 +9,8 @@ GET "/" {
   VAR subtraction: Number = - a TO b;
   VAR multiplication: Number = * a TO b;
   VAR division: Number = \ a TO b;
-  VAR andOp: Boolean = & c TO d;
-  VAR orOp: Boolean = | c TO d;
+  VAR andOp: Boolean = && c TO d;
+  VAR orOp: Boolean = || c TO d;
   VAR lessThanOp: Boolean = < a TO b;
   VAR lessThanOrEqualOp: Boolean = <= a TO b;
   VAR equalOp: Boolean = == a TO b;
@@ -22,4 +22,4 @@ GET "/" {
   "addition: {addition}, subtraction: {subtraction}, multiplication: {multiplication}, division: {division}, andOp: {andOp}, orOp: {orOp}, lessThanOp: {lessThanOp}, lessThanOrEqualOp: {lessThanOrEqualOp}, equalOp: {equalOp}, notEqualOp: {notEqualOp}, greaterThanOp: {greaterThanOp}, greaterOp: {greaterOp}";
   200;
   }
-};
+}
