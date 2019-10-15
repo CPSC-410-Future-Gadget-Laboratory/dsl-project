@@ -1,6 +1,6 @@
 GET "/conditionalTrue" {
-    VAR a = 1;
-    VAR b = 2;
+    VAR a : Number = 1;
+    VAR b : Number = 2;
     IF (a < b) {
       SEND {
         200;
@@ -15,8 +15,8 @@ GET "/conditionalTrue" {
 }
 
 GET "/conditionalFalse" {
-    VAR a = 1;
-    VAR b = 2;
+    VAR a : Number = 1;
+    VAR b : Number = 2;
     IF (a > b) {
       SEND {
         200;

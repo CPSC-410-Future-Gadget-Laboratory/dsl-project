@@ -54,6 +54,10 @@ public class BinaryOperation extends Expression {
         }
     }
 
+    public BinaryOperation() {
+
+    }
+
     @Override
     public void parse() {
 

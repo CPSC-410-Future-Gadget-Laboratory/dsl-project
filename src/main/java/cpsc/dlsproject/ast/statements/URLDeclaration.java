@@ -28,6 +28,10 @@ public class URLDeclaration extends Statement {
         this.params = params;
     }
 
+    public URLDeclaration() {
+
+    }
+
     @Override
     public void parse() {
 

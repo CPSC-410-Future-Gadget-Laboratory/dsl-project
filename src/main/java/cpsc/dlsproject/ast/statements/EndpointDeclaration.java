@@ -31,6 +31,8 @@ public class EndpointDeclaration extends Statement {
      */
     public List<Statement> statements;
 
+    public EndpointDeclaration() {}
+
     public EndpointDeclaration(RequestMethod requestMethodType, URLDeclaration url, List<Statement> statements) {
         this.requestMethodType = requestMethodType;
         this.url = url;

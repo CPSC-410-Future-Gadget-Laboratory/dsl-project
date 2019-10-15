@@ -10,7 +10,7 @@ public class PrintVisitorTest extends TestCase {
 
     public void testSimpleProgram() {
         ArrayList<Statement> body = new ArrayList<Statement>();
-        Response response = new Response(200, "Some successful Message!", new ArrayList<ValueDeclaration>());
+        Response response = new Response(200, "Some successful Message!", new ArrayList<VarDeclaration>());
         body.add(response);
         URLDeclaration url = new URLDeclaration("/path/to/success", new ArrayList<String>());
         EndpointDeclaration endpoint = new EndpointDeclaration(RequestMethod.GET, url, body);
@@ -27,9 +27,18 @@ public class PrintVisitorTest extends TestCase {
                 "    };\n" +
                 "};\n";
         PrintVisitor printVisitor = new PrintVisitor(program);
-        String actual = printVisitor.run();
+        String actual = null;
+        try {
+            actual = printVisitor.run();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Expected:\n" + expected + "\n");
-        System.out.println("Actual: \n" + printVisitor.run() + "\n");
+        try {
+            System.out.println("Actual: \n" + printVisitor.run() + "\n");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(expected, actual);
     }
 }

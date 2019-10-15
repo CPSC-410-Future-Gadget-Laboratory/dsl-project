@@ -14,7 +14,7 @@ public class Tokenizer {
 
     private static String program;
     private static List<String> literals = Arrays.asList("START", "GET", "POST", "PUT", "DELETE",
-            "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "\"", "<", ">", "<=", ">=", "==");;
+            "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "<", ">", "<=", ">=", "==", "TO");
     private String[] tokens;
     public int currentToken;
     private static Tokenizer theTokenizer;
@@ -155,7 +155,10 @@ public class Tokenizer {
 
     public String getAndCheckNext(String regexp){
         String s = getNext();
-        if (!s.matches(regexp)) System.exit(0);
+        if (!s.matches(regexp)) {
+            System.out.println("Expecting " + regexp + " but get " + s);
+            System.exit(1);
+        }
         System.out.println("matched: "+s+"  to  "+regexp);
         return s;
     }
@@ -217,5 +220,14 @@ public class Tokenizer {
         else
             token="NULLTOKEN";
         return token;
+    }
+
+    public List<String> getNextExpression() {
+        ArrayList<String> expression = new ArrayList<String>();
+        while (!theTokenizer.checkCurrent().equals(";")) {
+            expression.add(theTokenizer.getNext());
+        }
+
+        return expression;
     }
 }

@@ -7,6 +7,10 @@ public class VarAccess extends Expression {
         identifier = s;
     }
 
+    public VarAccess() {
+
+    }
+
     @Override
     public void parse() {
        identifier = tokenizer.getNext();

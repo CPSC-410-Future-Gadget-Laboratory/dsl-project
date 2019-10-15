@@ -2,6 +2,7 @@ package cpsc.dlsproject;
 
 import cpsc.dlsproject.ast.Program;
 import cpsc.dlsproject.tools.Tokenizer;
+import cpsc.dlsproject.visitors.ParseVisitor;
 import cpsc.dlsproject.visitors.ServerBuilderVisitor;
 
 public class Interpreter {
@@ -16,8 +17,11 @@ public class Interpreter {
             throw new Exception("Program script has not been loaded.");
         }
         Tokenizer.makeTokenizer(script);
-        Program program = new Program();
-        program.parse();
+
+        ParseVisitor parser = new ParseVisitor();
+        Program program = (Program) parser.run();
+//        Program program = new Program();
+//        program.parse();
 
         ServerBuilderVisitor serverBuilder = new ServerBuilderVisitor(program);
         serverBuilder.run();
@@ -25,11 +29,36 @@ public class Interpreter {
 
     public static void main(String[] args) throws Exception {
         Interpreter interpreter = new Interpreter();
-        interpreter.loadScriptFromString("GET \"/path/to/success\" {\n" +
-                "  SEND {\n" +
-                "    200;\n" +
-                "    \"here is to your success!\";\n" +
-                "  }\n" +
+        interpreter.loadScriptFromString("GET \"/conditionalTrue\" {\n" +
+                "    VAR a: Number = 1;\n" +
+                "    VAR b: Number = 2;\n" +
+                "    IF ( <  a TO b ) {\n" +
+                "      SEND {\n" +
+                "        200;\n" +
+                "        \"something good\";\n" +
+                "      };\n" +
+                "    } ELSE {\n" +
+                "      SEND {\n" +
+                "        500;\n" +
+                "        \"something bad\";\n" +
+                "      };\n" +
+                "    }\n" +
+                "}\n" +
+                "\n" +
+                "GET \"/conditionalFalse\" {\n" +
+                "    VAR a : Number = 1;\n" +
+                "    VAR b : Number = 2;\n" +
+                "    IF (> a TO b) {\n" +
+                "      SEND {\n" +
+                "        200;\n" +
+                "        \"something good\";\n" +
+                "      }\n" +
+                "    } ELSE {\n" +
+                "      SEND {\n" +
+                "        500;\n" +
+                "        \"something bad\";\n" +
+                "      }\n" +
+                "    }\n" +
                 "}");
         interpreter.runProgram();
     }
