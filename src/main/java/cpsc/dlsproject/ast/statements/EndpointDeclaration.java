@@ -39,7 +39,6 @@ public class EndpointDeclaration extends Statement {
         this.statements = statements;
     }
 
-    @Override
     public void parse() {
 
     }

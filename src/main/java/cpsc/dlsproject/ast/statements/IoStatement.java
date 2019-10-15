@@ -11,7 +11,6 @@ public class IoStatement extends BaseAST {
         readfile = (IO == "READFILE");
     }
 
-    @Override
     public void parse() {
         path = tokenizer.getNext();
         tokenizer.getAndCheckNext("\\}");

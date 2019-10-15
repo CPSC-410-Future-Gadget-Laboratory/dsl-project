@@ -4,9 +4,4 @@ import cpsc.dlsproject.types.Type;
 
 public class VoidValue extends Value {
     public Type type = Type.UNDEFINED;
-
-    @Override
-    public void parse() {
-
-    }
 }

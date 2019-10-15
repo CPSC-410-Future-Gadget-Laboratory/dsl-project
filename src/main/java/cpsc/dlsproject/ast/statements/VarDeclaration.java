@@ -35,9 +35,4 @@ public class VarDeclaration extends Statement {
         this.type = type;
         this.expression = expression;
     }
-
-    @Override
-    public void parse() {
-
-    }
 }

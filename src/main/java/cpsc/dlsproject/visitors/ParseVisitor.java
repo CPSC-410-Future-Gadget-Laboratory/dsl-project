@@ -11,7 +11,6 @@ import cpsc.dlsproject.ast.expressions.values.BooleanValue;
 import cpsc.dlsproject.ast.expressions.values.NumberValue;
 import cpsc.dlsproject.ast.expressions.values.StringValue;
 import cpsc.dlsproject.ast.statements.*;
-import cpsc.dlsproject.tools.InfixToPrefixConverter;
 import cpsc.dlsproject.tools.Tokenizer;
 import cpsc.dlsproject.types.Type;
 import cpsc.dlsproject.utils.Utils;

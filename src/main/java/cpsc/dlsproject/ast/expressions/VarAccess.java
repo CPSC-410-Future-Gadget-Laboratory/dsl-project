@@ -11,7 +11,6 @@ public class VarAccess extends Expression {
 
     }
 
-    @Override
     public void parse() {
        identifier = tokenizer.getNext();
     }
