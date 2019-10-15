@@ -32,18 +32,19 @@ After discussion the following changes were proposed:
 - We now support prefix notation for BinaryOperation. A binary operation starts with an operator (`+`, `-`, `*`, `/`), followed by two Values seperated by the string `"TO"`
 - Variables will have to be declared with types. The variable name should be followed by a `":"` and a type (currently only `Number` and `Boolean` are supported)
 ```
-GET "meaning/of/life" {
-    // SOME LOGIC..
-    IF (answer == 42) {
-            SEND {
-            200;
-            "Found the meaning of life and this universe!";
-        }
+GET "/conditionalTrue" {
+    VAR a : Number = 1;
+    VAR b : Number = 2;
+    IF (< a TO b) {
+      SEND {
+        200;
+        "something good";
+      }
     } ELSE {
-        SEND {
-            404;
-            "Still searching for my meaning";
-        }
+      SEND {
+        500;
+        "something bad";
+      }
     }
 }
 ```
