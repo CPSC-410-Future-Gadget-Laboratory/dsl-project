@@ -1,25 +1,25 @@
 GET "/" {
-  VAR a = 1;
-  VAR b = 2;
+  VAR a: Number = 1;
+  VAR b: Number = 2;
 
-  VAR c = true;
-  VAR d = false;
+  VAR c: Boolean = true;
+  VAR d: Boolean = false;
 
-  VAR addition = a + b;
-  VAR subtraction = a - b;
-  VAR multiplication = a * b;
-  VAR division = a \ b;
-  VAR andOp = c & d;
-  VAR orOp = d | d;
-  VAR lessThanOp = a < b;
-  VAR lessThanOrEqualOp = a <= b;
-  VAR equalOp = a == b;
-  VAR notEqualOp = a != b;
-  VAR greaterThanOp = a > b;
-  VAR greaterOp = a >= b;
+  VAR addition: Number = + a TO b;
+  VAR subtraction: Number = - a TO b;
+  VAR multiplication: Number = * a TO b;
+  VAR division: Number = \ a TO b;
+  VAR andOp: Boolean = && c TO d;
+  VAR orOp: Boolean = || c TO d;
+  VAR lessThanOp: Boolean = < a TO b;
+  VAR lessThanOrEqualOp: Boolean = <= a TO b;
+  VAR equalOp: Boolean = == a TO b;
+  VAR notEqualOp: Boolean = != a TO b;
+  VAR greaterThanOp: Boolean = > a TO b;
+  VAR greaterOp: Boolean = >= a TO b;
 
   SEND {
   "addition: {addition}, subtraction: {subtraction}, multiplication: {multiplication}, division: {division}, andOp: {andOp}, orOp: {orOp}, lessThanOp: {lessThanOp}, lessThanOrEqualOp: {lessThanOrEqualOp}, equalOp: {equalOp}, notEqualOp: {notEqualOp}, greaterThanOp: {greaterThanOp}, greaterOp: {greaterOp}";
   200;
   }
-};
+}

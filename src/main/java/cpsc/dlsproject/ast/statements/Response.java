@@ -25,15 +25,18 @@ public class Response extends Statement {
     /**
      * A list of embedded values read from the message.
      */
-    public List<ValueDeclaration> embededValues;
+    public List<VarDeclaration> embededValues;
 
-    public Response(int statusCode, String message, List<ValueDeclaration> embededValues) {
+    public Response(int statusCode, String message, List<VarDeclaration> embededValues) {
         this.statusCode = statusCode;
         this.message = message;
         this.embededValues = embededValues;
     }
 
-    @Override
+    public Response() {
+
+    }
+
     public void parse() {
 
     }

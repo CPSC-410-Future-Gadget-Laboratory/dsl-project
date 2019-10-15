@@ -6,7 +6,7 @@ public class VoidValue extends Value {
     public Type type = Type.UNDEFINED;
 
     @Override
-    public void parse() {
-
+    public String toString() {
+        return "UNDEFINED";
     }
 }

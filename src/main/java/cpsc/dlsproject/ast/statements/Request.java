@@ -13,7 +13,6 @@ public class Request extends BaseAST {
         this.requestType = requestType;
     }
 
-    @Override
     public void parse() {
         System.out.println(requestType);
         tokenizer.checkOpenBracket(tokenizer.getNext()); //TODO: checkOpenBracket returns boolean but it doesn't do anything with the return value. What was expected here?
@@ -34,7 +33,6 @@ public class Request extends BaseAST {
                 System.exit(0);
             } else {
                 tokenizer.getNext(); // Pop the keyword
-                currNode.parse();
                 children.add(currNode);
             }
         }

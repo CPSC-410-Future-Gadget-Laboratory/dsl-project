@@ -1,25 +1,27 @@
 package cpsc.dlsproject;
 
-import cpsc.dlsproject.ast.Program;
-import cpsc.dlsproject.tools.Tokenizer;
 
-import java.util.Arrays;
-import java.util.List;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        List<String> literals = Arrays.asList("START", "GET", "POST", "PUT", "DELETE",
-                "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "\"", "<", ">", "<=", ">=", "==");
-        Tokenizer.makeTokenizer("input.epdsl", literals);
-        Program p = new Program();
-        System.out.println("Done tokenizing");
-        p.parse();
-        System.out.println("Done parsing");
+/** Hello world! */
+public class App {
+  private static final String DIRECTORY =
+          System.getProperty("user.dir") + "/src/main/java/cpsc/dlsproject/";
+  public static void main(String[] args) {
+    System.out.println("Reading your program!");
+    String program;
+    try {
+      program = new String(Files.readAllBytes(Paths.get(DIRECTORY + args[0])), StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot read file because " + e);
     }
+    try {
+      Interpreter.loadScriptFromString(program).runProgram();
+    } catch (Exception e) {
+      throw new RuntimeException("Issues with running the program: " + e);
+    }
+  }
 }

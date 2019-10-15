@@ -7,7 +7,6 @@ import cpsc.dlsproject.ast.expressions.values.NumberValue;
 import cpsc.dlsproject.ast.expressions.values.StringValue;
 import cpsc.dlsproject.ast.statements.*;
 import cpsc.dlsproject.ast.Program;
-import cpsc.dlsproject.visitors.ASTVisitor;
 
 public class TypeCheckVisitor extends ASTVisitor<Boolean> {
 
@@ -44,12 +43,27 @@ public class TypeCheckVisitor extends ASTVisitor<Boolean> {
     }
 
     @Override
-    Boolean visit(ValueDeclaration valueDeclaration) {
+    Boolean visit(VarDeclaration varDeclaration) {
         return null;
     }
 
     @Override
     Boolean visit(BinaryOperation binOp) {
+        return null;
+    }
+
+    @Override
+    Boolean visit(NumberValue numVal) throws Exception {
+        return null;
+    }
+
+    @Override
+    Boolean visit(BooleanValue boolVal) throws Exception {
+        return null;
+    }
+
+    @Override
+    Boolean visit(StringValue strVal) throws Exception {
         return null;
     }
 }

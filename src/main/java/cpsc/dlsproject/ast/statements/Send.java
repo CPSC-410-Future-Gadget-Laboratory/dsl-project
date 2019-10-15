@@ -15,7 +15,6 @@ public class Send extends BaseAST {
         return message;
     }
 
-    @Override
     public void parse() {
         tokenizer.checkOpenBracket(tokenizer.getNext());
         while(!tokenizer.checkNext().equals("}")){

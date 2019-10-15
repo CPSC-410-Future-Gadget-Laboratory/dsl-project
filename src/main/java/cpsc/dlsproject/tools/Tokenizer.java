@@ -14,7 +14,7 @@ public class Tokenizer {
 
     private static String program;
     private static List<String> literals = Arrays.asList("START", "GET", "POST", "PUT", "DELETE",
-            "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "String", "Number", "Boolean", "\"", "<", ">", "<=", ">=", "==");;
+            "{", "ENDPOINT", "VAR", "SEND", "}", "(", ")", "IF", "ELSE", "PLUS", "MINUS", "MULTI", "DIV", "&&", "||","String", "Number", "Boolean",  "<=", ">=", "<", ">", "==", "!=", "TO");
     private String[] tokens;
     public int currentToken;
     private static Tokenizer theTokenizer;
@@ -42,11 +42,16 @@ public class Tokenizer {
         String tokenizedProgram = program;
         tokenizedProgram = tokenizedProgram.replace("\n","");
         tokenizedProgram = tokenizedProgram.replace("\r","");
+        //check this
         tokenizedProgram = tokenizedProgram.replaceAll(";","_;_");
+        //check above
         tokenizedProgram = tokenizedProgram.replace("+","PLUS");
         tokenizedProgram = tokenizedProgram.replace("-","MINUS");
         tokenizedProgram = tokenizedProgram.replace("*","MULTI");
         tokenizedProgram = tokenizedProgram.replace("\\","DIV");
+
+        List<String> quotedStrings = new ArrayList<>();
+        tokenizedProgram = changeDoubleQuotes(tokenizedProgram, quotedStrings);
 
         //Changing the endpoint braces so in case the endpoint contains curly braces like /api/v1/{userId}
         //        //the braces don't get tokenized
@@ -56,16 +61,28 @@ public class Tokenizer {
         tokenizedProgram = tokenizedProgram.replace(" = ","_");
 
         System.out.println(program);
+
         for (String s : literals){
-            tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
+            //checking this so that it doesn't incorrectly tokenize >= or <= as >_= and <_=
+            if(s.equals("<") || s.equals(">")){
+                tokenizedProgram = tokenizedProgram.replaceAll(s+"[^=]","_"+s+"_");
+            }
+            else{
+                tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
+            }
         }
 
-        tokenizedProgram = tokenizedProgram.replaceAll("[ ]+", "");
+        tokenizedProgram = tokenizedProgram.replace("[", "{");
+        tokenizedProgram = tokenizedProgram.replace("]", "}");
 
         //Tokenizing
         List<String> temparray= new LinkedList<>(Arrays.asList(tokenizedProgram.split("[_]+")));
 
-        temparray.remove("");
+        for(int i = 0; i<temparray.size(); i++)
+            if(!quotedStrings.contains(temparray.get(i)))
+                temparray.set(i, temparray.get(i).replaceAll("[ ]+", ""));
+
+        temparray.removeAll(Collections.singletonList(""));
 
         tokens = new String[temparray.size()];
         System.arraycopy(temparray.toArray(),0,tokens,0,temparray.size());
@@ -73,7 +90,7 @@ public class Tokenizer {
     }
 
     private String changeEndPointBraces(String tokenizedProgram, List<String> endpoints) {
-        Pattern pattern = Pattern.compile("ENDPOINT[ ]*=[ ]*_'(.*?)'_");
+        Pattern pattern = Pattern.compile("\"(.*?)\"");
         Matcher m = pattern.matcher(tokenizedProgram);
         while (m.find()) {
             endpoints.add(m.group());
@@ -94,7 +111,7 @@ public class Tokenizer {
             quotedStrings.add(m.group());
         }
         for (String s : quotedStrings){
-            tokenizedProgram = tokenizedProgram.replace(s,"_'"+s.substring(1, s.length()-1)+"'_");
+            tokenizedProgram = tokenizedProgram.replace(s,"_"+s+"_");
             System.out.println(tokenizedProgram);
         }
         return tokenizedProgram;
@@ -146,7 +163,10 @@ public class Tokenizer {
 
     public String getAndCheckNext(String regexp){
         String s = getNext();
-        if (!s.matches(regexp)) System.exit(0);
+        if (!s.matches(regexp)) {
+            System.out.println("Expecting " + regexp + " but get " + s);
+            System.exit(1);
+        }
         System.out.println("matched: "+s+"  to  "+regexp);
         return s;
     }
@@ -208,5 +228,14 @@ public class Tokenizer {
         else
             token="NULLTOKEN";
         return token;
+    }
+
+    public List<String> getNextExpression() {
+        ArrayList<String> expression = new ArrayList<String>();
+        while (!theTokenizer.checkCurrent().equals(";")) {
+            expression.add(theTokenizer.getNext());
+        }
+
+        return expression;
     }
 }

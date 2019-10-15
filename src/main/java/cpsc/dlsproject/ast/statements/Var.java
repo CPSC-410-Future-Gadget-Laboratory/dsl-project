@@ -54,9 +54,7 @@ public class Var extends BaseAST {
         }
     }
 
-    @Override
     public void parse() {
-//        tokenizer.getAndCheckNext("\\{");
         name = tokenizer.getNext();
         if (tokenizer.checkNext().equals("String")) {
             tokenizer.getNext();

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class PrintVisitorTest extends TestCase {
 
-    public void testSimpleProgram() {
+    public void testSimpleProgram() throws Exception {
         ArrayList<Statement> body = new ArrayList<Statement>();
-        Response response = new Response(200, "Some successful Message!", new ArrayList<ValueDeclaration>());
+        Response response = new Response(200, "Some successful Message!", new ArrayList<VarDeclaration>());
         body.add(response);
         URLDeclaration url = new URLDeclaration("/path/to/success", new ArrayList<String>());
         EndpointDeclaration endpoint = new EndpointDeclaration(RequestMethod.GET, url, body);

@@ -10,7 +10,6 @@ public class Logical extends BaseAST {
         this.oper = oper;
     }
 
-    @Override
     public void parse() {
         Var cond1 = new Var();
         cond1.parse();

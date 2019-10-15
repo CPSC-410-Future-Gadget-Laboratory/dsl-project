@@ -6,14 +6,13 @@ import cpsc.dlsproject.visitors.PrintVisitor;
 import cpsc.dlsproject.visitors.ServerBuilderVisitor;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class DevTestingEnvironment {
     /** Testing out the Server Class */
     public static void main(String[] args) throws IOException {
         ArrayList<Statement> body = new ArrayList<Statement>();
-        Response response = new Response(200, "Some successful Message!", new ArrayList<ValueDeclaration>());
+        Response response = new Response(200, "Some successful Message!", new ArrayList<VarDeclaration>());
         body.add(response);
         URLDeclaration url = new URLDeclaration("/", new ArrayList<String>());
         EndpointDeclaration endpoint = new EndpointDeclaration(RequestMethod.GET, url, body);
@@ -23,7 +22,11 @@ public class DevTestingEnvironment {
 
 
         PrintVisitor printVisitor = new PrintVisitor(program);
-        System.out.println("Running script:\n" + printVisitor.run() + "\n");
+        try {
+            System.out.println("Running script:\n" + printVisitor.run() + "\n");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         ServerBuilderVisitor serverBuilderVisitor = new ServerBuilderVisitor(program);
         serverBuilderVisitor.run();
         System.out.println("Server is now up and running...");
