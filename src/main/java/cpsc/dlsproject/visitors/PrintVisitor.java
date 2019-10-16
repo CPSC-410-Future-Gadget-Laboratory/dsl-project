@@ -110,8 +110,8 @@ public class PrintVisitor extends ASTVisitor<String> {
     }
 
     @Override
-    String visit(ValueDeclaration valueDeclaration) throws Exception {
-        return currIndentation + "VAL " + valueDeclaration.name + ": " + valueDeclaration.type.name() + " = " + this.visit(valueDeclaration.expression) + ";\n";
+    String visit(VarDeclaration varDeclaration) throws Exception {
+        return currIndentation + "VAL " + varDeclaration.name + ": " + varDeclaration.type.name() + " = " + this.visit(varDeclaration.expression) + ";\n";
     }
 
     @Override
@@ -133,4 +133,17 @@ public class PrintVisitor extends ASTVisitor<String> {
 
         return "(" + this.visit(binOp.lhs) + " " + binSymbolMap.get(binOp.operator) + " " + this.visit(binOp.rhs) + ")";
     }
+
+    @Override
+    String visit(NumberValue numVal) throws Exception {
+        throw new Exception("Not Implemented.");
+    }
+
+    @Override
+    String visit(BooleanValue boolVal) throws Exception {
+        throw new Exception("Not Implemented.");    }
+
+    @Override
+    String visit(StringValue strVal) throws Exception {
+        throw new Exception("Not Implemented.");    }
 }

@@ -80,7 +80,6 @@ public class Conditional extends Statement {
                 System.exit(0);
             } else {
                 tokenizer.getNext(); // Pop the keyword
-                currNode.parse();
                 ifelse.children.add(currNode);
             }
         }
@@ -88,7 +87,6 @@ public class Conditional extends Statement {
         return ifelse;
     }
 
-    @Override
     public void parse() {
         if (!tokenizer.getNext().equals("(")) {
             System.out.println("Invalid formation of condition expression");

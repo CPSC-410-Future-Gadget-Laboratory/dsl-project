@@ -28,8 +28,5 @@ public class URLDeclaration extends Statement {
         this.params = params;
     }
 
-    @Override
-    public void parse() {
-
-    }
+    public URLDeclaration() {}
 }

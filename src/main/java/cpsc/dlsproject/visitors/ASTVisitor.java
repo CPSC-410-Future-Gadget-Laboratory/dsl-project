@@ -11,15 +11,17 @@ import cpsc.dlsproject.ast.Program;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.ExecutionException;
 
 public abstract class ASTVisitor<X> {
     Program program;
 
+    ASTVisitor() {}
     ASTVisitor(Program program) {
         this.program = program;
     }
 
-    public X run() {
+    public X run() throws Exception {
         try {
             return this.visit(program);
         } catch (Exception e) {
@@ -63,7 +65,10 @@ public abstract class ASTVisitor<X> {
     abstract X visit(Conditional conditional) throws Exception;
     abstract X visit(Response response) throws Exception;
     abstract X visit(URLDeclaration url) throws Exception;
-    abstract X visit(ValueDeclaration valueDeclaration) throws Exception;
+    abstract X visit(VarDeclaration varDeclaration) throws Exception;
     abstract X visit(BinaryOperation binOp) throws Exception;
+    abstract X visit(NumberValue numVal) throws Exception;
+    abstract X visit(BooleanValue boolVal) throws Exception;
+    abstract X visit(StringValue strVal) throws Exception;
 }
 

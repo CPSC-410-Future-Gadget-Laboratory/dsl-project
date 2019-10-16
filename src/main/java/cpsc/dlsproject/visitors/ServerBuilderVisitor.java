@@ -1,5 +1,6 @@
 package cpsc.dlsproject.visitors;
 
+import com.sun.net.httpserver.HttpExchange;
 import cpsc.dlsproject.ast.expressions.BinaryOperation;
 import cpsc.dlsproject.ast.expressions.BinaryOperator;
 import cpsc.dlsproject.ast.expressions.VarAccess;
@@ -8,31 +9,43 @@ import cpsc.dlsproject.ast.statements.*;
 import cpsc.dlsproject.ast.Program;
 import cpsc.dlsproject.server.Server;
 import cpsc.dlsproject.utils.SymbolTable;
+import cpsc.dlsproject.utils.Utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A class representing a visitor for building the server.
  */
 public class ServerBuilderVisitor extends ASTVisitor<Value> {
-    public ArrayList<String> errorMessages;
     public Server server;
     public SymbolTable variables;
+    private int port = 8000;
 
     public ServerBuilderVisitor(Program program) {
         super(program);
     }
 
+    public void stopServer() {
+        server.stopServer();
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
     @Override
     public Value run() {
         try {
-            server = Server.newBuilder().setPort(8000).build();
-            this.visit(program);
+            server = Server.newBuilder().setPort(port).build();
             variables = new SymbolTable();
+            this.visit(program);
             server.startServer();
+            System.out.println("Server is serving in port " + port);
             return new VoidValue();
         } catch (IOException | ServerEvaluationError e) {
             System.out.println("Failed building the server.");
@@ -55,8 +68,10 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
         this.visit(endpoint.url);
 
         server.setHandler(endpoint.url.url, httpExchange -> {
+            // Setup environment for execution.
+            variables.setHttpExchange(httpExchange);
+
             for (Statement statement: endpoint.statements) {
-                statement.httpExchange = httpExchange;
                 try {
                     this.visit(statement);
                 } catch (Exception e) {
@@ -64,6 +79,9 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
                     System.out.println("500: There is an error when evaluating the statement. It is more likely to be the interpreter's error, not the developer's.");
                 }
             }
+
+            // Tear down environment after execution.
+            variables.clearHttpExchange();
         });
 
         return new VoidValue();
@@ -102,13 +120,19 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
 
     @Override
     Value visit(Response response) throws ServerEvaluationError {
+        HttpExchange httpExchange = variables.getHttpExchange();
+        String replacedMsg = null;
         try {
-            byte body[] = response.message.getBytes("UTF-8");
+            replacedMsg = Utils.getUtilsObj().replaceEmbeddedValues(variables, response.message);
+        } catch (Exception e) {
+            throw new ServerEvaluationError("Error when replacing embedded values.");
+        }
+        try {
+            byte body[] = replacedMsg.getBytes("UTF-8");
+            httpExchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
+            httpExchange.sendResponseHeaders(response.statusCode, body.length);
 
-            response.httpExchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
-            response.httpExchange.sendResponseHeaders(response.statusCode, body.length);
-
-            OutputStream out = response.httpExchange.getResponseBody();
+            OutputStream out = httpExchange.getResponseBody();
             out.write(body);
             out.close();
         } catch (IOException e) {
@@ -124,14 +148,14 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
     }
 
     @Override
-    Value visit(ValueDeclaration valueDeclaration) throws ServerEvaluationError {
+    Value visit(VarDeclaration varDeclaration) throws ServerEvaluationError {
         Value result = null;
         try {
-            result = this.visit(valueDeclaration.expression);
+            result = this.visit(varDeclaration.expression);
         } catch (Exception e) {
             throw new ServerEvaluationError("Error evaluating expression");
         }
-        this.variables.setValue(valueDeclaration.name, result);
+        this.variables.setValue(varDeclaration.name, result);
         return new VoidValue();
     }
 
@@ -175,6 +199,21 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
             throw new ServerEvaluationError("Binary Operation is not specified/invalid.");
         }
     }
+
+    @Override
+    Value visit(NumberValue numVal) throws ServerEvaluationError {
+        return numVal;
+    }
+
+    @Override
+    Value visit(BooleanValue boolVal) throws ServerEvaluationError {
+        return boolVal;
+    }
+
+    @Override
+    Value visit(StringValue strValue) throws ServerEvaluationError {
+        return strValue;
+    };
 
     private class ServerEvaluationError extends Exception {
         private String message;

@@ -1,0 +1,39 @@
+{
+  "test_suite": [
+    {
+      "code": "binary.dsl",
+      "tests": [
+        {
+          "endpoint": "/",
+          "expectedStatusCode": 200,
+          "expectedMessage": "addition: 3, subtraction: -1, multiplication: 2, division: 0.5, andOp: false, orOp: true, lessThanOp: true, lessThanOrEqualOp: true, equalOp: false, notEqualOp: true, greaterThanOp: false, greaterOp: false"
+        }
+      ]
+    },
+    {
+      "code": "conditional.dsl",
+      "tests": [
+        {
+          "endpoint": "/conditionalTrue",
+          "expectedStatusCode": 200,
+          "expectedMessage": "something good"
+        },
+        {
+          "endpoint": "/conditionalFalse",
+          "expectedStatusCode": 500,
+          "expectedMessage": "something bad"
+        }
+      ]
+    },
+    {
+      "code": "simple.dsl",
+      "tests": [
+        {
+          "endpoint": "/path/to/success",
+          "expectedStatusCode": 200,
+          "expectedMessage": "here is to your success!"
+        }
+      ]
+    }
+  ]
+}

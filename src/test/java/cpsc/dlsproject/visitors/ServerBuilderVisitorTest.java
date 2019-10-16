@@ -10,7 +10,7 @@ public class ServerBuilderVisitorTest extends TestCase {
 
     public void testSimpleProgram() {
         ArrayList<Statement> body = new ArrayList<Statement>();
-        Response response = new Response(200, "Some successful Message!", new ArrayList<ValueDeclaration>());
+        Response response = new Response(200, "Some successful Message!", new ArrayList<VarDeclaration>());
         body.add(response);
         URLDeclaration url = new URLDeclaration("/path/to/success", new ArrayList<String>());
         EndpointDeclaration endpoint = new EndpointDeclaration(RequestMethod.GET, url, body);

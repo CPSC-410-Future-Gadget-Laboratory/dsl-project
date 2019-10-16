@@ -4,7 +4,6 @@ import cpsc.dlsproject.types.Type;
 
 public class StringValue extends Value {
     public Type type = Type.STRING;
-
     public final String value;
 
     public StringValue(String s) {
@@ -12,7 +11,7 @@ public class StringValue extends Value {
     }
 
     @Override
-    public void parse() {
-
+    public String toString() {
+        return value;
     }
 }

@@ -18,7 +18,6 @@ public class Program extends BaseAST {
         this.endpoints = endpoints;
     }
 
-    @Override
     public void parse() {
         while (tokenizer.moreTokens()) {
             BaseAST currNode = null;
@@ -31,7 +30,6 @@ public class Program extends BaseAST {
                 System.out.println("Error, invalid token");
                 System.exit(0);
             }
-            currNode.parse();
             nodes.add(currNode);
         }
         System.out.println("Done with PROGRAM!");

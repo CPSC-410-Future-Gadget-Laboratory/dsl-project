@@ -10,7 +10,7 @@ import cpsc.dlsproject.ast.expressions.Expression;
  *
  * e.g. Number something = 2;
  */
-public class ValueDeclaration extends Statement {
+public class VarDeclaration extends Statement {
     /**
      * The identifier of the value.
      */
@@ -26,18 +26,13 @@ public class ValueDeclaration extends Statement {
      */
     public Expression expression;
 
-    public ValueDeclaration() {
+    public VarDeclaration() {
 
     }
 
-    public ValueDeclaration(String name, Type type, Expression expression) {
+    public VarDeclaration(String name, Type type, Expression expression) {
         this.name = name;
         this.type = type;
         this.expression = expression;
-    }
-
-    @Override
-    public void parse() {
-
     }
 }
