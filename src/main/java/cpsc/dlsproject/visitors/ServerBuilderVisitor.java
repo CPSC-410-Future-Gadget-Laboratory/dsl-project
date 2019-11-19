@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 
 /** A class representing a visitor for building the server. */
 public class ServerBuilderVisitor extends ASTVisitor<Value> {
@@ -46,7 +44,7 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
       server.startServer();
       System.out.println("Server is serving in port " + port);
     } catch (IOException | ServerEvaluationError e) {
-      throw new RuntimeException("Failed building the server.");
+      throw new RuntimeException("Failed building the server, " + e);
     }
     return new VoidValue();
   }
