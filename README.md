@@ -4,6 +4,17 @@
 
 This is the CPSC 410 - Advanced Software Engineering group project.
 
+## How to compile and run the language
+
+Write the code in a file with a `.dsl` extension and place it in the `src/main/java/cpsc/dlsproject` directory.
+There are some example files in that directory for reference. 
+
+Then run the following command *from the root directory* of the project
+
+```shell script
+mvn -DskipTests package exec:java -Dexec.mainClass=cpsc.dlsproject.App -Dexec.args="<your-file-name>"
+```
+
 ## EBNF
 Below is the EBNF of the language.
 ```
