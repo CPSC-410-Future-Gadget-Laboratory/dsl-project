@@ -17,8 +17,6 @@ public class ServerBuilderVisitorTest extends TestCase {
         ArrayList<EndpointDeclaration> endpoints = new ArrayList<EndpointDeclaration>();
         endpoints.add(endpoint);
         Program program = new Program(endpoints);
-
-
         String expected = "GET {\n" +
                 "    ENDPOINT = \"/path/to/success\";\n" +
                 "    SEND = {\n" +
@@ -28,6 +26,7 @@ public class ServerBuilderVisitorTest extends TestCase {
                 "};\n";
         System.out.println("Expected:\n" + expected + "\n");
         ServerBuilderVisitor serverBuilderVisitor = new ServerBuilderVisitor(program);
+        serverBuilderVisitor.setPort(9000);
         serverBuilderVisitor.run();
     }
 }
