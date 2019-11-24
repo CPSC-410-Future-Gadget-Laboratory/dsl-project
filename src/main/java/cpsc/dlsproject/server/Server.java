@@ -136,12 +136,13 @@ public final class Server {
     endpointVisitFrequency.put(endpoint, endpointVisitFrequency.get(endpoint) + 1);
   }
 
-  /** Add to server logs */
-  public void addToServerLogs(HttpExchange httpExchange) {
+  /** Add to server logs. The done field is true if the request has been finished */
+  public void addToServerLogs(HttpExchange httpExchange, boolean done) {
     JSONObject object = new JSONObject();
     object.put("path", httpExchange.getHttpContext().getPath());
     object.put("client_ip", httpExchange.getRemoteAddress().getAddress().toString());
     object.put("log_time", LocalDateTime.now().toString());
+    object.put("done", done);
     serverLogsArray.add(object);
   }
 
