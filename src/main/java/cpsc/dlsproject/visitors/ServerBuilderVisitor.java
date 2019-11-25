@@ -69,7 +69,7 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
           // Setup environment for execution.
           variables.setHttpExchange(httpExchange);
           server.increaseEndpointHitFrequency(endpoint.url.url);
-          int id = server.incrementAndGetID();
+          long id = server.incrementAndGetID();
           server.addToServerLogs(httpExchange, false /* done */, id);
           for (Statement statement : endpoint.statements) {
             try {

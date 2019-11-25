@@ -22,7 +22,7 @@ public final class Server {
   private final Set<String> reservedEndpoints;
   private final String statsApiEndpoint = "/_stats";
   private final String loggingApiEndpoint = "/_logs";
-  private volatile int id;
+  private volatile long id;
 
   private Server(int port) throws IOException {
     this.port = port;
@@ -139,7 +139,7 @@ public final class Server {
   }
 
   /** Increment and get the ID of the request */
-  public int incrementAndGetID() {
+  public long incrementAndGetID() {
     return ++id;
   }
 
