@@ -6,57 +6,6 @@ export const getNodeColorByType = node => {
     if (node.type === TYPE_REQUEST) return COLOR_REQUEST;
 };
 
-const sampleLogs = {
-    "1": {
-        id: 1,
-        type: "REQUEST",
-        url: "/books/1",
-        endpointName: "/books/{id}",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-    },
-    "2": {
-        id: 2,
-        type: "REQUEST",
-        url: "/books/2",
-        endpointName: "/books/{id}",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-    },
-    "3": {
-        id: 3,
-        type: "REQUEST",
-        url: "/books",
-        endpointName: "/books",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-    },
-    "4": {
-        id: 3,
-        type: "REQUEST",
-        url: "/",
-        endpointName: "/",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-    },
-};
-
 export const getLogsAsArrays = (logs) => {
     return Object.values(logs);
 }
@@ -251,6 +200,97 @@ export const buildGraphDataFromLogs = (logs) => {
 
     return graphData;
 };
+
+/**
+ * Returns the number of requests per minute of an endpoint.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const getRequestPerMinute = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns the average latency of an endpoint.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const getAverageLatency = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns Errors Per Minute of an endpoint.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const getErrorsPerMinute = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns the total number of unique requestor of an endpoint.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const getNumberOfUniqueIPAddresses = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns the number of logs with status code starting with 2XX.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const getNumberOf2XXStatusCode = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns a hashmap (JavaScript object) with status codes starting with 2XX as key and the number of occurences the values.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const accumulate2XXStatusCodes = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns the number of logs with status code starting with 4XX.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const getNumberOf4XXStatusCode = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns a hashmap (JavaScript object) with status codes starting with 4XX as key and the number of occurences the values.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const accumulate4XXStatusCodes = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns the number of logs with status code starting with 5XX.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const getNumberOf5XXStatusCode = (logs, endpointName) => {
+    // Implement Here...
+};
+
+/**
+ * Returns a hashmap (JavaScript object) with status codes starting with 5XX as key and the number of occurences the values.
+ * @param {object} logs 
+ * @param {string} endpointName 
+ */
+export const accumulate5XXStatusCodes = (logs, endpointName) => {
+    // Implement Here...
+};
+
 
 export default {
     getListOfEndpointsPathname,
