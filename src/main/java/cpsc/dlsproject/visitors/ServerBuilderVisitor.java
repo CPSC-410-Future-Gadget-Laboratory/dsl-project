@@ -69,7 +69,8 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
           // Setup environment for execution.
           variables.setHttpExchange(httpExchange);
           server.increaseEndpointHitFrequency(endpoint.url.url);
-          server.addToServerLogs(httpExchange, false /* done */);
+          int id = server.incrementAndGetID();
+          server.addToServerLogs(httpExchange, false /* done */, id);
           for (Statement statement : endpoint.statements) {
             try {
               this.visit(statement);
@@ -85,7 +86,7 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
           }
 
           // Tear down environment after execution.
-          server.addToServerLogs(httpExchange, true /* done */);
+          server.addToServerLogs(httpExchange, true /* done */, id);
           variables.clearHttpExchange();
         });
 

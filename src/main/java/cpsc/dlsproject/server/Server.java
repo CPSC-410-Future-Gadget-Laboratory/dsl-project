@@ -20,8 +20,9 @@ public final class Server {
   private final Map<String, Integer> endpointVisitFrequency;
   private final JSONArray serverLogsArray;
   private final Set<String> reservedEndpoints;
-  private final String statsApiEndpoint = "/stats";
-  private final String loggingApiEndpoint = "/logs";
+  private final String statsApiEndpoint = "/_stats";
+  private final String loggingApiEndpoint = "/_logs";
+  private volatile int id;
 
   private Server(int port) throws IOException {
     this.port = port;
@@ -32,6 +33,7 @@ public final class Server {
     serverLogsArray = new JSONArray();
     reservedEndpoints.add(statsApiEndpoint);
     reservedEndpoints.add(loggingApiEndpoint);
+    id = 0;
   }
 
   /** Starts a given server */
@@ -136,13 +138,19 @@ public final class Server {
     endpointVisitFrequency.put(endpoint, endpointVisitFrequency.get(endpoint) + 1);
   }
 
+  /** Increment and get the ID of the request */
+  public int incrementAndGetID() {
+    return ++id;
+  }
+
   /** Add to server logs. The done field is true if the request has been finished */
-  public void addToServerLogs(HttpExchange httpExchange, boolean done) {
+  public void addToServerLogs(HttpExchange httpExchange, boolean done, long id) {
     JSONObject object = new JSONObject();
     object.put("path", httpExchange.getHttpContext().getPath());
     object.put("client_ip", httpExchange.getRemoteAddress().getAddress().toString());
     object.put("log_time", LocalDateTime.now().toString());
     object.put("done", done);
+    object.put("id", id);
     serverLogsArray.add(object);
   }
 
