@@ -1,24 +1,26 @@
 package cpsc.dlsproject.server;
 
 import com.sun.net.httpserver.HttpContext;
+import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import javax.annotation.processing.SupportedSourceVersion;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public final class Server {
   private final int port;
   private final HttpServer server;
   private final Map<String, HttpContext> endpointMap;
   private final Map<String, Integer> endpointVisitFrequency;
+  private final JSONArray serverLogsArray;
   private final Set<String> reservedEndpoints;
+  private final String statsApiEndpoint = "/stats";
   private final String loggingApiEndpoint = "/logs";
 
   private Server(int port) throws IOException {
@@ -27,6 +29,8 @@ public final class Server {
     endpointMap = new HashMap<>();
     endpointVisitFrequency = new HashMap<>();
     reservedEndpoints = new HashSet<>();
+    serverLogsArray = new JSONArray();
+    reservedEndpoints.add(statsApiEndpoint);
     reservedEndpoints.add(loggingApiEndpoint);
   }
 
@@ -44,7 +48,11 @@ public final class Server {
     this.server.stop(0);
   }
 
-  public String getLoggingEndpointUrl() {
+  public String getStatsApiEndpoint() {
+    return statsApiEndpoint;
+  }
+
+  public String getLoggingApiEndpoint() {
     return loggingApiEndpoint;
   }
 
@@ -79,14 +87,19 @@ public final class Server {
     return new Builder();
   }
 
-  public void setupLoggingEndpoint() {
+  /** Sets up the endpoint that displays stats for the current run of the server enpoints */
+  public void setupStatsEndpoint() {
     HttpHandler handler =
         (httpExchange) -> {
-          this.increaseEndpointHitFrequency(this.getLoggingEndpointUrl());
+          this.increaseEndpointHitFrequency(this.getStatsApiEndpoint());
           StringBuilder response = new StringBuilder();
           Set<Map.Entry<String, Integer>> frequencySet = this.getEndpointFrequencyEntrySet();
           for (Map.Entry<String, Integer> entry : frequencySet) {
-            response.append(entry.getKey()).append(":").append(entry.getValue()).append(System.getProperty("line.separator"));
+            response
+                .append(entry.getKey())
+                .append(":")
+                .append(entry.getValue())
+                .append(System.getProperty("line.separator"));
           }
           httpExchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
           httpExchange.sendResponseHeaders(200, response.length());
@@ -94,11 +107,25 @@ public final class Server {
           out.write(response.toString().getBytes());
           out.close();
         };
-    this.endpointMap.put(
-        this.loggingApiEndpoint, this.server.createContext(this.loggingApiEndpoint));
-    this.setHandler(this.getLoggingEndpointUrl(), handler);
+    this.endpointMap.put(this.statsApiEndpoint, this.server.createContext(this.statsApiEndpoint));
+    this.setHandler(this.getStatsApiEndpoint(), handler);
     System.out.println("Set handler for logging");
-    this.endpointVisitFrequency.put(this.loggingApiEndpoint, 0);
+    this.endpointVisitFrequency.put(this.statsApiEndpoint, 0);
+  }
+
+  /** Sets up the endpoint that displays the logs */
+  public void setupLoggingEndpoint() {
+    HttpHandler handler = (httpExchange) -> {
+      httpExchange.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
+      httpExchange.sendResponseHeaders(200, serverLogsArray.toJSONString().length());
+      OutputStream out = httpExchange.getResponseBody();
+      out.write(serverLogsArray.toJSONString().getBytes());
+      out.close();
+    };
+    this.endpointMap.put(this.loggingApiEndpoint, this.server.createContext(this.loggingApiEndpoint));
+    this.setHandler(this.getLoggingApiEndpoint(), handler);
+    System.out.println("Set handler for logging");
+    this.endpointVisitFrequency.put(this.getLoggingApiEndpoint(), 0);
   }
 
   /** Increase the frequency hit of the endpoint */
@@ -107,6 +134,16 @@ public final class Server {
       throw new IllegalArgumentException("Frequency increasing method: Endpoint does not exist");
     }
     endpointVisitFrequency.put(endpoint, endpointVisitFrequency.get(endpoint) + 1);
+  }
+
+  /** Add to server logs. The done field is true if the request has been finished */
+  public void addToServerLogs(HttpExchange httpExchange, boolean done) {
+    JSONObject object = new JSONObject();
+    object.put("path", httpExchange.getHttpContext().getPath());
+    object.put("client_ip", httpExchange.getRemoteAddress().getAddress().toString());
+    object.put("log_time", LocalDateTime.now().toString());
+    object.put("done", done);
+    serverLogsArray.add(object);
   }
 
   /** Returns endpoint entry set */

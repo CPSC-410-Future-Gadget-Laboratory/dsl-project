@@ -32,7 +32,8 @@ public class Interpreter {
     try {
       program = (Program) parser.run();
     } catch (Exception e) {
-      System.out.println("Throwing a parsing exception!");
+      System.out.println("Throwing a parsing exception!: ");
+      e.printStackTrace();
       throw new InterpreterException(e);
     }
 
