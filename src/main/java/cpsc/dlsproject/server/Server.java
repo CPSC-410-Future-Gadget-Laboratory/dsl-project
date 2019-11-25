@@ -23,6 +23,7 @@ public final class Server {
   private final String statsApiEndpoint = "/_stats";
   private final String loggingApiEndpoint = "/_logs";
   private volatile long id;
+  private volatile long logId;
 
   private Server(int port) throws IOException {
     this.port = port;
@@ -34,6 +35,7 @@ public final class Server {
     reservedEndpoints.add(statsApiEndpoint);
     reservedEndpoints.add(loggingApiEndpoint);
     id = 0;
+    logId = 0;
   }
 
   /** Starts a given server */
@@ -143,14 +145,37 @@ public final class Server {
     return ++id;
   }
 
-  /** Add to server logs. The done field is true if the request has been finished */
-  public void addToServerLogs(HttpExchange httpExchange, boolean done, long id) {
+  /** Get current ID */
+  public long getCurrentId() {
+    return this.id;
+  }
+
+  /** Add request to server logs */
+  public void addRequestToServerLogs(HttpExchange httpExchange, long id) {
     JSONObject object = new JSONObject();
     object.put("path", httpExchange.getHttpContext().getPath());
     object.put("client_ip", httpExchange.getRemoteAddress().getAddress().toString());
     object.put("log_time", LocalDateTime.now().toString());
-    object.put("done", done);
+    object.put("type", "request");
     object.put("id", id);
+    object.put("log_id", this.logId);
+    ++logId;
+    serverLogsArray.add(object);
+  }
+
+  /** Add response to server logs */
+  public void addResponseToServerLogs(HttpExchange httpExchange, int statusCode, String responseMessage, String contentType, long id) {
+    JSONObject object = new JSONObject();
+    object.put("path", httpExchange.getHttpContext().getPath());
+    object.put("client_ip", httpExchange.getRemoteAddress().getAddress().toString());
+    object.put("log_time", LocalDateTime.now().toString());
+    object.put("type", "response");
+    object.put("id", id);
+    object.put("status_code", statusCode);
+    object.put("response_message", responseMessage);
+    object.put("content_type", contentType);
+    object.put("log_id", logId);
+    ++logId;
     serverLogsArray.add(object);
   }
 
