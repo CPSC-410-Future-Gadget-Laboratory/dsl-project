@@ -21,7 +21,7 @@ Run a server through a language snippet following the instructions above.
 Go to directory `client/src` and run the following command
 
 ```shellscript
-node testclient.js <endpoint-path> <number-of-calls-to-the-endpoint>
+node testclient.js
 ```
 
 ## EBNF
