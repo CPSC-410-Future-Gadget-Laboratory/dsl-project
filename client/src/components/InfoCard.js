@@ -1,17 +1,60 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react';
+import { Button, Card, Header, Divider } from 'semantic-ui-react';
+import Chart from 'react-google-charts';
 
 export default class InfoCard extends React.Component {
     render() {
         return (
-            <Card>
-                {/* Things to do:
-                - Check out React Documentation https://reactjs.org/docs/components-and-props.html
-                - For this component, feel free to propose an appropriate API via props that you need to display the info.
-                - Create a dummy data for development purpose for now first.
-                - Propose what information would be useful to show for each node (request, endpoint, etc).
-                - Read up SemantiUI React library and browse the components that can help you implement it. (https://react.semantic-ui.com/) */}
-                Implement Info Card here... (Change this text and see it reloads automagically.)
+            <Card
+                fluid
+                className="info-card-card"
+                style={{
+                    opacity: 0.8
+                }}
+            >
+                <Card.Content
+                    header="/books/{bookID}/user/{userID}"
+                    description="ENDPOINT"
+                />
+                <Card.Content style={{
+                    overflowY: "scroll",
+                }}>
+                    <p><strong>Pathname:</strong> /books/1/user/123</p>
+                    <p><strong>Request per Minute:</strong> </p>
+                    <p><strong>Average Latency:</strong> </p>
+                    <p><strong>Errors per Minute:</strong> </p>
+                    <p><strong>No. of unique IP Address:</strong> </p>
+                    <p><strong>2XX:</strong> </p>
+                    <p><strong> - 200:</strong> </p>
+                    <p><strong> - 204:</strong> </p>
+                    <p><strong>4XX:</strong> </p>
+                    <p><strong> - 404:</strong> </p>
+                    <Header>
+                        Traffic
+                    </Header>
+                    <Divider />
+                    <Chart
+                        width="340px"
+                        height="300px"
+                        chartType="LineChart"
+                        data={[
+                            ['Time', 'Traffic'],
+                            ["4 Hour Ago", 18],
+                            ["3 Hour Ago", 17],
+                            ["2 Hour Ago", 23],
+                            ["1 Hour Ago", 10],
+                            ["Just Now", 0],
+                        ]}
+                        options={{
+                            hAxis: {
+                                title: 'Time',
+                            },
+                            vAxis: {
+                                title: 'Traffic',
+                            },
+                        }}
+                    />
+                </Card.Content>
             </Card>
         )
     }
