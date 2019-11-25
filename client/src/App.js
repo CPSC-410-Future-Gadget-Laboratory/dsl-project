@@ -14,7 +14,8 @@ class App extends React.Component {
 
     this.state = {
       ready: false,
-      logs: {}
+      logs: {},
+      active: undefined,
     }
   }
 
@@ -28,7 +29,7 @@ class App extends React.Component {
             id: datum.log_id,
             endpointHitId: datum.id,
             url: datum.path,
-            type: datum.done ? "response" : "request",
+            type: datum.type,
             endpointName: datum.path,
             logTime: datum.log_time,
             IPAddress: datum.client_ip,
@@ -98,6 +99,7 @@ class App extends React.Component {
     };
 
     const graphData = buildGraphDataFromLogs(this.state.logs);
+    const currentlyActiveNode = graphData.nodes.find((node) => node.id === this.state.active);
 
     return (
       <div className="App">
@@ -107,11 +109,12 @@ class App extends React.Component {
         <ForceGraph3D
           backgroundColor="black"
           graphData={graphData}
-        // nodeAutoColorBy={getNodeColorByType}
-        // linkWidth={2}
+          onNodeClick={node => {
+            this.setState({ active: node.id });
+          }}
         />
         <div className="info-card">
-          <InfoCard />
+          <InfoCard node={currentlyActiveNode} />
         </div>
       </div>
     );

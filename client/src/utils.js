@@ -20,128 +20,10 @@ export const getListOfEndpointsPathname = (logs) => {
     }, []);
 };
 
-export const filterLogsByPathname = (logs, endpointName) => logs.filter((log) => log.endpointName === endpointName);
+export const filterLogsByPathname = (logs, endpointName) => logs.filter((log) => log.endpointName === endpointName && log.type === "response");
 
 /* Get list of endpoints from logs */
 export const buildGraphDataFromLogs = (logs) => {
-    // const graphData = {
-    //     "nodes": [
-    //       {
-    //         "id": "1",
-    //         "name": "project_name",
-    //         "val": 1,
-    //         "type": TYPE_ROOT,
-    //         "color": "red",
-    //       },
-    //       {
-    //         "id": "2",
-    //         "name": "/",
-    //         "val": 0.1,
-    //         "type": TYPE_ENDPOINT,
-    //         "color": "green",
-    //       },
-    //       {
-    //         "id": "3",
-    //         "name": "/books",
-    //         "val": 0.1,
-    //         "type": TYPE_ENDPOINT,
-    //         "color": "green",
-    //       },
-    //       {
-    //         "id": "4",
-    //         "name": "/books/{id}",
-    //         "val": 0.1,
-    //         "type": TYPE_ENDPOINT,
-    //         "color": "green",
-    //       },
-    //       {
-    //         "id": "5",
-    //         "name": "/payment",
-    //         "val": 0.1,
-    //         "type": TYPE_ENDPOINT,
-    //         "color": "green",
-    //       },
-    //       {
-    //         "id": "6",
-    //         "name": "/home",
-    //         "val": 0.1,
-    //         "type": TYPE_ENDPOINT,
-    //         "color": "green",
-    //       },
-    //       {
-    //         "id": "7",
-    //         "name": "request /home #7",
-    //         "val": 0.01,
-    //         "type": TYPE_REQUEST,
-    //       },
-    //       {
-    //         "id": "8",
-    //         "name": "request /home #7",
-    //         "val": 0.01,
-    //         "type": TYPE_REQUEST,
-    //       },
-    //       {
-    //         "id": "9",
-    //         "name": "request /home #7",
-    //         "val": 0.01,
-    //         "type": TYPE_REQUEST,
-    //       },
-    //       {
-    //         "id": "10",
-    //         "name": "request /home #7",
-    //         "val": 0.01,
-    //         "type": TYPE_REQUEST,
-    //       },
-    //       {
-    //         "id": "11",
-    //         "name": "request /home #7",
-    //         "val": 0.01,
-    //         "type": TYPE_REQUEST,
-    //       },
-    //     ],
-    //     "links": [
-    //       {
-    //         source: "1",
-    //         target: "2",
-    //       },
-    //       {
-    //         source: "1",
-    //         target: "3",
-    //       },
-    //       {
-    //         source: "1",
-    //         target: "4",
-    //       },
-    //       {
-    //         source: "1",
-    //         target: "5",
-    //       },
-    //       {
-    //         source: "1",
-    //         target: "6",
-    //       },
-    //       {
-    //         source: "2",
-    //         target: "7",
-    //       },
-    //       {
-    //         source: "2",
-    //         target: "8",
-    //       },
-    //       {
-    //         source: "2",
-    //         target: "9",
-    //       },
-    //       {
-    //         source: "2",
-    //         target: "10",
-    //       },
-    //       {
-    //         source: "2",
-    //         target: "11",
-    //       }
-    //     ]
-    //   };
 
     const graphData = {
         nodes: [],
@@ -151,7 +33,7 @@ export const buildGraphDataFromLogs = (logs) => {
     const rootNode = {
         id: "ROOT",
         name: "Server",
-        val: 10,
+        val: 1000,
         type: TYPE_ROOT,
         color: "white",
     };
@@ -164,9 +46,9 @@ export const buildGraphDataFromLogs = (logs) => {
         const newNode = {
             id: endpointName,
             name: endpointName,
-            val: 5,
+            val: 200,
             type: TYPE_ENDPOINT,
-            color: "green",
+            color: "grey",
         };
 
         const newLinks = {
@@ -183,7 +65,7 @@ export const buildGraphDataFromLogs = (logs) => {
             const endpointLogNode = {
                 id: endpointLog.id,
                 name: endpointLog.logTime,
-                val: 2,
+                val: 0.5,
                 type: TYPE_REQUEST,
                 color: "red",
             };
