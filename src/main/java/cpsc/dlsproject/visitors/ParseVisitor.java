@@ -125,6 +125,7 @@ public class ParseVisitor extends ASTVisitor<BaseAST> {
                     break;
 
                 default:
+                    System.out.println("UNMATCHED: " + tokenizer.checkCurrent());
                     throw new Exception("Invalid statement in body of endpoint declaration.");
             }
             if (tokenizer.checkCurrent().equals(";")) {
