@@ -43,3 +43,8 @@
   background-color: white;
   width: 700px;
 }
+
+list-item{
+  margin-bottom: 0.1px;
+  background-color: gray;
+}
