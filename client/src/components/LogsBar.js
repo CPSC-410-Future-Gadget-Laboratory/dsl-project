@@ -19,76 +19,45 @@ export default class LogsBar extends React.Component {
                     {Object.values(this.props.logs).map(log =>
                         <Card>
                             <Card.Content
-                                header={log.endpointName}
-                                description={log.statusCode}
+                                header={`${log.type} ID: ${log.endpointHitId}`}
                             />
+                            <Divider fitted/>
+                            <Card.Content
+                                description={`URL: ${log.url}`}
+                            />
+                            <Divider fitted/>
+                            <Card.Content
+                                description={`IPAddress: ${log.IPAddress}`}
+                            />
+                            <Divider fitted/>
+                            <Card.Content
+                                description={`Type: ${log.type}`}
+                            />
+                            <Divider fitted/>
+                            <Card.Content
+                                description={`Endpoint Name: ${log.endpointName}`}
+                            />
+                            <Divider fitted/>
+                            <Card.Content
+                                description={`Log Time: ${log.logTime}`}
+                            />
+                            {log.type === "response" ?
+                                <React.Fragment>
+                                    <Divider fitted/>
+                                    <Card.Content
+                                        description={`Content Type: ${log.contentType}`}
+                                    />
+                                    <Divider fitted/>
+                                    <Card.Content
+                                        description={`Status Code: ${log.statusCode}`}
+                                    />
+                                    <Divider fitted/>
+                                    <Card.Content
+                                        description={`Message: ${log.message}`}
+                                    />
+                                </React.Fragment> : "" }
+
                         </Card>)}
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
-                    <Card>
-                        <Card.Content
-                            header="/books/{bookID}/user/{userID}"
-                            description="ENDPOINT"
-                        />
-                    </Card>
                 </Card.Group>
             </Card>
         )
