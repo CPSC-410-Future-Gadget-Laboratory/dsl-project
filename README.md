@@ -4,6 +4,15 @@
 
 This is the CPSC 410 - Advanced Software Engineering group project.
 
+## How to run the example server visualization
+
+If you are using a UNIX based OS, you can run the bash script that will set up the backend server, start up the frontend react server, and make some API calls to the backend endpoints to
+fill up the visualization. It may take >10s to set everything up for the first time. Just run the following command:
+
+```shell script
+./run.sh
+```
+
 ## How to compile and run the language
 
 Write the code in a file with a `.dsl` extension and place it in the `src/main/java/cpsc/dlsproject` directory.
@@ -21,7 +30,7 @@ Run a server through a language snippet following the instructions above.
 Go to directory `client/src` and run the following command
 
 ```shellscript
-node testclient.js <endpoint-path> <number-of-calls-to-the-endpoint>
+node testclient.js
 ```
 
 ## EBNF
