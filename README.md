@@ -15,6 +15,15 @@ Then run the following command *from the root directory* of the project
 mvn -DskipTests package exec:java -Dexec.mainClass=cpsc.dlsproject.App -Dexec.args="<your-file-name>"
 ```
 
+## How to run the test http client
+
+Run a server through a language snippet following the instructions above. 
+Go to directory `client/src` and run the following command
+
+```shellscript
+node testclient.js <endpoint-path> <number-of-calls-to-the-endpoint>
+```
+
 ## EBNF
 Below is the EBNF of the language.
 ```
