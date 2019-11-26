@@ -77,16 +77,17 @@ export default class InfoCard extends React.Component {
                 <Card.Content style={{
                     overflowY: "scroll",
                 }}>
-                    <p><strong>Pathname:</strong> /books/1/user/123</p>
-                    <p><strong>Request per Minute:</strong> </p>
-                    <p><strong>Average Latency:</strong> </p>
-                    <p><strong>Errors per Minute:</strong> </p>
-                    <p><strong>No. of unique IP Address:</strong> </p>
-                    <p><strong>2XX:</strong> </p>
-                    <p><strong> - 200:</strong> </p>
-                    <p><strong> - 204:</strong> </p>
-                    <p><strong>4XX:</strong> </p>
-                    <p><strong> - 404:</strong> </p>
+
+                    <p><strong>No of Endpoints:</strong> localhost:3000/path/to/success</p>
+                    <p><strong>Request per Minute:</strong> 12398</p>
+                    <p><strong>Total Compute Time:</strong> 2311 ms</p>
+                    <p><strong>Errors per Minute:</strong> 0.5</p>
+                    <p><strong>No. of unique IP Address:</strong> 192.168.1.27</p>
+                    <p><strong>2XX:</strong> 402</p>
+                    <p><strong> - 200:</strong> 12389</p>
+                    <p><strong> - 204:</strong> 12351</p>
+                    <p><strong>4XX:</strong> 8239</p>
+                    <p><strong> - 404:</strong> 351</p>
                     <Header>
                         Traffic
                     </Header>
