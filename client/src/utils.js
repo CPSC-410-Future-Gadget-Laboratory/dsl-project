@@ -63,14 +63,15 @@ export const buildGraphDataFromLogs = (logs) => {
         // Get all request and response.
         const requestLogs = filterRequestLogsByPathname(logsArray, endpointName);
         for (const requestLog of requestLogs) {
+            const responseLog = logsArray.find(log => log.endpointHitId === requestLog.endpointHitId && log.type === "response");
             const endpointLogNode = {
                 id: requestLog.id,
                 name: requestLog.logTime,
                 val: 0.5,
                 type: TYPE_REQUEST,
-                color: "red",
+                color: responseLog && 200 <= responseLog.statusCode && responseLog.statusCode <= 299 ? "green" : "red",
                 request: requestLog,
-                response: logsArray.find(log => log.endpointHitId === requestLog.endpointHitId && log.type === "response"),
+                response: responseLog,
             };
 
             const endpointLogLink = {
