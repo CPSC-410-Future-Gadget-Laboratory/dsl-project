@@ -128,22 +128,20 @@ export default class InfoCard extends React.Component {
                 }}
             >
                 <Card.Content
-                    header="Hit"
+                    header={`Hit to ${hit.request.endpointName}`}
                     description="ENDPOINT HIT"
                 />
                 <Card.Content style={{
                     overflowY: "scroll",
                 }}>
-                    <p><strong>Pathname:</strong></p>
-                    <p><strong>Request per Minute:</strong> </p>
-                    <p><strong>Average Latency:</strong> </p>
-                    <p><strong>Errors per Minute:</strong> </p>
-                    <p><strong>No. of unique IP Address:</strong> </p>
-                    <p><strong>2XX:</strong> </p>
-                    <p><strong> - 200:</strong> </p>
-                    <p><strong> - 204:</strong> </p>
-                    <p><strong>4XX:</strong> </p>
-                    <p><strong> - 404:</strong> </p>
+                    <p><strong>Pathname:</strong> {`https://localhost:8080${hit.request.endpointName}`}</p>
+                    <p><strong>Request time:</strong> {hit.request.logTime}</p>
+                    <p><strong>Response time:</strong> {hit.response.logTime}</p>
+                    <p><strong>Latency:</strong> {hit.response.logTime} - {hit.request.logTime}</p>
+                    <p><strong>IP Address:</strong> {hit.response.IPAddress}</p>
+                    <p><strong>Content Type:</strong> {hit.response.contentType}</p>
+                    <p><strong>Status Code:</strong> {hit.response.statusCode}</p>
+                    <p><strong>Response Message:</strong> {hit.response.message}</p>
                 </Card.Content>
             </Card>
         )
@@ -165,7 +163,7 @@ export default class InfoCard extends React.Component {
         )
     }
 
-    
+
     render() {
         if (!this.props.node) {
             return this.renderEmptyCard();
