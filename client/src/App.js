@@ -22,6 +22,7 @@ class App extends React.Component {
   componentDidMount() {
     fetch("/_logs").then(response => {
       response.text().then(dataText => {
+        console.log(dataText);
         const data = JSON.parse(dataText);
         console.log(data);
 

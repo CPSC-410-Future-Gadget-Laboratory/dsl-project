@@ -1,4 +1,3 @@
-
 import { TYPE_ROOT, COLOR_ROOT, TYPE_REQUEST, COLOR_REQUEST, COLOR_ENDPOINT, TYPE_ENDPOINT } from './constants';
 import {Card} from "semantic-ui-react";
 import React from "react";
@@ -97,51 +96,51 @@ export const buildGraphDataFromLogs = (logs) => {
  */
 export const getTraffic = (logs, endpointName) => {
 
-    let logArray = Object.values(logs);
+  let logArray = Object.values(logs);
 
-    if(endpointName){
-        logArray = logArray.filter(log => {
-            return log.endpointName === endpointName;
-        });
-    }
-
-
-    const NUM_HOURS = 4;
-
-    console.log();
-
-    const currTime = new Date();
-    console.log(currTime);
-
-    let updatedLogTime = logArray.map(log => {
-        let hour = Math.floor(Math.abs(currTime - new Date(log.logTime)) / 36e5);
-        return hour;
+  if(endpointName){
+    logArray = logArray.filter(log => {
+      return log.endpointName === endpointName;
     });
-
-    updatedLogTime = updatedLogTime.filter(hour => {
-        return hour <= NUM_HOURS;
-    });
-
-    const groupByHours = updatedLogTime.reduce((acc, it) => {
-        acc[it] = acc[it] + 1 || 1;
-        return acc;
-    }, {});
+  }
 
 
-    return [
-        ['Time', 'Traffic'],
-        ["4 Hour Ago", groupByHours['4'] ? groupByHours['4'] : 0],
-        ["3 Hour Ago", groupByHours['3'] ? groupByHours['3'] : 0],
-        ["2 Hour Ago", groupByHours['2'] ? groupByHours['2'] : 0],
-        ["1 Hour Ago", groupByHours['1'] ? groupByHours['1'] : 0],
-        ["< 1 Hour Ago", groupByHours['0'] ? groupByHours['0'] : 0],
-    ]
+  const NUM_HOURS = 4;
+
+  console.log();
+
+  const currTime = new Date();
+  console.log(currTime);
+
+  let updatedLogTime = logArray.map(log => {
+    let hour = Math.floor(Math.abs(currTime - new Date(log.logTime)) / 36e5);
+    return hour;
+  });
+
+  updatedLogTime = updatedLogTime.filter(hour => {
+    return hour <= NUM_HOURS;
+  });
+
+  const groupByHours = updatedLogTime.reduce((acc, it) => {
+    acc[it] = acc[it] + 1 || 1;
+    return acc;
+  }, {});
+
+
+  return [
+    ['Time', 'Traffic'],
+    ["4 Hour Ago", groupByHours['4'] ? groupByHours['4'] : 0],
+    ["3 Hour Ago", groupByHours['3'] ? groupByHours['3'] : 0],
+    ["2 Hour Ago", groupByHours['2'] ? groupByHours['2'] : 0],
+    ["1 Hour Ago", groupByHours['1'] ? groupByHours['1'] : 0],
+    ["< 1 Hour Ago", groupByHours['0'] ? groupByHours['0'] : 0],
+  ]
 };
 
 /**
  * Returns the number of requests per minute of an endpoint.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const getRequestPerMinute = (logs, endpointName) => {
     // Implement Here...
@@ -149,8 +148,8 @@ export const getRequestPerMinute = (logs, endpointName) => {
 
 /**
  * Returns the average latency of an endpoint.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const getAverageLatency = (logs, endpointName) => {
     // Implement Here...
@@ -158,8 +157,8 @@ export const getAverageLatency = (logs, endpointName) => {
 
 /**
  * Returns Errors Per Minute of an endpoint.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const getErrorsPerMinute = (logs, endpointName) => {
     // Implement Here...
@@ -167,8 +166,8 @@ export const getErrorsPerMinute = (logs, endpointName) => {
 
 /**
  * Returns the total number of unique requestor of an endpoint.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const getNumberOfUniqueIPAddresses = (logs, endpointName) => {
     // Implement Here...
@@ -176,8 +175,8 @@ export const getNumberOfUniqueIPAddresses = (logs, endpointName) => {
 
 /**
  * Returns the number of logs with status code starting with 2XX.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const getNumberOf2XXStatusCode = (logs, endpointName) => {
     // Implement Here...
@@ -185,8 +184,8 @@ export const getNumberOf2XXStatusCode = (logs, endpointName) => {
 
 /**
  * Returns a hashmap (JavaScript object) with status codes starting with 2XX as key and the number of occurences the values.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const accumulate2XXStatusCodes = (logs, endpointName) => {
     // Implement Here...
@@ -194,8 +193,8 @@ export const accumulate2XXStatusCodes = (logs, endpointName) => {
 
 /**
  * Returns the number of logs with status code starting with 4XX.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const getNumberOf4XXStatusCode = (logs, endpointName) => {
     // Implement Here...
@@ -203,8 +202,8 @@ export const getNumberOf4XXStatusCode = (logs, endpointName) => {
 
 /**
  * Returns a hashmap (JavaScript object) with status codes starting with 4XX as key and the number of occurences the values.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const accumulate4XXStatusCodes = (logs, endpointName) => {
     // Implement Here...
@@ -212,8 +211,8 @@ export const accumulate4XXStatusCodes = (logs, endpointName) => {
 
 /**
  * Returns the number of logs with status code starting with 5XX.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const getNumberOf5XXStatusCode = (logs, endpointName) => {
     // Implement Here...
@@ -221,8 +220,8 @@ export const getNumberOf5XXStatusCode = (logs, endpointName) => {
 
 /**
  * Returns a hashmap (JavaScript object) with status codes starting with 5XX as key and the number of occurences the values.
- * @param {object} logs
- * @param {string} endpointName
+ * @param {object} logs 
+ * @param {string} endpointName 
  */
 export const accumulate5XXStatusCodes = (logs, endpointName) => {
     // Implement Here...
