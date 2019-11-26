@@ -23,6 +23,7 @@ class App extends React.Component {
     fetch("/_logs").then(response => {
       response.text().then(dataText => {
         const data = JSON.parse(dataText);
+        console.log(data);
 
         const logs = data.reduce((obj, datum) => {
           obj[datum.log_id] = {
@@ -36,7 +37,7 @@ class App extends React.Component {
             contentType: datum.content_type,
             statusCode: datum.status_code,
             message: datum.response_message,
-          }
+          };
 
           return obj;
         }, {});
@@ -47,59 +48,10 @@ class App extends React.Component {
   }
 
   render() {
-    const logsData = {
-      "1": {
-        id: 1,
-        type: "request",
-        url: "/books/1",
-        endpointName: "/books/{id}",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-      },
-      "2": {
-        id: 2,
-        type: "request",
-        url: "/books/2",
-        endpointName: "/books/{id}",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-      },
-      "3": {
-        id: 3,
-        type: "request",
-        url: "/books",
-        endpointName: "/books",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-      },
-      "4": {
-        id: 3,
-        type: "request",
-        url: "/",
-        endpointName: "/",
-        timeRequested: "2019-11-10:00:10:10",
-        timeResponded: "2019-11-10:00:10:10",
-        IPAddress: "1023-12301203u-1230",
-        contentType: "html/blahlbala",
-        statusCode: 200,
-        message: "Something cool.",
-      },
-    };
 
     const graphData = buildGraphDataFromLogs(this.state.logs);
     const currentlyActiveNode = graphData.nodes.find((node) => node.id === this.state.active);
+    console.log(currentlyActiveNode);
 
     return (
       <div className="App">
@@ -114,7 +66,7 @@ class App extends React.Component {
           }}
         />
         <div className="info-card">
-          <InfoCard node={currentlyActiveNode} />
+          <InfoCard node={currentlyActiveNode} logs={this.state.logs}/>
         </div>
       </div>
     );

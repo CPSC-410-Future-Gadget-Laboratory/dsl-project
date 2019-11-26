@@ -1,11 +1,13 @@
 import React from 'react';
-import { Button, Card, Header, Divider } from 'semantic-ui-react';
+import { Button, Card, Header, Divider, List } from 'semantic-ui-react';
 import Chart from 'react-google-charts';
 import { TYPE_ROOT, TYPE_ENDPOINT, TYPE_REQUEST } from '../constants';
+import {buildGraphDataFromLogs, getTraffic} from "../utils";
 
 export default class InfoCard extends React.Component {
 
     renderServerCard() {
+      const chartData = getTraffic(this.props.logs);
         return (
             <Card
                 fluid
@@ -39,14 +41,7 @@ export default class InfoCard extends React.Component {
                         width="340px"
                         height="300px"
                         chartType="LineChart"
-                        data={[
-                            ['Time', 'Traffic'],
-                            ["4 Hour Ago", 18],
-                            ["3 Hour Ago", 17],
-                            ["2 Hour Ago", 23],
-                            ["1 Hour Ago", 10],
-                            ["Just Now", 0],
-                        ]}
+                        data={chartData}
                         options={{
                             hAxis: {
                                 title: 'Time',
@@ -62,6 +57,8 @@ export default class InfoCard extends React.Component {
     }
 
     renderEndpointCard() {
+      const endpointName = this.props.node.id;
+      const chartData = getTraffic(this.props.logs, endpointName);
         return (
             <Card
                 fluid
@@ -95,14 +92,7 @@ export default class InfoCard extends React.Component {
                         width="340px"
                         height="300px"
                         chartType="LineChart"
-                        data={[
-                            ['Time', 'Traffic'],
-                            ["4 Hour Ago", 18],
-                            ["3 Hour Ago", 17],
-                            ["2 Hour Ago", 23],
-                            ["1 Hour Ago", 10],
-                            ["Just Now", 0],
-                        ]}
+                        data={chartData}
                         options={{
                             hAxis: {
                                 title: 'Time',
@@ -165,7 +155,7 @@ export default class InfoCard extends React.Component {
         )
     }
 
-    
+
     render() {
         if (!this.props.node) {
             return this.renderEmptyCard();

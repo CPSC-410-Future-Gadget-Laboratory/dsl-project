@@ -13,3 +13,6 @@ buildNumber.properties
 dsl-project.iml
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
+src/main/main.iml
+src/test/test.iml
+client/client.iml
