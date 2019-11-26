@@ -66,7 +66,7 @@ class App extends React.Component {
           }}
         />
         <div className="info-card">
-          <InfoCard node={currentlyActiveNode} logs={this.state.logs}/>
+          <InfoCard node={currentlyActiveNode} logs={this.state.logs} graphData={graphData.nodes}/>
         </div>
       </div>
     );

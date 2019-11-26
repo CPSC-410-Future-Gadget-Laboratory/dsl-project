@@ -144,7 +144,7 @@ export const getTraffic = (logs, endpointName) => {
  * @param {string} endpointName
  */
 export const getRequestPerMinute = (logs, endpointName) => {
-    // Implement Here...
+
 };
 
 /**
