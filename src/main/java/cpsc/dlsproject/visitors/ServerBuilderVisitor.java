@@ -13,7 +13,7 @@ import cpsc.dlsproject.utils.Utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /** A class representing a visitor for building the server. */
@@ -69,23 +69,25 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
           // Setup environment for execution.
           variables.setHttpExchange(httpExchange);
           server.increaseEndpointHitFrequency(endpoint.url.url);
-          server.addToServerLogs(httpExchange, false /* done */);
+          long id = server.incrementAndGetID();
+          server.addRequestToServerLogs(httpExchange, id);
           for (Statement statement : endpoint.statements) {
             try {
               this.visit(statement);
             } catch (Exception e) {
+              String errorMessage = "Sorry, there has been an error on the server side. :(";
               httpExchange
                   .getResponseBody()
                   .write(
-                      "Sorry, there has been an error on the server side. :("
-                          .getBytes(Charset.forName("UTF-8")));
+                      errorMessage
+                          .getBytes(StandardCharsets.UTF_8));
               System.out.println(
                   "500: There is an error when evaluating the statement. It is more likely to be the interpreter's error, not the developer's.");
+              server.addResponseToServerLogs(httpExchange, 500, errorMessage, "text/html", id);
             }
           }
 
           // Tear down environment after execution.
-          server.addToServerLogs(httpExchange, true /* done */);
           variables.clearHttpExchange();
         });
 
@@ -141,6 +143,7 @@ public class ServerBuilderVisitor extends ASTVisitor<Value> {
       OutputStream out = httpExchange.getResponseBody();
       out.write(body);
       out.close();
+      server.addResponseToServerLogs(httpExchange, response.statusCode, response.message, "text/html" /* ContentType */, server.getCurrentId());
     } catch (IOException e) {
       throw new ServerEvaluationError("There is an error when writing response into body.");
     }
