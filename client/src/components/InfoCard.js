@@ -74,16 +74,17 @@ export default class InfoCard extends React.Component {
                 <Card.Content style={{
                     overflowY: "scroll",
                 }}>
-                    <p><strong>Pathname:</strong> /books/1/user/123</p>
-                    <p><strong>Request per Minute:</strong> </p>
-                    <p><strong>Average Latency:</strong> </p>
-                    <p><strong>Errors per Minute:</strong> </p>
-                    <p><strong>No. of unique IP Address:</strong> </p>
-                    <p><strong>2XX:</strong> </p>
-                    <p><strong> - 200:</strong> </p>
-                    <p><strong> - 204:</strong> </p>
-                    <p><strong>4XX:</strong> </p>
-                    <p><strong> - 404:</strong> </p>
+
+                    <p><strong>No of Endpoints:</strong> localhost:3000/path/to/success</p>
+                    <p><strong>Request per Minute:</strong> 12398</p>
+                    <p><strong>Total Compute Time:</strong> 2311 ms</p>
+                    <p><strong>Errors per Minute:</strong> 0.5</p>
+                    <p><strong>No. of unique IP Address:</strong> 192.168.1.27</p>
+                    <p><strong>2XX:</strong> 402</p>
+                    <p><strong> - 200:</strong> 12389</p>
+                    <p><strong> - 204:</strong> 12351</p>
+                    <p><strong>4XX:</strong> 8239</p>
+                    <p><strong> - 404:</strong> 351</p>
                     <Header>
                         Traffic
                     </Header>
@@ -118,22 +119,20 @@ export default class InfoCard extends React.Component {
                 }}
             >
                 <Card.Content
-                    header="Hit"
+                    header={`Hit to ${hit.request.endpointName}`}
                     description="ENDPOINT HIT"
                 />
                 <Card.Content style={{
                     overflowY: "scroll",
                 }}>
-                    <p><strong>Pathname:</strong></p>
-                    <p><strong>Request per Minute:</strong> </p>
-                    <p><strong>Average Latency:</strong> </p>
-                    <p><strong>Errors per Minute:</strong> </p>
-                    <p><strong>No. of unique IP Address:</strong> </p>
-                    <p><strong>2XX:</strong> </p>
-                    <p><strong> - 200:</strong> </p>
-                    <p><strong> - 204:</strong> </p>
-                    <p><strong>4XX:</strong> </p>
-                    <p><strong> - 404:</strong> </p>
+                    <p><strong>Pathname:</strong> {`https://localhost:8080${hit.request.endpointName}`}</p>
+                    <p><strong>Request time:</strong> {hit.request.logTime}</p>
+                    <p><strong>Response time:</strong> {hit.response.logTime}</p>
+                    <p><strong>Latency:</strong> {hit.response.logTime} - {hit.request.logTime}</p>
+                    <p><strong>IP Address:</strong> {hit.response.IPAddress}</p>
+                    <p><strong>Content Type:</strong> {hit.response.contentType}</p>
+                    <p><strong>Status Code:</strong> {hit.response.statusCode}</p>
+                    <p><strong>Response Message:</strong> {hit.response.message}</p>
                 </Card.Content>
             </Card>
         )
