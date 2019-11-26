@@ -126,9 +126,9 @@ export default class InfoCard extends React.Component {
                     overflowY: "scroll",
                 }}>
                     <p><strong>Pathname:</strong> {`https://localhost:8080${hit.request.endpointName}`}</p>
-                    <p><strong>Request time:</strong> {hit.request.logTime}</p>
-                    <p><strong>Response time:</strong> {hit.response.logTime}</p>
-                    <p><strong>Latency:</strong> {hit.response.logTime} - {hit.request.logTime}</p>
+                    <p><strong>Request time:</strong> {new Date(hit.request.logTime).toString()}</p>
+                    <p><strong>Response time:</strong> {new Date(hit.response.logTime).toString()}</p>
+                    <p><strong>Latency:</strong> {new Date(hit.response.logTime).getTime() - new Date(hit.request.logTime).getTime()} ms</p>
                     <p><strong>IP Address:</strong> {hit.response.IPAddress}</p>
                     <p><strong>Content Type:</strong> {hit.response.contentType}</p>
                     <p><strong>Status Code:</strong> {hit.response.statusCode}</p>
