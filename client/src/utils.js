@@ -20,10 +20,11 @@ export const getListOfEndpointsPathname = (logs) => {
     }, []);
 };
 
-export const filterLogsByPathname = (logs, endpointName) => logs.filter((log) => log.endpointName === endpointName && log.type === "response");
+export const filterRequestLogsByPathname = (logs, endpointName) => logs.filter((log) => log.endpointName === endpointName && log.type === "request");
 
 /* Get list of endpoints from logs */
 export const buildGraphDataFromLogs = (logs) => {
+    const logsArray = getLogsAsArrays(logs);
 
     const graphData = {
         nodes: [],
@@ -60,14 +61,16 @@ export const buildGraphDataFromLogs = (logs) => {
         graphData.links.push(newLinks);
 
         // Get all request and response.
-        const endpointLogs = filterLogsByPathname(Object.values(logs), endpointName);
-        for (const endpointLog of endpointLogs) {
+        const requestLogs = filterRequestLogsByPathname(logsArray, endpointName);
+        for (const requestLog of requestLogs) {
             const endpointLogNode = {
-                id: endpointLog.id,
-                name: endpointLog.logTime,
+                id: requestLog.id,
+                name: requestLog.logTime,
                 val: 0.5,
                 type: TYPE_REQUEST,
                 color: "red",
+                request: requestLog,
+                response: logsArray.find(log => log.endpointHitId === requestLog.endpointHitId && log.type === "response"),
             };
 
             const endpointLogLink = {
